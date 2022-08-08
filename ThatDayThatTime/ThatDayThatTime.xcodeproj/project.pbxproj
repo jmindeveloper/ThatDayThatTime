@@ -15,6 +15,7 @@
 		0EBD218628A0D2AD006F19FE /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218528A0D2AD006F19FE /* SideMenu */; };
 		0EBD218928A0D2C8006F19FE /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218828A0D2C8006F19FE /* FSCalendar */; };
 		0EBD218C28A0D2EF006F19FE /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218B28A0D2EF006F19FE /* CombineCocoa */; };
+		0EBD219228A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219028A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		0E161C08289FCDA60055B84F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E161C0B289FCDA60055B84F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E161C0D289FCDA60055B84F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0EBD219128A0D37D006F19FE /* ThatDayThatTime.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ThatDayThatTime.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,13 +62,38 @@
 		0E161BFE289FCDA40055B84F /* ThatDayThatTime */ = {
 			isa = PBXGroup;
 			children = (
+				0EBD218E28A0D35E006F19FE /* Model */,
+				0EBD218D28A0D353006F19FE /* Application */,
+			);
+			path = ThatDayThatTime;
+			sourceTree = "<group>";
+		};
+		0EBD218D28A0D353006F19FE /* Application */ = {
+			isa = PBXGroup;
+			children = (
 				0E161BFF289FCDA40055B84F /* AppDelegate.swift */,
 				0E161C01289FCDA40055B84F /* SceneDelegate.swift */,
 				0E161C08289FCDA60055B84F /* Assets.xcassets */,
 				0E161C0A289FCDA60055B84F /* LaunchScreen.storyboard */,
 				0E161C0D289FCDA60055B84F /* Info.plist */,
 			);
-			path = ThatDayThatTime;
+			path = Application;
+			sourceTree = "<group>";
+		};
+		0EBD218E28A0D35E006F19FE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0EBD218F28A0D362006F19FE /* CoreData */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0EBD218F28A0D362006F19FE /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				0EBD219028A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +180,7 @@
 			files = (
 				0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */,
 				0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */,
+				0EBD219228A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +321,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8PRV428ULN;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ThatDayThatTime/Info.plist;
+				INFOPLIST_FILE = ThatDayThatTime/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -321,7 +349,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8PRV428ULN;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ThatDayThatTime/Info.plist;
+				INFOPLIST_FILE = ThatDayThatTime/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -420,6 +448,19 @@
 			productName = CombineCocoa;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		0EBD219028A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0EBD219128A0D37D006F19FE /* ThatDayThatTime.xcdatamodel */,
+			);
+			currentVersion = 0EBD219128A0D37D006F19FE /* ThatDayThatTime.xcdatamodel */;
+			path = ThatDayThatTime.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0E161BF4289FCDA40055B84F /* Project object */;
 }
