@@ -14,12 +14,14 @@ final class DateLineView: UIView {
     private let leftLine: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
+        
         return view
     }()
     
     private let rightLine: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
+        
         return view
     }()
     
@@ -29,6 +31,8 @@ final class DateLineView: UIView {
         label.text = date
         label.textAlignment = .center
         label.textColor = .lightGray
+        label.isUserInteractionEnabled = false
+        
         return label
     }()
     

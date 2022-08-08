@@ -6,34 +6,54 @@
 //
 
 import UIKit
+import SnapKit
 
 final class TimeDiaryViewController: UIViewController {
     
     // MARK: - ViewProperties
-    private let dateLineView: DateLineView = {
+    private lazy var dateLineView: DateLineView = {
         let view = DateLineView(date: "2022.08.08 수요일")
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dateLineViewTapped))
+        view.addGestureRecognizer(tapGesture)
         
         return view
     }()
+    
+    private let calendar = DTCalendar()
+    
+    private var calendarHidden = true
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureSubViews()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         setConstraintsOfDateLineView()
+        setConstraintsOfCalendar()
     }
-    
+}
+
+// MARK: - TargetMethod
+extension TimeDiaryViewController {
+    @objc private func dateLineViewTapped() {
+        calendarHidden.toggle()
+        calendar.snp.updateConstraints {
+            $0.width.equalToSuperview()
+            $0.top.equalTo(dateLineView.snp.bottom)
+            $0.leading.equalToSuperview()
+            $0.height.equalTo(calendarHidden ? 0 : 300)
+        }
+        
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.view.layoutIfNeeded()
+        }
+    }
 }
 
 // MARK: - UI
 extension TimeDiaryViewController {
     private func configureSubViews() {
-        [dateLineView].forEach {
+        [dateLineView, calendar].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -43,7 +63,16 @@ extension TimeDiaryViewController {
         dateLineView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.height.equalTo(30)
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(-15)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    private func setConstraintsOfCalendar() {
+        calendar.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.top.equalTo(dateLineView.snp.bottom)
+            $0.leading.equalToSuperview()
+            $0.height.equalTo(0)
         }
     }
 }
