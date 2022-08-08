@@ -24,6 +24,8 @@ final class CoreDataManager {
                 print(String(describing: error))
             }
         }
+        // db를 보기위한 경로추적용 log
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
     }
     
     /// diary 목록 가져오기
@@ -42,7 +44,14 @@ final class CoreDataManager {
         guard let entity = NSEntityDescription.entity(forEntityName: type.entityName, in: persistentContainer.viewContext) else { return }
         
         let diary = NSManagedObject(entity: entity, insertInto: persistentContainer.viewContext)
-//        diary.setValue(<#T##value: Any?##Any?#>, forKey: <#T##String#>)
+        diary.setValue(UUID().uuidString, forKey: "id")
+        diary.setValue("2022.08.08 월요일", forKey: "date")
+        diary.setValue("일기일기일기", forKey: "content")
+        diary.setValue(Data(), forKey: "image")
+        
+        if type == .time {
+            diary.setValue("22:55", forKey: "time")
+        }
         
         do {
             try persistentContainer.viewContext.save()
