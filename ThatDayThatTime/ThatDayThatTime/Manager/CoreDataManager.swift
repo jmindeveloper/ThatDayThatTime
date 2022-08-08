@@ -28,6 +28,7 @@ final class CoreDataManager {
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
     }
     
+    // MARK: - Method
     /// diary 목록 가져오기
     func getDiary(type: DiaryType) {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
