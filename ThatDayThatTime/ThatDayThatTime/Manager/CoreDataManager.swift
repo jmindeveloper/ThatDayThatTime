@@ -23,9 +23,11 @@ enum DiaryType {
 
 final class CoreDataManager {
     
+    // MARK: - Properties
     private let containerName = "ThatDayThatTime"
     private let persistentContainer: NSPersistentContainer
     
+    // MARK: - LifeCycle
     init() {
         self.persistentContainer = NSPersistentContainer(name: containerName)
         persistentContainer.loadPersistentStores { _, error in

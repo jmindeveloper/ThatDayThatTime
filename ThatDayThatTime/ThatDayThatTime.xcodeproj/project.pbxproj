@@ -17,6 +17,9 @@
 		0EBD218C28A0D2EF006F19FE /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218B28A0D2EF006F19FE /* CombineCocoa */; };
 		0EBD219228A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219028A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld */; };
 		0EBD219528A0D531006F19FE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219428A0D531006F19FE /* CoreDataManager.swift */; };
+		0EBD219B28A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219728A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift */; };
+		0EBD219D28A0D7CC006F19FE /* DayDiary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219928A0D7CC006F19FE /* DayDiary+CoreDataProperties.swift */; };
+		0EBD219F28A0D834006F19FE /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219E28A0D834006F19FE /* Diary.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		0E161C0D289FCDA60055B84F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0EBD219128A0D37D006F19FE /* ThatDayThatTime.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ThatDayThatTime.xcdatamodel; sourceTree = "<group>"; };
 		0EBD219428A0D531006F19FE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		0EBD219728A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeDiary+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0EBD219928A0D7CC006F19FE /* DayDiary+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayDiary+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0EBD219E28A0D834006F19FE /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +100,10 @@
 		0EBD218F28A0D362006F19FE /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				0EBD219728A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift */,
+				0EBD219928A0D7CC006F19FE /* DayDiary+CoreDataProperties.swift */,
 				0EBD219028A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld */,
+				0EBD219E28A0D834006F19FE /* Diary.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -189,8 +198,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EBD219F28A0D834006F19FE /* Diary.swift in Sources */,
 				0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */,
 				0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */,
+				0EBD219D28A0D7CC006F19FE /* DayDiary+CoreDataProperties.swift in Sources */,
+				0EBD219B28A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift in Sources */,
 				0EBD219528A0D531006F19FE /* CoreDataManager.swift in Sources */,
 				0EBD219228A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld in Sources */,
 			);
