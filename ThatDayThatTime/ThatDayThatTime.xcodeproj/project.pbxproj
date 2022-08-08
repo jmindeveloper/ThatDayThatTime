@@ -102,8 +102,8 @@
 			children = (
 				0EBD219728A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift */,
 				0EBD219928A0D7CC006F19FE /* DayDiary+CoreDataProperties.swift */,
-				0EBD219028A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld */,
 				0EBD219E28A0D834006F19FE /* Diary.swift */,
+				0EBD219028A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";

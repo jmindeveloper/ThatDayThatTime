@@ -8,3 +8,16 @@
 import Foundation
 
 protocol Diary { }
+
+enum DiaryType {
+    case day, time
+    
+    var entityName: String {
+        switch self {
+        case .day:
+            return "DayDiary"
+        case .time:
+            return "TimeDiary"
+        }
+    }
+}
