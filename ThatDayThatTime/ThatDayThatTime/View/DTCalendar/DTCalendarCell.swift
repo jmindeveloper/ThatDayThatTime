@@ -29,8 +29,13 @@ final class DTCalendarCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(date: String) {
-        self.dateLabel.text = date
+    func configureCell(weak: String) {
+        self.dateLabel.text = weak
+    }
+    
+    func configureCell(day: CalendarCellComponents) {
+        self.dateLabel.text = day.day
+        self.dateLabel.textColor = day.dayColor
     }
 }
 

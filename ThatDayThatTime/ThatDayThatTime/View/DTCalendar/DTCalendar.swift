@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 // TODO: - ViewModel
 final class DTCalendar: UIView {
@@ -25,12 +26,16 @@ final class DTCalendar: UIView {
     
     // MARK: - Properties
     let week = ["일", "월", "화", "수", "목", "금", "토"]
+    let calendarManager = CalendarManager()
+    private var subscriptios = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: .zero)
         configureSubViews()
         setConstraintsOfDateLabel()
+        calendarManager.updateCalendar()
+        bindingCalendarManager()
     }
     
     required init?(coder: NSCoder) {
@@ -42,6 +47,16 @@ final class DTCalendar: UIView {
 extension DTCalendar {
     func reloadCalendar() {
         calendarCollectionView.reloadData()
+    }
+}
+
+// MARK: - Binding
+extension DTCalendar {
+    private func bindingCalendarManager() {
+        calendarManager.updateCalendarDone
+            .sink { [weak self] in
+                self?.calendarCollectionView.reloadSections(IndexSet(1...1))
+            }.store(in: &subscriptios)
     }
 }
 
@@ -81,12 +96,11 @@ extension DTCalendar: UICollectionViewDataSource {
         
         switch indexPath.section {
         case 0:
-            cell.configureCell(date: week[indexPath.row])
+            cell.configureCell(weak: week[indexPath.row])
         case 1:
-            cell.configureCell(date: "10")
+            cell.configureCell(day: calendarManager.days[indexPath.row])
         default: break
         }
-        
         
         return cell
     }
