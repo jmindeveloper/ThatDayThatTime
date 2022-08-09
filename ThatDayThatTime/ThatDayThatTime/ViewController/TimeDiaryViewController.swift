@@ -12,15 +12,23 @@ final class TimeDiaryViewController: UIViewController {
     
     // MARK: - ViewProperties
     private lazy var dateLineView: DateLineView = {
-        let view = DateLineView(date: String.getDate(date: Date()))
+        let view = DateLineView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dateLineViewTapped))
         view.addGestureRecognizer(tapGesture)
         
         return view
     }()
     
-    private let calendar = DTCalendar()
+    private lazy var calendar: DTCalendar = {
+        let calendar = DTCalendar()
+        calendar.bindingSelectedDate { [weak self] date in
+            self?.dateLineView.configureDateLabel(date: date)
+        }
+        
+        return calendar
+    }()
     
+    // MARK: - Properties
     private var calendarHidden = true
     
     // MARK: - LifeCycle

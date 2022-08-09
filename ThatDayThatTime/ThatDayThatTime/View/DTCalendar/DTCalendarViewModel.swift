@@ -15,10 +15,12 @@ final class DTCalendarViewModel {
     let week = ["일", "월", "화", "수", "목", "금", "토"]
     var days = [CalendarCellComponents]() {
         willSet {
-            updateCalendarDone.send()
+            updateCalendar.send()
         }
     }
-    let updateCalendarDone = PassthroughSubject<Void, Never>()
+    let updateCalendar = PassthroughSubject<Void, Never>()
+    let updateCurrentDate = CurrentValueSubject<String, Never>(String.getDate(date: Date()))
+    
     private var subscriptions = Set<AnyCancellable>()
     
     var daysCount = 42
@@ -28,7 +30,7 @@ final class DTCalendarViewModel {
     }
     
     // MARK: - Method
-    func updateCalendar() {
+    func updateCalendarRequest() {
         manager.updateCalendar()
     }
     
@@ -39,6 +41,7 @@ final class DTCalendarViewModel {
                 if day.date == String.getDate(date: Date()) {
                     var day = day
                     day.dayColor = .red
+                    day.cellColor = .daySelectedColor
                     return day
                 }
                 return day
@@ -49,4 +52,17 @@ final class DTCalendarViewModel {
             }.store(in: &subscriptions)
     }
     
+    func selectedDay(index: Int) {
+        var dayss = days
+        for i in 0..<dayss.count {
+            if i == index {
+                dayss[index].cellColor = .daySelectedColor
+                updateCurrentDate.send(dayss[index].date)
+            } else {
+                dayss[i].cellColor = .clear
+            }
+        }
+        
+        days = dayss
+    }
 }

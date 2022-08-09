@@ -33,6 +33,8 @@ final class DTCalendarCell: UICollectionViewCell {
     
     func configureCell(weak: String) {
         self.dateLabel.text = weak
+        self.dateLabel.backgroundColor = .clear
+        self.dateLabel.textColor = .darkGray
     }
     
     func configureCell(day: CalendarCellComponents) {

@@ -28,7 +28,6 @@ final class DateLineView: UIView {
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
-        label.text = date
         label.textAlignment = .center
         label.textColor = .lightGray
         label.isUserInteractionEnabled = false
@@ -36,12 +35,8 @@ final class DateLineView: UIView {
         return label
     }()
     
-    // MARK: - Properties
-    private let date: String
-    
     // MARK: - LifeCycle
-    init(date: String) {
-        self.date = date
+    init() {
         super.init(frame: .zero)
         configureSubViews()
         setConstraintsOfDateLabel()
@@ -51,6 +46,10 @@ final class DateLineView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configureDateLabel(date: String) {
+        dateLabel.text = date
     }
     
 }

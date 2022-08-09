@@ -33,7 +33,6 @@ final class DTCalendar: UIView {
     }()
     
     // MARK: - Properties
-//    let calendarManager = CalendarManager()
     let viewModel = DTCalendarViewModel()
     private var subscriptios = Set<AnyCancellable>()
     
@@ -43,8 +42,8 @@ final class DTCalendar: UIView {
         configureSubViews()
         setConstraintsOfCalendarCollectionView()
         setConstraintsOfBottomLine()
-        viewModel.updateCalendar()
-        bindingCalendarManager()
+        viewModel.updateCalendarRequest()
+        bindingCalendarViewModel()
     }
     
     required init?(coder: NSCoder) {
@@ -65,10 +64,17 @@ extension DTCalendar {
 
 // MARK: - Binding
 extension DTCalendar {
-    private func bindingCalendarManager() {
-        viewModel.updateCalendarDone
+    private func bindingCalendarViewModel() {
+        viewModel.updateCalendar
             .sink { [weak self] in
-                self?.calendarCollectionView.reloadSections(IndexSet(1...1))
+                self?.calendarCollectionView.reloadData()
+            }.store(in: &subscriptios)
+    }
+    
+    func bindingSelectedDate(completion: @escaping ((String) -> Void)) {
+        viewModel.updateCurrentDate
+            .sink { date in
+                completion(date)
             }.store(in: &subscriptios)
     }
 }
@@ -127,7 +133,7 @@ extension DTCalendar: UICollectionViewDataSource {
 
 extension DTCalendar: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        viewModel.selectedDay(index: indexPath.row)
     }
 }
 
