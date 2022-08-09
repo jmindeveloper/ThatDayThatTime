@@ -12,7 +12,7 @@ final class TimeDiaryViewController: UIViewController {
     
     // MARK: - ViewProperties
     private lazy var dateLineView: DateLineView = {
-        let view = DateLineView(date: "2022.08.08 수요일")
+        let view = DateLineView(date: String.getDate(date: Date()))
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dateLineViewTapped))
         view.addGestureRecognizer(tapGesture)
         

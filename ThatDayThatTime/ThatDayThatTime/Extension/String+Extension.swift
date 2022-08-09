@@ -8,13 +8,14 @@
 import Foundation
 
 extension String {
-    static var dateFormatter: DateFormatter = {
+    static func getDate(date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd"
-        return formatter
-    }()
+        formatter.dateFormat = "yyyy년 M월 d일 EEEE"
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter.string(from: date)
+    }
     
-    var date: Date? {
-        return Self.dateFormatter.date(from: self)
+    static func getDate(components: CalendarCellComponents) -> String {
+        return "\(components.year)년 \(components.month)월 \(components.day)일 \(components.weekday)"
     }
 }

@@ -119,6 +119,10 @@ extension DTCalendar: UICollectionViewDataSource {
         case 0:
             cell.configureCell(weak: week[indexPath.row])
         case 1:
+            let day = calendarManager.days[indexPath.row]
+            if day.date == String.getDate(date: Date()) {
+                calendarManager.days[indexPath.row].dayColor = .red
+            }
             cell.configureCell(day: calendarManager.days[indexPath.row])
         default: break
         }

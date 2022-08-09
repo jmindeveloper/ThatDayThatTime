@@ -37,9 +37,8 @@ final class CalendarManager {
             year: String(date.year ?? 2022),
             month: String(date.month ?? 1),
             day: String(date.day ?? 1),
-            weekday: (date.year ?? 1) - 1,
-            dayColor: color,
-            date: date.date ?? Date()
+            week: (date.weekday ?? 1) - 1,
+            dayColor: color
         )
         
         return components
