@@ -25,7 +25,8 @@ final class CalendarManager {
     }
     
     func updateCalendar() {
-        calendarDate = calendar.date(byAdding: DateComponents(day: -8), to: calendarDate) ?? Date()
+        let date = calendar.component(.day, from: calendarDate) - 1
+        calendarDate = calendar.date(byAdding: DateComponents(day: -date), to: calendarDate) ?? Date()
         updateDays()
     }
     
