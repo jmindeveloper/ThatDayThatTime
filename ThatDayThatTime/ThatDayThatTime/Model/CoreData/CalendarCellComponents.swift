@@ -11,5 +11,5 @@ import UIKit
 struct CalendarCellComponents {
     let day: String
     let dayColor: UIColor?
-    let cellColor: UIColor? = nil
+    var cellColor: UIColor? = .daySelectedColor
 }

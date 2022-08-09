@@ -15,7 +15,6 @@ final class CalendarManager {
     let calendar = Calendar.current
     var calendarDate = Date()
     var days = [CalendarCellComponents]()
-    var dayDate = Date()
     let updateCalendarDone = PassthroughSubject<Void, Never>()
     
     private func startDateOfMonth(from date: Date) -> Int {

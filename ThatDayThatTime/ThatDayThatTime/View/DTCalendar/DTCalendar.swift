@@ -128,7 +128,9 @@ extension DTCalendar: UICollectionViewDataSource {
 }
 
 extension DTCalendar: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
 }
 
 extension DTCalendar: UICollectionViewDelegateFlowLayout {

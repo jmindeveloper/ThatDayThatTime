@@ -15,6 +15,8 @@ final class DTCalendarCell: UICollectionViewCell {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
+        label.layer.cornerRadius = 5
+        label.layer.masksToBounds = true
         
         return label
     }()
@@ -36,6 +38,7 @@ final class DTCalendarCell: UICollectionViewCell {
     func configureCell(day: CalendarCellComponents) {
         self.dateLabel.text = day.day
         self.dateLabel.textColor = day.dayColor
+        self.dateLabel.backgroundColor = day.cellColor
     }
 }
 
@@ -51,7 +54,8 @@ extension DTCalendarCell {
     private func setConstraintsOfDateLabel() {
         dateLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.size.equalToSuperview().multipliedBy(0.8)
+            $0.height.equalToSuperview().multipliedBy(0.9)
+            $0.width.equalTo(dateLabel.snp.height)
         }
     }
 }
