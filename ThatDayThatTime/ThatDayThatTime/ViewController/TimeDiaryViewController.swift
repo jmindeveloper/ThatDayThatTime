@@ -44,8 +44,10 @@ extension TimeDiaryViewController {
             $0.height.equalTo(calendarHidden ? 0 : 300)
         }
         
-        UIView.animate(withDuration: 0.3, delay: 0) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
             self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.calendar.bottomLineHidden()
         }
     }
 }

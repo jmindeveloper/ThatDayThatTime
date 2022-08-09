@@ -24,6 +24,14 @@ final class DTCalendar: UIView {
         return collectionView
     }()
     
+    private let bottomLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.isHidden = true
+        
+        return view
+    }()
+    
     // MARK: - Properties
     let week = ["일", "월", "화", "수", "목", "금", "토"]
     let calendarManager = CalendarManager()
@@ -33,7 +41,8 @@ final class DTCalendar: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         configureSubViews()
-        setConstraintsOfDateLabel()
+        setConstraintsOfCalendarCollectionView()
+        setConstraintsOfBottomLine()
         calendarManager.updateCalendar()
         bindingCalendarManager()
     }
@@ -47,6 +56,10 @@ final class DTCalendar: UIView {
 extension DTCalendar {
     func reloadCalendar() {
         calendarCollectionView.reloadData()
+    }
+    
+    func bottomLineHidden() {
+        bottomLine.isHidden.toggle()
     }
 }
 
@@ -63,15 +76,23 @@ extension DTCalendar {
 // MARK: - UI
 extension DTCalendar {
     private func configureSubViews() {
-        [calendarCollectionView].forEach {
+        [calendarCollectionView, bottomLine].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
         }
     }
     
-    private func setConstraintsOfDateLabel() {
+    private func setConstraintsOfCalendarCollectionView() {
         calendarCollectionView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalToSuperview()
+            $0.edges.equalToSuperview()
+        }
+    }
+    
+    private func setConstraintsOfBottomLine() {
+        bottomLine.snp.makeConstraints {
+            $0.bottom.equalTo(calendarCollectionView.snp.bottom)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(1)
         }
     }
 }
