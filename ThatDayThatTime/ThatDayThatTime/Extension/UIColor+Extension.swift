@@ -11,4 +11,8 @@ extension UIColor {
     static var daySelectedColor: UIColor {
         return UIColor(named: "DaySelectedColor") ?? UIColor.clear
     }
+    
+    static var viewBackgroundColor: UIColor {
+        return UIColor(named: "ViewBackgroundColor") ?? UIColor.clear
+    }
 }

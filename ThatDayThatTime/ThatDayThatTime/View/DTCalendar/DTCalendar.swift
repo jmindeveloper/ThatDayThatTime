@@ -8,12 +8,12 @@
 import UIKit
 import Combine
 
-// TODO: - ViewModel
 final class DTCalendar: UIView {
     
     private lazy var calendarCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .viewBackgroundColor
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.dataSource = self
@@ -42,6 +42,7 @@ final class DTCalendar: UIView {
         configureSubViews()
         setConstraintsOfCalendarCollectionView()
         setConstraintsOfBottomLine()
+        configureCalendarGesture()
         viewModel.updateCalendarRequest()
         bindingCalendarViewModel()
     }
@@ -53,12 +54,32 @@ final class DTCalendar: UIView {
 
 // MARK: - Method
 extension DTCalendar {
-    func reloadCalendar() {
-        calendarCollectionView.reloadData()
-    }
-    
     func bottomLineHidden() {
         bottomLine.isHidden.toggle()
+    }
+    
+    private func configureCalendarGesture() {
+        let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(calendarSwipeGestureHandler(_:)))
+        leftSwipeGesture.direction = .left
+        let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(calendarSwipeGestureHandler(_:)))
+        rightSwipeGesture.direction = .right
+        
+        calendarCollectionView.addGestureRecognizer(leftSwipeGesture)
+        calendarCollectionView.addGestureRecognizer(rightSwipeGesture)
+    }
+}
+
+// MARK: - TargetMethod
+extension DTCalendar {
+    @objc private func calendarSwipeGestureHandler(_ sender: UISwipeGestureRecognizer) {
+        print(sender.direction)
+        if sender.direction == .left {
+            print("다음달")
+        }
+        
+        if sender.direction == .right {
+            print("지난달")
+        }
     }
 }
 
@@ -135,7 +156,7 @@ extension DTCalendar: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension DTCalendar: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 1 {        
+        if indexPath.section == 1 {
             viewModel.selectedDay(index: indexPath.row)
         }
     }

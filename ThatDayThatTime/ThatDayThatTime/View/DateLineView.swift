@@ -27,7 +27,7 @@ final class DateLineView: UIView {
     
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemBackground
+        label.backgroundColor = .viewBackgroundColor
         label.textAlignment = .center
         label.textColor = .lightGray
         label.isUserInteractionEnabled = false
