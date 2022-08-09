@@ -54,7 +54,7 @@ extension DTCalendarCell {
     private func setConstraintsOfDateLabel() {
         dateLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.height.equalToSuperview().multipliedBy(0.9)
+            $0.height.equalToSuperview().multipliedBy(1)
             $0.width.equalTo(dateLabel.snp.height)
         }
     }

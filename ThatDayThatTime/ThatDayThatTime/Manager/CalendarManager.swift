@@ -26,13 +26,20 @@ final class CalendarManager {
     }
     
     func updateCalendar() {
+        calendarDate = calendar.date(byAdding: DateComponents(day: -8), to: calendarDate) ?? Date()
         updateDays()
     }
     
-    private func createCalendarCellComponents(day: String, color: UIColor) -> CalendarCellComponents {
+    private func createCalendarCellComponents(color: UIColor, date: Date) -> CalendarCellComponents {
+        let date = calendar.dateComponents([.year, .month, .day, .weekday], from: calendarDate)
+                          
         let components = CalendarCellComponents(
-            day: day,
-            dayColor: color
+            year: String(date.year ?? 2022),
+            month: String(date.month ?? 1),
+            day: String(date.day ?? 1),
+            weekday: (date.year ?? 1) - 1,
+            dayColor: color,
+            date: date.date ?? Date()
         )
         
         return components
@@ -42,26 +49,27 @@ final class CalendarManager {
         days.removeAll()
         let startDayOfTheWeek = startDateOfMonth(from: calendarDate)
         let currentEndDate = endDate(from: calendarDate)
-        let beforeMonth = calendar.date(byAdding: DateComponents(month: -1), to: calendarDate) ?? Date()
-        let beforeMonthEndDate = endDate(from: beforeMonth)
-        var beforeDayOffset = 0 - startDayOfTheWeek + 1
+        var beforeDayOffset = 0 - startDayOfTheWeek
         var afterDayOffset = 1
+        calendarDate = calendar.date(byAdding: DateComponents(day: beforeDayOffset), to: calendarDate) ?? Date()
         
         for i in 0..<49 {
             if i < startDayOfTheWeek {
-                let day = String(beforeMonthEndDate + beforeDayOffset)
-                days.append(createCalendarCellComponents(day: day, color: .lightGray))
+                days.append(createCalendarCellComponents(color: .lightGray, date: calendarDate))
                 beforeDayOffset += 1
+                calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
                 continue
             }
             if i > currentEndDate + startDayOfTheWeek - 1 {
-                days.append(createCalendarCellComponents(day: String(afterDayOffset), color: .lightGray))
+                days.append(createCalendarCellComponents(color: .lightGray, date: calendarDate))
                 afterDayOffset += 1
+                calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
                 continue
             }
-            let day = String(i - startDayOfTheWeek + 1)
-            days.append(createCalendarCellComponents(day: day, color: .darkGray))
+            days.append(createCalendarCellComponents(color: .darkGray, date: calendarDate))
+            calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
         }
+        
         updateCalendarDone.send()
     }
     

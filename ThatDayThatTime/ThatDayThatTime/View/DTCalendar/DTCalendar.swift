@@ -19,7 +19,7 @@ final class DTCalendar: UIView {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(DTCalendarCell.self, forCellWithReuseIdentifier: DTCalendarCell.identifier)
-        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        collectionView.contentInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         
         return collectionView
     }()
