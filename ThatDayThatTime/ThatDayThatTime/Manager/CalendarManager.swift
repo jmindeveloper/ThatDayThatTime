@@ -14,8 +14,7 @@ final class CalendarManager {
     
     let calendar = Calendar.current
     var calendarDate = Date()
-    var days = [CalendarCellComponents]()
-    let updateCalendarDone = PassthroughSubject<Void, Never>()
+    let sendNewDay = PassthroughSubject<CalendarCellComponents, Never>()
     
     private func startDateOfMonth(from date: Date) -> Int {
         return calendar.component(.weekday, from: date) - 1
@@ -45,7 +44,6 @@ final class CalendarManager {
     }
     
     private func updateDays() {
-        days.removeAll()
         let startDayOfTheWeek = startDateOfMonth(from: calendarDate)
         let currentEndDate = endDate(from: calendarDate)
         var beforeDayOffset = 0 - startDayOfTheWeek
@@ -54,22 +52,20 @@ final class CalendarManager {
         
         for i in 0..<49 {
             if i < startDayOfTheWeek {
-                days.append(createCalendarCellComponents(color: .lightGray, date: calendarDate))
+                sendNewDay.send(createCalendarCellComponents(color: .lightGray, date: calendarDate))
                 beforeDayOffset += 1
                 calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
                 continue
             }
             if i > currentEndDate + startDayOfTheWeek - 1 {
-                days.append(createCalendarCellComponents(color: .lightGray, date: calendarDate))
+                sendNewDay.send(createCalendarCellComponents(color: .lightGray, date: calendarDate))
                 afterDayOffset += 1
                 calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
                 continue
             }
-            days.append(createCalendarCellComponents(color: .darkGray, date: calendarDate))
+            sendNewDay.send(createCalendarCellComponents(color: .darkGray, date: calendarDate))
             calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
         }
-        
-        updateCalendarDone.send()
     }
     
     func minusMonth() {

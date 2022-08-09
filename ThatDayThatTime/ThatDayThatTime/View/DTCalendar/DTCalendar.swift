@@ -33,8 +33,8 @@ final class DTCalendar: UIView {
     }()
     
     // MARK: - Properties
-    let week = ["일", "월", "화", "수", "목", "금", "토"]
-    let calendarManager = CalendarManager()
+//    let calendarManager = CalendarManager()
+    let viewModel = DTCalendarViewModel()
     private var subscriptios = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
@@ -43,7 +43,7 @@ final class DTCalendar: UIView {
         configureSubViews()
         setConstraintsOfCalendarCollectionView()
         setConstraintsOfBottomLine()
-        calendarManager.updateCalendar()
+        viewModel.updateCalendar()
         bindingCalendarManager()
     }
     
@@ -66,7 +66,7 @@ extension DTCalendar {
 // MARK: - Binding
 extension DTCalendar {
     private func bindingCalendarManager() {
-        calendarManager.updateCalendarDone
+        viewModel.updateCalendarDone
             .sink { [weak self] in
                 self?.calendarCollectionView.reloadSections(IndexSet(1...1))
             }.store(in: &subscriptios)
@@ -97,8 +97,6 @@ extension DTCalendar {
     }
 }
 
-
-
 extension DTCalendar: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
@@ -117,16 +115,12 @@ extension DTCalendar: UICollectionViewDataSource {
         
         switch indexPath.section {
         case 0:
-            cell.configureCell(weak: week[indexPath.row])
+            cell.configureCell(weak: viewModel.week[indexPath.row])
         case 1:
-            let day = calendarManager.days[indexPath.row]
-            if day.date == String.getDate(date: Date()) {
-                calendarManager.days[indexPath.row].dayColor = .red
-            }
-            cell.configureCell(day: calendarManager.days[indexPath.row])
+            cell.configureCell(day: viewModel.days[indexPath.row])
         default: break
         }
-        
+
         return cell
     }
 }
