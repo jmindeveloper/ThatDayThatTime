@@ -12,8 +12,9 @@ import UIKit
 
 final class CalendarManager {
     
-    let calendar = Calendar.current
-    var calendarDate = Date()
+    private let calendar = Calendar.current
+    private var calendarDate = Date()
+    private var currentCalendarMonthDate = Date()
     let sendNewDay = PassthroughSubject<CalendarCellComponents, Never>()
     
     private func startDateOfMonth(from date: Date) -> Int {
@@ -27,6 +28,7 @@ final class CalendarManager {
     func updateCalendar() {
         let date = calendar.component(.day, from: calendarDate) - 1
         calendarDate = calendar.date(byAdding: DateComponents(day: -date), to: calendarDate) ?? Date()
+        currentCalendarMonthDate = calendarDate
         updateDays()
     }
     
@@ -51,7 +53,7 @@ final class CalendarManager {
         var afterDayOffset = 1
         calendarDate = calendar.date(byAdding: DateComponents(day: beforeDayOffset), to: calendarDate) ?? Date()
         
-        for i in 0..<49 {
+        for i in 0..<42 {
             if i < startDayOfTheWeek {
                 sendNewDay.send(createCalendarCellComponents(color: .lightGray, date: calendarDate))
                 beforeDayOffset += 1
@@ -70,12 +72,12 @@ final class CalendarManager {
     }
     
     func minusMonth() {
-        calendarDate = calendar.date(byAdding: DateComponents(month: -1), to: calendarDate) ?? Date()
+        calendarDate = calendar.date(byAdding: DateComponents(month: -1), to: currentCalendarMonthDate) ?? Date()
         updateCalendar()
     }
     
     func plusMonth() {
-        calendarDate = calendar.date(byAdding: DateComponents(month: 1), to: calendarDate) ?? Date()
+        calendarDate = calendar.date(byAdding: DateComponents(month: 1), to: currentCalendarMonthDate) ?? Date()
         updateCalendar()
     }
 }

@@ -34,6 +34,14 @@ final class DTCalendarViewModel {
         manager.updateCalendar()
     }
     
+    func updateNextMonth() {
+        manager.plusMonth()
+    }
+    
+    func updateBeforeMonth() {
+        manager.minusMonth()
+    }
+    
     // MARK: - Binding
     func bindingManager() {
         manager.sendNewDay
@@ -47,8 +55,8 @@ final class DTCalendarViewModel {
                 return day
             }
             .collect(daysCount)
-            .sink { days in
-                self.days = days
+            .sink { [weak self] days in
+                self?.days = days
             }.store(in: &subscriptions)
     }
     

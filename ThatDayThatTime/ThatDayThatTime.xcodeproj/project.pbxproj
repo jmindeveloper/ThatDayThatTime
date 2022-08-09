@@ -134,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				0EBD218F28A0D362006F19FE /* CoreData */,
+				0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -145,7 +146,6 @@
 				0EBD219928A0D7CC006F19FE /* DayDiary+CoreDataProperties.swift */,
 				0EBD219E28A0D834006F19FE /* Diary.swift */,
 				0EBD219028A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld */,
-				0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";

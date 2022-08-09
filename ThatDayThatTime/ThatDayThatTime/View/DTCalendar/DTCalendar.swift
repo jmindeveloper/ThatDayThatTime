@@ -72,13 +72,10 @@ extension DTCalendar {
 // MARK: - TargetMethod
 extension DTCalendar {
     @objc private func calendarSwipeGestureHandler(_ sender: UISwipeGestureRecognizer) {
-        print(sender.direction)
         if sender.direction == .left {
-            print("다음달")
-        }
-        
-        if sender.direction == .right {
-            print("지난달")
+            viewModel.updateNextMonth()
+        } else if sender.direction == .right {
+            viewModel.updateBeforeMonth()
         }
     }
 }
