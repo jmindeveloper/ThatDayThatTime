@@ -103,6 +103,7 @@ extension DTCalendar {
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension DTCalendar: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
@@ -131,12 +132,16 @@ extension DTCalendar: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension DTCalendar: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.selectedDay(index: indexPath.row)
+        if indexPath.section == 1 {        
+            viewModel.selectedDay(index: indexPath.row)
+        }
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension DTCalendar: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 3
