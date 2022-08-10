@@ -28,6 +28,16 @@ final class TimeDiaryViewController: UIViewController {
         return calendar
     }()
     
+    private lazy var timeDiaryCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .red
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        return collectionView
+    }()
+    
     // MARK: - Properties
     private var calendarHidden = true
     
@@ -38,6 +48,7 @@ final class TimeDiaryViewController: UIViewController {
         configureSubViews()
         setConstraintsOfDateLineView()
         setConstraintsOfCalendar()
+        setConstraintsOfTimeDiaryCollectionView()
     }
 }
 
@@ -63,7 +74,7 @@ extension TimeDiaryViewController {
 // MARK: - UI
 extension TimeDiaryViewController {
     private func configureSubViews() {
-        [dateLineView, calendar].forEach {
+        [dateLineView, calendar, timeDiaryCollectionView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -85,4 +96,32 @@ extension TimeDiaryViewController {
             $0.height.equalTo(0)
         }
     }
+    
+    private func setConstraintsOfTimeDiaryCollectionView() {
+        timeDiaryCollectionView.snp.makeConstraints {
+            $0.top.equalTo(calendar.snp.bottom).offset(3)
+            $0.horizontalEdges.bottom.equalToSuperview()
+        }
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+extension TimeDiaryViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension TimeDiaryViewController: UICollectionViewDelegate {
+    
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension TimeDiaryViewController: UICollectionViewDelegateFlowLayout {
+    
 }
