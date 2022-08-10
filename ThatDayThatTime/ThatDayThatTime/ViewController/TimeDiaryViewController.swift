@@ -75,7 +75,10 @@ extension TimeDiaryViewController {
     
     private func pushWritingTimeDiaryViewController() {
         let vc = WritingTimeDiaryViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .fullScreen
+        
+        self.present(vc, animated: true)
     }
 }
 
