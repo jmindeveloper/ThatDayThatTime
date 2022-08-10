@@ -29,6 +29,7 @@
 		0EBD219F28A0D834006F19FE /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219E28A0D834006F19FE /* Diary.swift */; };
 		0EBD21A228A0E6C9006F19FE /* TimeDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD21A128A0E6C9006F19FE /* TimeDiaryViewController.swift */; };
 		0EBD21A528A0E809006F19FE /* DateLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD21A428A0E809006F19FE /* DateLineView.swift */; };
+		0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		0EBD219E28A0D834006F19FE /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
 		0EBD21A128A0E6C9006F19FE /* TimeDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryViewController.swift; sourceTree = "<group>"; };
 		0EBD21A428A0E809006F19FE /* DateLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateLineView.swift; sourceTree = "<group>"; };
+		0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingTimeDiaryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				0EBD21A128A0E6C9006F19FE /* TimeDiaryViewController.swift */,
+				0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 			files = (
 				0E8AB4D628A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift in Sources */,
 				0EBD219F28A0D834006F19FE /* Diary.swift in Sources */,
+				0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */,
 				0E20739228A13FA5006FE55D /* CalendarCellComponents.swift in Sources */,
 				0E81DEE328A10F3300A2B7C6 /* DTCalendar.swift in Sources */,
 				0E20739028A12CBF006FE55D /* CalendarManager.swift in Sources */,

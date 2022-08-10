@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import Combine
+import CombineCocoa
 
 final class TimeDiaryViewController: UIViewController {
     
@@ -40,15 +42,40 @@ final class TimeDiaryViewController: UIViewController {
     
     // MARK: - Properties
     private var calendarHidden = true
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor
+        configureNavigation()
         configureSubViews()
         setConstraintsOfDateLineView()
         setConstraintsOfCalendar()
         setConstraintsOfTimeDiaryCollectionView()
+    }
+}
+
+// MARK: - Method
+extension TimeDiaryViewController {
+    private func configureNavigation() {
+        let addTimeDiaryButton = UIBarButtonItem(
+            image: UIImage(systemName: "plus"),
+            style: .plain,
+            target: self,
+            action: nil
+         )
+        addTimeDiaryButton.tapPublisher
+            .sink { [weak self] in
+                self?.pushWritingTimeDiaryViewController()
+            }.store(in: &subscriptions)
+        
+        navigationItem.rightBarButtonItem = addTimeDiaryButton
+    }
+    
+    private func pushWritingTimeDiaryViewController() {
+        let vc = WritingTimeDiaryViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -57,9 +84,6 @@ extension TimeDiaryViewController {
     @objc private func dateLineViewTapped() {
         calendarHidden.toggle()
         calendar.snp.updateConstraints {
-            $0.width.equalToSuperview()
-            $0.top.equalTo(dateLineView.snp.bottom)
-            $0.leading.equalToSuperview()
             $0.height.equalTo(calendarHidden ? 0 : 300)
         }
         
