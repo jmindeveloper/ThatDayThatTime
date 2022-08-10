@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CombineCocoa
 
 final class DTCalendar: UIView {
     
@@ -34,7 +35,7 @@ final class DTCalendar: UIView {
     
     // MARK: - Properties
     let viewModel = DTCalendarViewModel()
-    private var subscriptios = Set<AnyCancellable>()
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
     override init(frame: CGRect) {
@@ -59,24 +60,22 @@ extension DTCalendar {
     }
     
     private func configureCalendarGesture() {
-        let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(calendarSwipeGestureHandler(_:)))
+        let leftSwipeGesture = UISwipeGestureRecognizer()
         leftSwipeGesture.direction = .left
-        let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(calendarSwipeGestureHandler(_:)))
+        leftSwipeGesture.swipePublisher
+            .sink { [weak self] gesture in
+                self?.viewModel.updateNextMonth()
+            }.store(in: &subscriptions)
+        
+        let rightSwipeGesture = UISwipeGestureRecognizer()
         rightSwipeGesture.direction = .right
+        rightSwipeGesture.swipePublisher
+            .sink { [weak self] gesture in
+                self?.viewModel.updateBeforeMonth()
+            }.store(in: &subscriptions)
         
         calendarCollectionView.addGestureRecognizer(leftSwipeGesture)
         calendarCollectionView.addGestureRecognizer(rightSwipeGesture)
-    }
-}
-
-// MARK: - TargetMethod
-extension DTCalendar {
-    @objc private func calendarSwipeGestureHandler(_ sender: UISwipeGestureRecognizer) {
-        if sender.direction == .left {
-            viewModel.updateNextMonth()
-        } else if sender.direction == .right {
-            viewModel.updateBeforeMonth()
-        }
     }
 }
 
@@ -86,14 +85,14 @@ extension DTCalendar {
         viewModel.updateCalendar
             .sink { [weak self] in
                 self?.calendarCollectionView.reloadData()
-            }.store(in: &subscriptios)
+            }.store(in: &subscriptions)
     }
     
     func bindingSelectedDate(completion: @escaping ((String) -> Void)) {
         viewModel.updateCurrentDate
             .sink { date in
                 completion(date)
-            }.store(in: &subscriptios)
+            }.store(in: &subscriptions)
     }
 }
 
