@@ -84,6 +84,7 @@ extension TimeDiaryViewController {
     
     private func setConstraintsOfDateLineView() {
         dateLineView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
             $0.width.equalToSuperview()
             $0.height.equalTo(30)
             $0.top.equalTo(view.safeAreaLayoutGuide)
