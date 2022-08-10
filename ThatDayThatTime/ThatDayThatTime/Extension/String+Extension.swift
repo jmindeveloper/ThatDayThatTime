@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    static func getDate(date: Date) -> String {
+    static func getDate(date: Date = Date()) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy년 M월 d일 EEEE"
         formatter.locale = Locale(identifier: "ko_KR")

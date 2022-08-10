@@ -28,6 +28,16 @@ final class TimeDiaryViewController: UIViewController {
         return calendar
     }()
     
+    private lazy var timeDiaryCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: timeDiaryCollectionViewLayout())
+        collectionView.backgroundColor = .viewBackgroundColor
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(TimeDiaryCollectionViewCell.self, forCellWithReuseIdentifier: TimeDiaryCollectionViewCell.identifier)
+        
+        return collectionView
+    }()
+    
     // MARK: - Properties
     private var calendarHidden = true
     
@@ -38,6 +48,7 @@ final class TimeDiaryViewController: UIViewController {
         configureSubViews()
         setConstraintsOfDateLineView()
         setConstraintsOfCalendar()
+        setConstraintsOfTimeDiaryCollectionView()
     }
 }
 
@@ -63,7 +74,7 @@ extension TimeDiaryViewController {
 // MARK: - UI
 extension TimeDiaryViewController {
     private func configureSubViews() {
-        [dateLineView, calendar].forEach {
+        [dateLineView, calendar, timeDiaryCollectionView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -71,6 +82,7 @@ extension TimeDiaryViewController {
     
     private func setConstraintsOfDateLineView() {
         dateLineView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
             $0.width.equalToSuperview()
             $0.height.equalTo(30)
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -85,4 +97,45 @@ extension TimeDiaryViewController {
             $0.height.equalTo(0)
         }
     }
+    
+    private func setConstraintsOfTimeDiaryCollectionView() {
+        timeDiaryCollectionView.snp.makeConstraints {
+            $0.top.equalTo(calendar.snp.bottom).offset(3)
+            $0.horizontalEdges.bottom.equalToSuperview()
+        }
+    }
+}
+
+// MARK: - CompositionalLayout
+extension TimeDiaryViewController {
+    private func timeDiaryCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
+        
+        return UICollectionViewCompositionalLayout(section: section)
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+extension TimeDiaryViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeDiaryCollectionViewCell.identifier, for: indexPath) as? TimeDiaryCollectionViewCell else { return UICollectionViewCell() }
+        
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension TimeDiaryViewController: UICollectionViewDelegate {
+    
 }

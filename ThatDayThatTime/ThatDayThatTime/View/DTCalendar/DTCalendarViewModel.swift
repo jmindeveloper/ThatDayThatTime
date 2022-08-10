@@ -19,7 +19,7 @@ final class DTCalendarViewModel {
         }
     }
     let updateCalendar = PassthroughSubject<Void, Never>()
-    let updateCurrentDate = CurrentValueSubject<String, Never>(String.getDate(date: Date()))
+    let updateCurrentDate = CurrentValueSubject<String, Never>(String.getDate())
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -43,7 +43,7 @@ final class DTCalendarViewModel {
     }
     
     func mapCalendarCellComponentIsToday(_ component: CalendarCellComponents) -> CalendarCellComponents {
-        if component.date == String.getDate(date: Date()) {
+        if component.date == String.getDate() {
             var day = component
             day.dayColor = .red
             return day
