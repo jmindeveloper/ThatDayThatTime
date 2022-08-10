@@ -113,6 +113,7 @@ extension DTCalendar {
     
     private func setConstraintsOfBottomLine() {
         bottomLine.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
             $0.bottom.equalTo(calendarCollectionView.snp.bottom)
             $0.width.equalToSuperview()
             $0.height.equalTo(1)
