@@ -136,6 +136,6 @@ extension TimeDiaryViewController: UICollectionViewDelegateFlowLayout {
         let inset = collectionView.contentInset
         let width = collectionView.frame.width - inset.right - inset.right
         
-        return CGSize(width: width, height: 100)
+        return CGSize(width: width, height: 200)
     }
 }
