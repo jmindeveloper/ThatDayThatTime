@@ -32,7 +32,7 @@ final class CalendarManager {
         updateDays()
     }
     
-    private func createCalendarCellComponents(color: UIColor, date: Date) -> CalendarCellComponents {
+    private func createCalendarCellComponents(color: UIColor, date: Date, isCurrentMonth: Bool) -> CalendarCellComponents {
         let date = calendar.dateComponents([.year, .month, .day, .weekday], from: calendarDate)
                           
         let components = CalendarCellComponents(
@@ -40,7 +40,8 @@ final class CalendarManager {
             month: String(date.month ?? 1),
             day: String(date.day ?? 1),
             week: (date.weekday ?? 1) - 1,
-            dayColor: color
+            dayColor: color,
+            isCurrentMonth: isCurrentMonth
         )
         
         return components
@@ -55,18 +56,18 @@ final class CalendarManager {
         
         for i in 0..<42 {
             if i < startDayOfTheWeek {
-                sendNewDay.send(createCalendarCellComponents(color: .lightGray, date: calendarDate))
+                sendNewDay.send(createCalendarCellComponents(color: .lightGray, date: calendarDate, isCurrentMonth: false))
                 beforeDayOffset += 1
                 calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
                 continue
             }
             if i > currentEndDate + startDayOfTheWeek - 1 {
-                sendNewDay.send(createCalendarCellComponents(color: .lightGray, date: calendarDate))
+                sendNewDay.send(createCalendarCellComponents(color: .lightGray, date: calendarDate, isCurrentMonth: false))
                 afterDayOffset += 1
                 calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
                 continue
             }
-            sendNewDay.send(createCalendarCellComponents(color: .darkGray, date: calendarDate))
+            sendNewDay.send(createCalendarCellComponents(color: .darkGray, date: calendarDate, isCurrentMonth: true))
             calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
         }
     }

@@ -42,18 +42,33 @@ final class DTCalendarViewModel {
         manager.minusMonth()
     }
     
+    func mapCalendarCellComponentIsToday(_ component: CalendarCellComponents) -> CalendarCellComponents {
+        if component.date == String.getDate(date: Date()) {
+            var day = component
+            day.dayColor = .red
+            return day
+        }
+        return component
+    }
+    
+    func mapCalendarCellComponentIsSelected(_ component: CalendarCellComponents) -> CalendarCellComponents {
+        var day = updateCurrentDate.value.components(separatedBy: " ")[2]
+        day.removeLast()
+        
+        if component.day == day, component.isCurrentMonth {
+            var day = component
+            day.cellColor = .daySelectedColor
+            updateCurrentDate.send(component.date)
+            return day
+        }
+        return component
+    }
+    
     // MARK: - Binding
     func bindingManager() {
         manager.sendNewDay
-            .map { day -> CalendarCellComponents in
-                if day.date == String.getDate(date: Date()) {
-                    var day = day
-                    day.dayColor = .red
-                    day.cellColor = .daySelectedColor
-                    return day
-                }
-                return day
-            }
+            .map(mapCalendarCellComponentIsToday(_:))
+            .map(mapCalendarCellComponentIsSelected(_:))
             .collect(daysCount)
             .sink { [weak self] days in
                 self?.days = days

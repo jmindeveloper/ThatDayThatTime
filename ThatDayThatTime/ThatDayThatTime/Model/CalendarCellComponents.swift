@@ -38,6 +38,7 @@ struct CalendarCellComponents {
     let week: Int
     var dayColor: UIColor?
     var cellColor: UIColor? = .clear
+    var isCurrentMonth: Bool
     
     var weekday: String {
         WeekDay.init(rawValue: week)?.weekday ?? "월요일"
