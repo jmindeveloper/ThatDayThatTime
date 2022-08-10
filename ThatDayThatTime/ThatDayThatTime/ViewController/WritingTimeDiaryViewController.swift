@@ -216,15 +216,17 @@ extension WritingTimeDiaryViewController {
         photoButton.snp.remakeConstraints {
             $0.bottom.equalToSuperview().offset(-5 - keyboardHeight)
             $0.leading.equalToSuperview().offset(15)
+            $0.size.equalTo(35)
         }
         
         saveButton.snp.remakeConstraints {
             $0.bottom.equalToSuperview().offset(-5 - keyboardHeight)
             $0.trailing.equalToSuperview().offset(-15)
+            $0.size.equalTo(35)
         }
         
         diaryStringCountLabel.snp.remakeConstraints {
-            $0.bottom.equalToSuperview().offset(-5 - keyboardHeight)
+            $0.centerY.equalTo(saveButton.snp.centerY)
             $0.centerX.equalToSuperview()
         }
     }
