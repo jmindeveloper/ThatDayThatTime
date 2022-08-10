@@ -88,7 +88,7 @@ extension TimeDiaryCollectionViewCell {
     
     private func setConstraintsOfConnectionCircle() {
         connectionCircle.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(30)
+            $0.leading.equalToSuperview().offset(20)
             $0.top.equalToSuperview().offset(15)
             $0.size.equalTo(10)
         }
@@ -116,7 +116,7 @@ extension TimeDiaryCollectionViewCell {
     private func setConstraintsOfTimeLabel() {
         timeLabel.snp.makeConstraints {
             $0.leading.equalTo(connectionCircle.snp.trailing).offset(15)
-            $0.trailing.equalToSuperview().offset(-15)
+            $0.trailing.equalToSuperview().offset(-10)
             $0.centerY.equalTo(connectionCircle.snp.centerY)
         }
     }

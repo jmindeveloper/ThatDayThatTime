@@ -29,12 +29,10 @@ final class TimeDiaryViewController: UIViewController {
     }()
     
     private lazy var timeDiaryCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: timeDiaryCollectionViewLayout())
         collectionView.backgroundColor = .viewBackgroundColor
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         collectionView.register(TimeDiaryCollectionViewCell.self, forCellWithReuseIdentifier: TimeDiaryCollectionViewCell.identifier)
         
         return collectionView
@@ -108,6 +106,22 @@ extension TimeDiaryViewController {
     }
 }
 
+// MARK: - CompositionalLayout
+extension TimeDiaryViewController {
+    private func timeDiaryCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
+        
+        return UICollectionViewCompositionalLayout(section: section)
+    }
+}
+
 // MARK: - UICollectionViewDataSource
 extension TimeDiaryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -124,18 +138,4 @@ extension TimeDiaryViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension TimeDiaryViewController: UICollectionViewDelegate {
     
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension TimeDiaryViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let inset = collectionView.contentInset
-        let width = collectionView.frame.width - inset.right - inset.right
-        
-        return CGSize(width: width, height: 200)
-    }
 }
