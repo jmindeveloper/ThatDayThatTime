@@ -13,7 +13,6 @@ extension UIAlertController {
         style: UIAlertAction.Style,
         handler: (() -> Void)? = nil
     ) -> UIAlertController {
-        
         let action = UIAlertAction(title: actionTytle, style: style) { _ in
             handler?()
         }

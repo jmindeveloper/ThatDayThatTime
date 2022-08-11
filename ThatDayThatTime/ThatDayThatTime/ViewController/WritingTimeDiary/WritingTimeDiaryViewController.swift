@@ -122,7 +122,7 @@ extension WritingTimeDiaryViewController {
          )
         addTimeDiaryButton.tapPublisher
             .sink { [weak self] in
-                self?.dismiss(animated: true)
+                self?.presentDismissAlert()
             }.store(in: &subscriptions)
         
         navigationBar.topItem?.rightBarButtonItem = addTimeDiaryButton
@@ -135,18 +135,6 @@ extension WritingTimeDiaryViewController {
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
-    }
-    
-    private func presentImagePickerActionSheet() {
-        let alert = AlertManager(style: .actionSheet).createAlert()
-            .addAction(actionTytle: "사진앨범", style: .default) { [weak self] in
-                self?.openAlbum()
-            }
-            .addAction(actionTytle: "카메라", style: .default) { [weak self] in
-                self?.openCamera()
-            }
-            .addAction(actionTytle: "취소", style: .cancel)
-        self.present(alert, animated: true)
     }
     
     private func openCamera() {
@@ -208,8 +196,13 @@ extension WritingTimeDiaryViewController {
     private func bindingViewProperties() {
         saveButton.tapPublisher
             .sink { [weak self] in
-                self?.viewModel.saveTimeDiary {
-                    self?.dismiss(animated: true)
+                guard let self = self else { return }
+                if self.viewModel.diary.isEmpty {
+                    self.presentCantSaveAlert()
+                } else {
+                    self.viewModel.saveTimeDiary {
+                        self.dismiss(animated: true)
+                    }
                 }
             }.store(in: &subscriptions)
         
@@ -244,6 +237,37 @@ extension WritingTimeDiaryViewController {
     }
 }
 
+// MARK: - Alert
+extension WritingTimeDiaryViewController {
+    private func presentImagePickerActionSheet() {
+        let alert = AlertManager(style: .actionSheet).createAlert()
+            .addAction(actionTytle: "사진앨범", style: .default) { [weak self] in
+                self?.openAlbum()
+            }
+            .addAction(actionTytle: "카메라", style: .default) { [weak self] in
+                self?.openCamera()
+            }
+            .addAction(actionTytle: "취소", style: .cancel)
+        self.present(alert, animated: true)
+    }
+    
+    private func presentDismissAlert() {
+        let alert = AlertManager(title: "작성된 내용이 저장이 안됩니다", message: "작성을 종료하겠습니까?")
+            .createAlert()
+            .addAction(actionTytle: "확인", style: .default) { [weak self] in
+                self?.dismiss(animated: true)
+            }
+            .addAction(actionTytle: "취소", style: .cancel)
+        self.present(alert, animated: true)
+    }
+    
+    private func presentCantSaveAlert() {
+        let alert = AlertManager(message: "일기를 작성해주세요")
+            .createAlert()
+            .addAction(actionTytle: "확인", style: .default)
+        self.present(alert, animated: true)
+    }
+}
 
 // MARK: - UI
 extension WritingTimeDiaryViewController {
