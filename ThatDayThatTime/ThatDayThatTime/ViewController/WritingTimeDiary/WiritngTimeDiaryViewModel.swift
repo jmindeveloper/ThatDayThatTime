@@ -14,6 +14,7 @@ final class WritingTimeDiaryViewModel {
     let diary: String
     var image: CurrentValueSubject<UIImage?, Never>
     var date: CurrentValueSubject<String, Never>
+    private let coreDataManager = CoreDataManager()
     
     init(timeDiary: TimeDiary?) {
         self.time = CurrentValueSubject<String, Never>(timeDiary?.time ?? String.getTime())
@@ -22,5 +23,14 @@ final class WritingTimeDiaryViewModel {
         self.date = CurrentValueSubject<String, Never>(timeDiary?.date ?? String.getDate())
     }
     
-    
+    func saveTimeDiary() {
+        let newDiary = DiaryEntity(
+            content: diary,
+            date: date.value,
+            id: UUID().uuidString,
+            image: image.value?.pngData(),
+            time: time.value
+        )
+        coreDataManager.saveDiary(type: .time, diary: newDiary)
+    }
 }
