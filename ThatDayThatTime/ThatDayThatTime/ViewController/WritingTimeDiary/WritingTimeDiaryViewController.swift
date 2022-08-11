@@ -81,6 +81,7 @@ final class WritingTimeDiaryViewController: UIViewController {
     // MARK: - Properteis
     private var subscriptions = Set<AnyCancellable>()
     private let viewModel = WritingTimeDiaryViewModel(timeDiary: nil)
+    private var isTimeChangeMode = false
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -102,6 +103,7 @@ final class WritingTimeDiaryViewController: UIViewController {
         bindingViewProperties()
         
         configureImageViewGesture()
+        configureTimeLabelGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,7 +121,7 @@ extension WritingTimeDiaryViewController {
             style: .plain,
             target: self,
             action: nil
-         )
+        )
         addTimeDiaryButton.tapPublisher
             .sink { [weak self] in
                 self?.presentDismissAlert()
@@ -135,6 +137,30 @@ extension WritingTimeDiaryViewController {
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
+    }
+    
+    private func keyboardTimePickerMode(isTimeChange: Bool) {
+        diaryTextView.resignFirstResponder()
+        
+        if isTimeChange {
+            let picker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 400))
+            
+            if #available(iOS 13.4, *) {
+                picker.preferredDatePickerStyle = .wheels
+            }
+            picker.datePickerMode = .time
+            picker.locale = Locale(identifier: "ko_KR")
+            
+            picker.datePublisher
+                .sink { [weak self] date in
+                    self?.viewModel.time.send(String.getTime(date: date))
+                }.store(in: &subscriptions)
+            
+            diaryTextView.inputView = picker
+        } else {
+            diaryTextView.inputView = nil
+        }
+        diaryTextView.becomeFirstResponder()
     }
     
     private func openCamera() {
@@ -234,6 +260,19 @@ extension WritingTimeDiaryViewController {
         
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(tapGesture)
+    }
+    
+    private func configureTimeLabelGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        tapGesture.tapPublisher
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.isTimeChangeMode.toggle()
+                self.keyboardTimePickerMode(isTimeChange: self.isTimeChangeMode)
+            }.store(in: &subscriptions)
+        
+        timeLabel.isUserInteractionEnabled = true
+        timeLabel.addGestureRecognizer(tapGesture)
     }
 }
 
