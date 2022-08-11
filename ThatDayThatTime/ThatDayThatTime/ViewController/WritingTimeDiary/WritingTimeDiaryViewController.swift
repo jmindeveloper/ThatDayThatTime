@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 import CombineCocoa
+import PhotosUI
 
 final class WritingTimeDiaryViewController: UIViewController {
     
@@ -48,7 +49,6 @@ final class WritingTimeDiaryViewController: UIViewController {
         let textView = UITextView()
         textView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
         textView.font = .systemFont(ofSize: 17)
-        textView.becomeFirstResponder()
         textView.backgroundColor = .viewBackgroundColor
         textView.configure()
         
@@ -82,6 +82,7 @@ final class WritingTimeDiaryViewController: UIViewController {
     private var subscriptions = Set<AnyCancellable>()
     private let viewModel = WritingTimeDiaryViewModel(timeDiary: nil)
     
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor
@@ -99,6 +100,11 @@ final class WritingTimeDiaryViewController: UIViewController {
         diaryTextView.text = viewModel.diary
         bindingViewModel()
         bindingViewProperties()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        diaryTextView.becomeFirstResponder()
     }
     
 }
@@ -128,6 +134,43 @@ extension WritingTimeDiaryViewController {
             object: nil
         )
     }
+    
+    private func presentImagePickerActionSheet() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let album = UIAlertAction(title: "사진앨범", style: .default) { [weak self] _ in
+            self?.openAlbum()
+        }
+        let camera = UIAlertAction(title: "카메라", style: .default) { [weak self] _ in
+            self?.openCamera()
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(album)
+        alert.addAction(camera)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true)
+    }
+    
+    private func openCamera() {
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        present(picker, animated: true)
+    }
+    
+    private func openAlbum() {
+        if #available(iOS 14, *) {
+            var configuration = PHPickerConfiguration()
+            configuration.selectionLimit = 1
+            configuration.filter = .images
+            let picker = PHPickerViewController(configuration: configuration)
+            picker.delegate = viewModel
+            present(picker, animated: true)
+        } else {
+            let picker = UIImagePickerController()
+            picker.sourceType = .photoLibrary
+            picker.delegate = viewModel
+            present(picker, animated: true)
+        }
+    }
 }
 
 // MARK: - TargetMethod
@@ -153,6 +196,9 @@ extension WritingTimeDiaryViewController {
         
         viewModel.image.sink { [weak self] image in
             self?.imageView.image = image
+            self?.imageView.snp.updateConstraints {
+                $0.height.equalTo(self?.imageView.image == nil ? 0 : 60)
+            }
         }.store(in: &subscriptions)
         
         viewModel.date.sink { [weak self] date in
@@ -166,6 +212,11 @@ extension WritingTimeDiaryViewController {
                 self?.viewModel.saveTimeDiary {
                     self?.dismiss(animated: true)
                 }
+            }.store(in: &subscriptions)
+        
+        photoButton.tapPublisher
+            .sink { [weak self] in
+                self?.presentImagePickerActionSheet()
             }.store(in: &subscriptions)
         
         diaryTextView.textPublisher
