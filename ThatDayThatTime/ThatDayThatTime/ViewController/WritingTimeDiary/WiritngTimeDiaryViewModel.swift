@@ -11,7 +11,7 @@ import Combine
 final class WritingTimeDiaryViewModel {
     
     var time: CurrentValueSubject<String, Never>
-    let diary: String
+    var diary: String
     var image: CurrentValueSubject<UIImage?, Never>
     var date: CurrentValueSubject<String, Never>
     private let coreDataManager = CoreDataManager()
@@ -23,7 +23,7 @@ final class WritingTimeDiaryViewModel {
         self.date = CurrentValueSubject<String, Never>(timeDiary?.date ?? String.getDate())
     }
     
-    func saveTimeDiary() {
+    func saveTimeDiary(completion: @escaping () -> Void) {
         let newDiary = DiaryEntity(
             content: diary,
             date: date.value,
@@ -32,5 +32,10 @@ final class WritingTimeDiaryViewModel {
             time: time.value
         )
         coreDataManager.saveDiary(type: .time, diary: newDiary)
+        completion()
+    }
+    
+    func getDiaryStringCount() -> Int {
+        return diary.count
     }
 }

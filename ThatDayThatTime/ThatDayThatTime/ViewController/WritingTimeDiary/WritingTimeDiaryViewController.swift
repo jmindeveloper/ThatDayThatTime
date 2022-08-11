@@ -22,7 +22,6 @@ final class WritingTimeDiaryViewController: UIViewController {
     
     private let dateLineView: DateLineView = {
         let dateLineView = DateLineView()
-        dateLineView.configureDateLabel(date: "2022년 8월 10일 수요일")
         
         return dateLineView
     }()
@@ -39,7 +38,6 @@ final class WritingTimeDiaryViewController: UIViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.fill")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         
@@ -60,7 +58,6 @@ final class WritingTimeDiaryViewController: UIViewController {
     private let diaryStringCountLabel: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
-        label.text = "0/300"
         
         return label
     }()
@@ -101,6 +98,7 @@ final class WritingTimeDiaryViewController: UIViewController {
         
         diaryTextView.text = viewModel.diary
         bindingViewModel()
+        bindingViewProperties()
     }
     
 }
@@ -160,6 +158,22 @@ extension WritingTimeDiaryViewController {
         viewModel.date.sink { [weak self] date in
             self?.dateLineView.configureDateLabel(date: date)
         }.store(in: &subscriptions)
+    }
+    
+    private func bindingViewProperties() {
+        saveButton.tapPublisher
+            .sink { [weak self] in
+                self?.viewModel.saveTimeDiary {
+                    self?.dismiss(animated: true)
+                }
+            }.store(in: &subscriptions)
+        
+        diaryTextView.textPublisher
+            .sink { [weak self] diary in
+                self?.viewModel.diary = diary ?? ""
+                let diaryStringCount = self?.viewModel.getDiaryStringCount() ?? 0
+                self?.diaryStringCountLabel.text = "\(diaryStringCount)/300"
+            }.store(in: &subscriptions)
     }
 }
 
