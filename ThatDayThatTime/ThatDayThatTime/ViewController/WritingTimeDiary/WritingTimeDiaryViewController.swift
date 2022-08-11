@@ -83,6 +83,7 @@ final class WritingTimeDiaryViewController: UIViewController {
     
     // MARK: - Properteis
     private var subscriptions = Set<AnyCancellable>()
+    private let viewModel = WritingTimeDiaryViewModel(timeDiary: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +98,9 @@ final class WritingTimeDiaryViewController: UIViewController {
         setConstraintsOfDiaryTextView()
         setConstraintsOfDiaryStringCountLabel()
         keyboardObserve()
+        
+        diaryTextView.text = viewModel.diary
+        bindingViewModel()
     }
     
 }
@@ -138,6 +142,24 @@ extension WritingTimeDiaryViewController {
         }
         
         updateBottomButtonsConstraints(keyboardHeight)
+    }
+}
+
+// MARK: - Binding
+extension WritingTimeDiaryViewController {
+    private func bindingViewModel() {
+        viewModel.time
+            .sink { [weak self] time in
+                self?.timeLabel.text = time
+            }.store(in: &subscriptions)
+        
+        viewModel.image.sink { [weak self] image in
+            self?.imageView.image = image
+        }.store(in: &subscriptions)
+        
+        viewModel.date.sink { [weak self] date in
+            self?.dateLineView.configureDateLabel(date: date)
+        }.store(in: &subscriptions)
     }
 }
 

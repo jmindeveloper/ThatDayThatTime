@@ -19,6 +19,8 @@
 		0E81DEE328A10F3300A2B7C6 /* DTCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81DEE228A10F3300A2B7C6 /* DTCalendar.swift */; };
 		0E81DEE728A1117A00A2B7C6 /* DTCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81DEE628A1117A00A2B7C6 /* DTCalendarCell.swift */; };
 		0E8AB4D628A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8AB4D528A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift */; };
+		0E9BE57228A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57128A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift */; };
+		0E9BE57428A4CBBB0096A1F5 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57328A4CBBB0096A1F5 /* UIImage+Extension.swift */; };
 		0EBD218328A0D296006F19FE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218228A0D296006F19FE /* SnapKit */; };
 		0EBD218628A0D2AD006F19FE /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218528A0D2AD006F19FE /* SideMenu */; };
 		0EBD218C28A0D2EF006F19FE /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218B28A0D2EF006F19FE /* CombineCocoa */; };
@@ -48,6 +50,8 @@
 		0E81DEE228A10F3300A2B7C6 /* DTCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendar.swift; sourceTree = "<group>"; };
 		0E81DEE628A1117A00A2B7C6 /* DTCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendarCell.swift; sourceTree = "<group>"; };
 		0E8AB4D528A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryCollectionViewCell.swift; sourceTree = "<group>"; };
+		0E9BE57128A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiritngTimeDiaryViewModel.swift; sourceTree = "<group>"; };
+		0E9BE57328A4CBBB0096A1F5 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		0EBD219128A0D37D006F19FE /* ThatDayThatTime.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ThatDayThatTime.xcdatamodel; sourceTree = "<group>"; };
 		0EBD219428A0D531006F19FE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		0EBD219728A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeDiary+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 				0E81DEDE28A10E6E00A2B7C6 /* String+Extension.swift */,
 				0E3142C528A218CF00149E34 /* UIColor+Extension.swift */,
 				0EFC165128A3C8BB00006AB0 /* UITextView+Extension.swift */,
+				0E9BE57328A4CBBB0096A1F5 /* UIImage+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -120,6 +125,15 @@
 				0E3142C828A24CD300149E34 /* DTCalendarViewModel.swift */,
 			);
 			path = DTCalendar;
+			sourceTree = "<group>";
+		};
+		0E9BE57028A4C99F0096A1F5 /* WritingTimeDiary */ = {
+			isa = PBXGroup;
+			children = (
+				0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */,
+				0E9BE57128A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift */,
+			);
+			path = WritingTimeDiary;
 			sourceTree = "<group>";
 		};
 		0EBD218D28A0D353006F19FE /* Application */ = {
@@ -166,8 +180,8 @@
 		0EBD21A028A0E6B4006F19FE /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0E9BE57028A4C99F0096A1F5 /* WritingTimeDiary */,
 				0EBD21A128A0E6C9006F19FE /* TimeDiaryViewController.swift */,
-				0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -268,6 +282,7 @@
 				0E20739228A13FA5006FE55D /* CalendarCellComponents.swift in Sources */,
 				0E81DEE328A10F3300A2B7C6 /* DTCalendar.swift in Sources */,
 				0E20739028A12CBF006FE55D /* CalendarManager.swift in Sources */,
+				0E9BE57228A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift in Sources */,
 				0EFC165228A3C8BB00006AB0 /* UITextView+Extension.swift in Sources */,
 				0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */,
 				0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */,
@@ -276,6 +291,7 @@
 				0EBD219B28A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift in Sources */,
 				0E3142C928A24CD300149E34 /* DTCalendarViewModel.swift in Sources */,
 				0EBD21A528A0E809006F19FE /* DateLineView.swift in Sources */,
+				0E9BE57428A4CBBB0096A1F5 /* UIImage+Extension.swift in Sources */,
 				0EBD219528A0D531006F19FE /* CoreDataManager.swift in Sources */,
 				0E81DEE728A1117A00A2B7C6 /* DTCalendarCell.swift in Sources */,
 				0EBD219228A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld in Sources */,
