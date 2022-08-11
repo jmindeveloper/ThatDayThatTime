@@ -100,6 +100,8 @@ final class WritingTimeDiaryViewController: UIViewController {
         diaryTextView.text = viewModel.diary
         bindingViewModel()
         bindingViewProperties()
+        
+        configureImageViewGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,17 +138,14 @@ extension WritingTimeDiaryViewController {
     }
     
     private func presentImagePickerActionSheet() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let album = UIAlertAction(title: "사진앨범", style: .default) { [weak self] _ in
-            self?.openAlbum()
-        }
-        let camera = UIAlertAction(title: "카메라", style: .default) { [weak self] _ in
-            self?.openCamera()
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        alert.addAction(album)
-        alert.addAction(camera)
-        alert.addAction(cancelAction)
+        let alert = AlertManager(style: .actionSheet).createAlert()
+            .addAction(actionTytle: "사진앨범", style: .default) { [weak self] in
+                self?.openAlbum()
+            }
+            .addAction(actionTytle: "카메라", style: .default) { [weak self] in
+                self?.openCamera()
+            }
+            .addAction(actionTytle: "취소", style: .cancel)
         self.present(alert, animated: true)
     }
     
@@ -227,6 +226,24 @@ extension WritingTimeDiaryViewController {
             }.store(in: &subscriptions)
     }
 }
+
+// MARK: - ConfigureGesture
+extension WritingTimeDiaryViewController {
+    private func configureImageViewGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        
+        tapGesture.tapPublisher
+            .sink { [weak self] _ in
+                let vc = FullPhotoViewController(image: self?.imageView.image)
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
+            }.store(in: &subscriptions)
+        
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGesture)
+    }
+}
+
 
 // MARK: - UI
 extension WritingTimeDiaryViewController {

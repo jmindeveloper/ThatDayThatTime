@@ -14,7 +14,7 @@ final class DTCalendarViewModel {
     let manager = CalendarManager()
     let week = ["일", "월", "화", "수", "목", "금", "토"]
     var days = [CalendarCellComponents]() {
-        willSet {
+        didSet {
             updateCalendar.send()
         }
     }
