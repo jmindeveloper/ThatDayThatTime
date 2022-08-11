@@ -36,22 +36,22 @@ final class CoreDataManager {
         guard let diary = try? persistentContainer.viewContext.fetch(fetchRequest) as? [Diary] else {
             return
         }
-        
+        print(diary.count)
         fetchDiary.send(diary)
     }
     
     /// diary 저장하기
-    func saveDiary(type: DiaryType) {
+    func saveDiary(type: DiaryType, diary: DiaryEntity) {
         guard let entity = NSEntityDescription.entity(forEntityName: type.entityName, in: persistentContainer.viewContext) else { return }
         
-        let diary = NSManagedObject(entity: entity, insertInto: persistentContainer.viewContext)
-        diary.setValue(UUID().uuidString, forKey: "id")
-        diary.setValue("2022.08.08 월요일", forKey: "date")
-        diary.setValue("일기일기일기", forKey: "content")
-        diary.setValue(Data(), forKey: "image")
+        let newDiary = NSManagedObject(entity: entity, insertInto: persistentContainer.viewContext)
+        newDiary.setValue(diary.id, forKey: "id")
+        newDiary.setValue(diary.date, forKey: "date")
+        newDiary.setValue(diary.content, forKey: "content")
+        newDiary.setValue(diary.image, forKey: "image")
         
         if type == .time {
-            diary.setValue("22:55", forKey: "time")
+            newDiary.setValue(diary.time, forKey: "time")
         }
         
         do {
@@ -59,6 +59,7 @@ final class CoreDataManager {
         } catch {
             persistentContainer.viewContext.rollback()
         }
+        getDiary(type: type)
     }
     
     /// diary 삭제하기

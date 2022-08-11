@@ -58,7 +58,27 @@ extension DTCalendar {
     func bottomLineHidden() {
         bottomLine.isHidden.toggle()
     }
+}
+
+// MARK: - Binding
+extension DTCalendar {
+    private func bindingCalendarViewModel() {
+        viewModel.updateCalendar
+            .sink { [weak self] in
+                self?.calendarCollectionView.reloadData()
+            }.store(in: &subscriptions)
+    }
     
+    func bindingSelectedDate(completion: @escaping ((String) -> Void)) {
+        viewModel.updateCurrentDate
+            .sink { date in
+                completion(date)
+            }.store(in: &subscriptions)
+    }
+}
+
+// MARK: - ConfigureGesture
+extension DTCalendar {
     private func configureCalendarGesture() {
         let leftSwipeGesture = UISwipeGestureRecognizer()
         leftSwipeGesture.direction = .left
@@ -76,23 +96,6 @@ extension DTCalendar {
         
         calendarCollectionView.addGestureRecognizer(leftSwipeGesture)
         calendarCollectionView.addGestureRecognizer(rightSwipeGesture)
-    }
-}
-
-// MARK: - Binding
-extension DTCalendar {
-    private func bindingCalendarViewModel() {
-        viewModel.updateCalendar
-            .sink { [weak self] in
-                self?.calendarCollectionView.reloadData()
-            }.store(in: &subscriptions)
-    }
-    
-    func bindingSelectedDate(completion: @escaping ((String) -> Void)) {
-        viewModel.updateCurrentDate
-            .sink { date in
-                completion(date)
-            }.store(in: &subscriptions)
     }
 }
 

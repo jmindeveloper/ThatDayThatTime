@@ -9,6 +9,14 @@ import Foundation
 
 protocol Diary { }
 
+struct DiaryEntity: Diary {
+    var content: String?
+    var date: String?
+    var id: String?
+    var image: Data?
+    var time: String?
+}
+
 enum DiaryType {
     case day, time
     

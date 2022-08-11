@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 import CombineCocoa
+import PhotosUI
 
 final class WritingTimeDiaryViewController: UIViewController {
     
@@ -22,7 +23,6 @@ final class WritingTimeDiaryViewController: UIViewController {
     
     private let dateLineView: DateLineView = {
         let dateLineView = DateLineView()
-        dateLineView.configureDateLabel(date: "2022년 8월 10일 수요일")
         
         return dateLineView
     }()
@@ -39,7 +39,6 @@ final class WritingTimeDiaryViewController: UIViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.fill")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         
@@ -50,7 +49,6 @@ final class WritingTimeDiaryViewController: UIViewController {
         let textView = UITextView()
         textView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
         textView.font = .systemFont(ofSize: 17)
-        textView.becomeFirstResponder()
         textView.backgroundColor = .viewBackgroundColor
         textView.configure()
         
@@ -60,7 +58,6 @@ final class WritingTimeDiaryViewController: UIViewController {
     private let diaryStringCountLabel: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
-        label.text = "0/300"
         
         return label
     }()
@@ -83,7 +80,10 @@ final class WritingTimeDiaryViewController: UIViewController {
     
     // MARK: - Properteis
     private var subscriptions = Set<AnyCancellable>()
+    private let viewModel = WritingTimeDiaryViewModel(timeDiary: nil)
+    private var isTimeChangeMode = false
     
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor
@@ -97,6 +97,18 @@ final class WritingTimeDiaryViewController: UIViewController {
         setConstraintsOfDiaryTextView()
         setConstraintsOfDiaryStringCountLabel()
         keyboardObserve()
+        
+        diaryTextView.text = viewModel.diary
+        bindingViewModel()
+        bindingViewProperties()
+        
+        configureImageViewGesture()
+        configureTimeLabelGesture()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        diaryTextView.becomeFirstResponder()
     }
     
 }
@@ -109,10 +121,10 @@ extension WritingTimeDiaryViewController {
             style: .plain,
             target: self,
             action: nil
-         )
+        )
         addTimeDiaryButton.tapPublisher
             .sink { [weak self] in
-                self?.dismiss(animated: true)
+                self?.presentDismissAlert()
             }.store(in: &subscriptions)
         
         navigationBar.topItem?.rightBarButtonItem = addTimeDiaryButton
@@ -126,6 +138,52 @@ extension WritingTimeDiaryViewController {
             object: nil
         )
     }
+    
+    private func keyboardTimePickerMode(isTimeChange: Bool) {
+        diaryTextView.resignFirstResponder()
+        
+        if isTimeChange {
+            let picker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 400))
+            
+            if #available(iOS 13.4, *) {
+                picker.preferredDatePickerStyle = .wheels
+            }
+            picker.datePickerMode = .time
+            picker.locale = Locale(identifier: "ko_KR")
+            
+            picker.datePublisher
+                .sink { [weak self] date in
+                    self?.viewModel.time.send(String.getTime(date: date))
+                }.store(in: &subscriptions)
+            
+            diaryTextView.inputView = picker
+        } else {
+            diaryTextView.inputView = nil
+        }
+        diaryTextView.becomeFirstResponder()
+    }
+    
+    private func openCamera() {
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        present(picker, animated: true)
+    }
+    
+    private func openAlbum() {
+        if #available(iOS 14, *) {
+            var configuration = PHPickerConfiguration()
+            configuration.selectionLimit = 1
+            configuration.filter = .images
+            let picker = PHPickerViewController(configuration: configuration)
+            picker.delegate = viewModel
+            present(picker, animated: true)
+        } else {
+            let picker = UIImagePickerController()
+            picker.sourceType = .photoLibrary
+            picker.delegate = viewModel
+            present(picker, animated: true)
+        }
+    }
 }
 
 // MARK: - TargetMethod
@@ -138,6 +196,115 @@ extension WritingTimeDiaryViewController {
         }
         
         updateBottomButtonsConstraints(keyboardHeight)
+    }
+}
+
+// MARK: - Binding
+extension WritingTimeDiaryViewController {
+    private func bindingViewModel() {
+        viewModel.time
+            .sink { [weak self] time in
+                self?.timeLabel.text = time
+            }.store(in: &subscriptions)
+        
+        viewModel.image.sink { [weak self] image in
+            self?.imageView.image = image
+            self?.imageView.snp.updateConstraints {
+                $0.height.equalTo(self?.imageView.image == nil ? 0 : 60)
+            }
+        }.store(in: &subscriptions)
+        
+        viewModel.date.sink { [weak self] date in
+            self?.dateLineView.configureDateLabel(date: date)
+        }.store(in: &subscriptions)
+    }
+    
+    private func bindingViewProperties() {
+        saveButton.tapPublisher
+            .sink { [weak self] in
+                guard let self = self else { return }
+                if self.viewModel.diary.isEmpty {
+                    self.presentCantSaveAlert()
+                } else {
+                    self.viewModel.saveTimeDiary {
+                        self.dismiss(animated: true)
+                    }
+                }
+            }.store(in: &subscriptions)
+        
+        photoButton.tapPublisher
+            .sink { [weak self] in
+                self?.presentImagePickerActionSheet()
+            }.store(in: &subscriptions)
+        
+        diaryTextView.textPublisher
+            .sink { [weak self] diary in
+                self?.viewModel.diary = diary ?? ""
+                let diaryStringCount = self?.viewModel.getDiaryStringCount() ?? 0
+                self?.diaryStringCountLabel.text = "\(diaryStringCount)/300"
+            }.store(in: &subscriptions)
+    }
+}
+
+// MARK: - ConfigureGesture
+extension WritingTimeDiaryViewController {
+    private func configureImageViewGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        
+        tapGesture.tapPublisher
+            .sink { [weak self] _ in
+                let vc = FullPhotoViewController(image: self?.imageView.image)
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
+            }.store(in: &subscriptions)
+        
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGesture)
+    }
+    
+    private func configureTimeLabelGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        tapGesture.tapPublisher
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.isTimeChangeMode.toggle()
+                self.keyboardTimePickerMode(isTimeChange: self.isTimeChangeMode)
+            }.store(in: &subscriptions)
+        
+        timeLabel.isUserInteractionEnabled = true
+        timeLabel.addGestureRecognizer(tapGesture)
+    }
+}
+
+// MARK: - Alert
+extension WritingTimeDiaryViewController {
+    private func presentImagePickerActionSheet() {
+        let alert = AlertManager(style: .actionSheet).createAlert()
+            .addAction(actionTytle: "사진앨범", style: .default) { [weak self] in
+                self?.openAlbum()
+            }
+            .addAction(actionTytle: "카메라", style: .default) { [weak self] in
+                self?.openCamera()
+            }
+            .addAction(actionTytle: "취소", style: .cancel)
+        self.present(alert, animated: true)
+    }
+    
+    private func presentDismissAlert() {
+        let alert = AlertManager(title: "작성된 내용이 저장이 안됩니다", message: "작성을 종료하겠습니까?")
+            .createAlert()
+            .addAction(actionTytle: "확인", style: .default) { [weak self] in
+                self?.dismiss(animated: true)
+            }
+            .addAction(actionTytle: "취소", style: .cancel)
+        self.present(alert, animated: true)
+    }
+    
+    private func presentCantSaveAlert() {
+        let alert = AlertManager(message: "일기를 작성해주세요")
+            .createAlert()
+            .addAction(actionTytle: "확인", style: .default)
+        self.present(alert, animated: true)
     }
 }
 
