@@ -104,6 +104,16 @@ extension TimeDiaryViewController {
         
         self.present(vc, animated: true)
     }
+    
+    private func pushWritingTimeDiaryViewController(with diary: TimeDiary) {
+        let writingTimeDiaryViewModel = WritingTimeDiaryViewModel(timeDiary: diary, date: nil)
+        
+        let vc = WritingTimeDiaryViewController(viewModel: writingTimeDiaryViewModel)
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .fullScreen
+        
+        self.present(vc, animated: true)
+    }
 }
 
 // MARK: - ConfigureGesture
@@ -240,5 +250,8 @@ extension TimeDiaryViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension TimeDiaryViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let diary = viewModel.diarys[indexPath.row]
+        pushWritingTimeDiaryViewController(with: diary)
+    }
 }
