@@ -15,6 +15,7 @@ final class CalendarManager {
     private let calendar = Calendar.current
     private var calendarDate = Date()
     private var currentCalendarMonthDate = Date()
+    private var selectedCalendarDate = Date()
     let sendNewDay = PassthroughSubject<CalendarCellComponents, Never>()
     
     private func startDateOfMonth(from date: Date) -> Int {
@@ -77,8 +78,27 @@ final class CalendarManager {
         updateCalendar()
     }
     
+    func minusDay(completion: (String) -> Void) {
+        selectedCalendarDate = calendar.date(byAdding: DateComponents(day: -1), to: selectedCalendarDate) ?? Date()
+        completion(String.getDate(date: selectedCalendarDate))
+    }
+    
     func plusMonth() {
         calendarDate = calendar.date(byAdding: DateComponents(month: 1), to: currentCalendarMonthDate) ?? Date()
+        
         updateCalendar()
+    }
+    
+    func plusDay(completion: (String) -> Void) {
+        selectedCalendarDate = calendar.date(byAdding: DateComponents(day: 1), to: selectedCalendarDate) ?? Date()
+        completion(String.getDate(date: selectedCalendarDate))
+    }
+    
+    func updateSelectedCalendarDate(with selectedDate: String) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 M월 d일 EEEE"
+        formatter.locale = Locale(identifier: "ko_KR")
+        
+        selectedCalendarDate = formatter.date(from: selectedDate) ?? Date()
     }
 }

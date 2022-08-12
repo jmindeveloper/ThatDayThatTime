@@ -7,12 +7,15 @@
 
 import Foundation
 
-protocol Diary { }
+protocol Diary {
+    var id: String { get }
+    var image: Data? { get }
+}
 
 struct DiaryEntity: Diary {
     var content: String?
     var date: String?
-    var id: String?
+    var id: String
     var image: Data?
     var time: String?
 }

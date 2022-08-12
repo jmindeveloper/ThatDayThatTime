@@ -22,7 +22,7 @@ extension TimeDiary {
 
     @NSManaged public var content: String?
     @NSManaged public var date: String?
-    @NSManaged public var id: String?
+    @NSManaged public var id: String
     @NSManaged public var image: Data?
     @NSManaged public var time: String?
 

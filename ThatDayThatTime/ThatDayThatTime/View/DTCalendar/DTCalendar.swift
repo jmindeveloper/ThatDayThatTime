@@ -58,6 +58,14 @@ extension DTCalendar {
     func bottomLineHidden() {
         bottomLine.isHidden.toggle()
     }
+    
+    func updateNextDay() {
+        viewModel.updateNextDay()
+    }
+
+    func updateBeforeDay() {
+        viewModel.updateBeforeDay()
+    }
 }
 
 // MARK: - Binding

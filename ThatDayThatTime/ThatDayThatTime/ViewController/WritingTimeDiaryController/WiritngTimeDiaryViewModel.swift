@@ -11,28 +11,53 @@ import PhotosUI
 
 final class WritingTimeDiaryViewModel: NSObject {
     
+    // MARK: - Properties
     var time: CurrentValueSubject<String, Never>
     var diary: String
     var image: CurrentValueSubject<UIImage?, Never>
     var date: CurrentValueSubject<String, Never>
-    private let coreDataManager = CoreDataManager()
+    private var originalDiary: TimeDiary?
+    private let coreDataManager: CoreDataManager
     
-    init(timeDiary: TimeDiary?) {
+    // MARK: - LifeCycle
+    init(timeDiary: TimeDiary?, date: String?, coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
+        self.originalDiary = timeDiary
         self.time = CurrentValueSubject<String, Never>(timeDiary?.time ?? String.getTime())
         self.diary = timeDiary?.content ?? ""
-        self.image = CurrentValueSubject<UIImage?, Never>(UIImage.getImage(to: timeDiary?.image))
-        self.date = CurrentValueSubject<String, Never>(timeDiary?.date ?? String.getDate())
+        self.image = CurrentValueSubject<UIImage?, Never>(UIImage.getImage(with: timeDiary))
+        self.date = CurrentValueSubject<String, Never>(timeDiary?.date ?? date ?? String.getDate())
     }
     
+    convenience init(timeDiary: TimeDiary, coreDataManager: CoreDataManager) {
+        self.init(timeDiary: timeDiary, date: nil, coreDataManager: coreDataManager)
+    }
+    
+    convenience init(date: String, coreDataManager: CoreDataManager) {
+        self.init(timeDiary: nil, date: date, coreDataManager: coreDataManager)
+    }
+}
+
+// MARK: - Method
+extension WritingTimeDiaryViewModel {
     func saveTimeDiary(completion: @escaping () -> Void) {
+        
         let newDiary = DiaryEntity(
             content: diary,
             date: date.value,
-            id: UUID().uuidString,
+            id: originalDiary?.id ?? UUID().uuidString,
+            // TODO: - JPEGData? pngData?
+            // TODO: - UIImage(data:) 함수는 느린가?
+            // TODO: - 그렇다면 리사이징을 해야하나?
             image: image.value?.pngData(),
             time: time.value
         )
-        coreDataManager.saveDiary(type: .time, diary: newDiary)
+        
+        if let originalDiary = originalDiary {
+            coreDataManager.updateDiary(type: .time, originalDiary: originalDiary, diary: newDiary)
+        } else {
+            coreDataManager.saveDiary(type: .time, diary: newDiary)
+        }
         completion()
     }
     
@@ -41,7 +66,7 @@ final class WritingTimeDiaryViewModel: NSObject {
     }
 }
 
-// MARK: - UIImagePickerControllerDelegate
+// MARK: - UII magePickerControllerDelegate
 extension WritingTimeDiaryViewModel: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
