@@ -51,11 +51,12 @@ final class TimeDiaryViewController: UIViewController {
     // MARK: - Properties
     private var calendarHidden = true
     private var subscriptions = Set<AnyCancellable>()
-    private let viewModel = TimeDiaryViewModel()
+    private let viewModel: TimeDiaryViewModel
     
     // MARK: - LifeCycle
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    init(viewModel: TimeDiaryViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
         bindingViewModel()
     }
     
@@ -96,7 +97,10 @@ extension TimeDiaryViewController {
     }
     
     private func pushWritingTimeDiaryViewController() {
-        let writingTimeDiaryViewModel = WritingTimeDiaryViewModel(timeDiary: nil, date: viewModel.date)
+        let writingTimeDiaryViewModel = WritingTimeDiaryViewModel(
+            date: viewModel.date,
+            coreDataManager: viewModel.coreDataManager
+        )
         
         let vc = WritingTimeDiaryViewController(viewModel: writingTimeDiaryViewModel)
         vc.modalTransitionStyle = .crossDissolve
@@ -106,7 +110,10 @@ extension TimeDiaryViewController {
     }
     
     private func pushWritingTimeDiaryViewController(with diary: TimeDiary) {
-        let writingTimeDiaryViewModel = WritingTimeDiaryViewModel(timeDiary: diary, date: nil)
+        let writingTimeDiaryViewModel = WritingTimeDiaryViewModel(
+            timeDiary: diary,
+            coreDataManager: viewModel.coreDataManager
+        )
         
         let vc = WritingTimeDiaryViewController(viewModel: writingTimeDiaryViewModel)
         vc.modalTransitionStyle = .crossDissolve

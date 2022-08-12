@@ -73,4 +73,25 @@ final class CoreDataManager {
             persistentContainer.viewContext.rollback()
         }
     }
+    
+    /// diary 수정하기
+    func updateDiary(type: DiaryType, originalDiary: Diary, diary: DiaryEntity) {
+        if let timeDiary = originalDiary as? TimeDiary {
+            timeDiary.content = diary.content
+            timeDiary.image = diary.image
+            timeDiary.time = diary.time
+            timeDiary.date = diary.date
+        } else if let dayDiary = originalDiary as? DayDiary {
+            dayDiary.content = diary.content
+            dayDiary.image = diary.image
+            dayDiary.date = diary.date
+        }
+        
+        do {
+            try persistentContainer.viewContext.save()
+        } catch {
+            persistentContainer.viewContext.rollback()
+        }
+        getDiary(type: type)
+    }
 }

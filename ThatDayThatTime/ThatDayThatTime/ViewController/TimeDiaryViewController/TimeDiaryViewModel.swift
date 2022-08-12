@@ -22,12 +22,13 @@ final class TimeDiaryViewModel {
     }
     var date = String.getDate()
     let updateDiarys = PassthroughSubject<Void, Never>()
-    private let coreDataManager = CoreDataManager()
+    let coreDataManager: CoreDataManager
     private var subscriptions = Set<AnyCancellable>()
     private let filterDiary = PassthroughSubject<Void, Never>()
         
     // MARK: - LifeCycle
-    init() {
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
         bindingCoreDataManager()
         bindingSelf()
         coreDataManager.getDiary(type: .time)

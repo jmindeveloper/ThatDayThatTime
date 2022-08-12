@@ -19,7 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        let rootVC = UINavigationController(rootViewController: TimeDiaryViewController())
+        let coreDataManager = CoreDataManager()
+        let timeDiaryViewModel = TimeDiaryViewModel(coreDataManager: coreDataManager)
+        
+        let rootVC = UINavigationController(rootViewController: TimeDiaryViewController(viewModel: timeDiaryViewModel))
         
         window?.rootViewController = rootVC
         window?.makeKeyAndVisible()
