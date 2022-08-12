@@ -93,4 +93,12 @@ final class CalendarManager {
         selectedCalendarDate = calendar.date(byAdding: DateComponents(day: 1), to: selectedCalendarDate) ?? Date()
         completion(String.getDate(date: selectedCalendarDate))
     }
+    
+    func updateSelectedCalendarDate(with selectedDate: String) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 M월 d일 EEEE"
+        formatter.locale = Locale(identifier: "ko_KR")
+        
+        selectedCalendarDate = formatter.date(from: selectedDate) ?? Date()
+    }
 }

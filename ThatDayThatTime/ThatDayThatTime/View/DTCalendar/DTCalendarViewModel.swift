@@ -61,18 +61,7 @@ final class DTCalendarViewModel {
             
     }
     
-    @discardableResult
-    private func selectedDay(date: String) -> Bool {
-        if let index = days.firstIndex(where: { component in
-            component.date == date
-        }) {
-            selectedDay(index: index)
-            return true
-        }
-        return false
-    }
-    
-    func mapCalendarCellComponentIsToday(_ component: CalendarCellComponents) -> CalendarCellComponents {
+    private func mapCalendarCellComponentIsToday(_ component: CalendarCellComponents) -> CalendarCellComponents {
         if component.date == String.getDate() {
             var day = component
             day.dayColor = .red
@@ -81,7 +70,7 @@ final class DTCalendarViewModel {
         return component
     }
     
-    func mapCalendarCellComponentIsSelected(_ component: CalendarCellComponents) -> CalendarCellComponents {
+    private func mapCalendarCellComponentIsSelected(_ component: CalendarCellComponents) -> CalendarCellComponents {
         var day = updateCurrentDate.value.components(separatedBy: " ")[2]
         day.removeLast()
         
@@ -115,7 +104,18 @@ final class DTCalendarViewModel {
                 days[i].cellColor = .clear
             }
         }
-        
+        manager.updateSelectedCalendarDate(with: days[index].date)
         self.days = days
+    }
+    
+    @discardableResult
+    private func selectedDay(date: String) -> Bool {
+        if let index = days.firstIndex(where: { component in
+            component.date == date
+        }) {
+            selectedDay(index: index)
+            return true
+        }
+        return false
     }
 }
