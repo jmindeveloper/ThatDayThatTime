@@ -36,7 +36,7 @@ final class CoreDataManager {
         guard let diary = try? persistentContainer.viewContext.fetch(fetchRequest) as? [Diary] else {
             return
         }
-        print(diary.count)
+        
         fetchDiary.send(diary)
     }
     

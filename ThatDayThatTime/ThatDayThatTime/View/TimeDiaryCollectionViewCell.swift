@@ -15,7 +15,6 @@ final class TimeDiaryCollectionViewCell: UICollectionViewCell {
     // MARK: - ViewProperties
     private let timeLabel: UILabel = {
         let label = UILabel()
-        label.text = "15:12"
         label.textColor = .black
         label.font = .systemFont(ofSize: 19, weight: .semibold)
         
@@ -45,7 +44,6 @@ final class TimeDiaryCollectionViewCell: UICollectionViewCell {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.fill")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         
@@ -54,7 +52,6 @@ final class TimeDiaryCollectionViewCell: UICollectionViewCell {
     
     private let contentLabel: UILabel = {
         let label = UILabel()
-        label.text = "(1절)동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 (후렴)무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세 (2절) 남산위에 저 소나무 철갑을 두른듯 바람서리 불변함은 우리기상 일세 (후렴)무궁화 삼천리 화려강산 대한사람 대한으로 길이보전하세"
         label.numberOfLines = 0
         label.textColor = .black
         
@@ -77,6 +74,18 @@ final class TimeDiaryCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+// MARK: - Method
+extension TimeDiaryCollectionViewCell {
+    func configureCell(with diary: TimeDiary, image: UIImage?) {
+        timeLabel.text = diary.time
+        contentLabel.text = diary.content
+        imageView.image = image
+        imageView.snp.updateConstraints {
+            $0.height.equalTo(image == nil ? 0 : 60)
+        }
+    }
 }
 
 // MARK: - UI

@@ -13,6 +13,9 @@
 		0E161C0C289FCDA60055B84F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C0A289FCDA60055B84F /* LaunchScreen.storyboard */; };
 		0E20739028A12CBF006FE55D /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E20738F28A12CBF006FE55D /* CalendarManager.swift */; };
 		0E20739228A13FA5006FE55D /* CalendarCellComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */; };
+		0E2DED7828A514DA007F131C /* TimeDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */; };
+		0E2DED7A28A52438007F131C /* test.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 0E2DED7928A52438007F131C /* test.JPG */; };
+		0E2DED7D28A524D7007F131C /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2DED7C28A524D7007F131C /* ImageCacheManager.swift */; };
 		0E3142C628A218CF00149E34 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3142C528A218CF00149E34 /* UIColor+Extension.swift */; };
 		0E3142C928A24CD300149E34 /* DTCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3142C828A24CD300149E34 /* DTCalendarViewModel.swift */; };
 		0E81DEDF28A10E6E00A2B7C6 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81DEDE28A10E6E00A2B7C6 /* String+Extension.swift */; };
@@ -47,6 +50,9 @@
 		0E161C0D289FCDA60055B84F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E20738F28A12CBF006FE55D /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellComponents.swift; sourceTree = "<group>"; };
+		0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryViewModel.swift; sourceTree = "<group>"; };
+		0E2DED7928A52438007F131C /* test.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.JPG; sourceTree = "<group>"; };
+		0E2DED7C28A524D7007F131C /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		0E3142C528A218CF00149E34 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		0E3142C828A24CD300149E34 /* DTCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendarViewModel.swift; sourceTree = "<group>"; };
 		0E81DEDE28A10E6E00A2B7C6 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -112,6 +118,15 @@
 			path = ThatDayThatTime;
 			sourceTree = "<group>";
 		};
+		0E2DED7628A514BC007F131C /* TimeDiaryViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0EBD21A128A0E6C9006F19FE /* TimeDiaryViewController.swift */,
+				0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */,
+			);
+			path = TimeDiaryViewController;
+			sourceTree = "<group>";
+		};
 		0E81DEDD28A10E3900A2B7C6 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,19 +149,20 @@
 			path = DTCalendar;
 			sourceTree = "<group>";
 		};
-		0E9BE57028A4C99F0096A1F5 /* WritingTimeDiary */ = {
+		0E9BE57028A4C99F0096A1F5 /* WritingTimeDiaryController */ = {
 			isa = PBXGroup;
 			children = (
 				0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */,
 				0E9BE57128A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift */,
 			);
-			path = WritingTimeDiary;
+			path = WritingTimeDiaryController;
 			sourceTree = "<group>";
 		};
 		0EBD218D28A0D353006F19FE /* Application */ = {
 			isa = PBXGroup;
 			children = (
 				0E161BFF289FCDA40055B84F /* AppDelegate.swift */,
+				0E2DED7928A52438007F131C /* test.JPG */,
 				0E161C01289FCDA40055B84F /* SceneDelegate.swift */,
 				0E161C08289FCDA60055B84F /* Assets.xcassets */,
 				0E161C0A289FCDA60055B84F /* LaunchScreen.storyboard */,
@@ -181,6 +197,7 @@
 				0E20738F28A12CBF006FE55D /* CalendarManager.swift */,
 				0EBD219428A0D531006F19FE /* CoreDataManager.swift */,
 				0E9BE57728A4F4240096A1F5 /* AlertManager.swift */,
+				0E2DED7C28A524D7007F131C /* ImageCacheManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -188,8 +205,8 @@
 		0EBD21A028A0E6B4006F19FE /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				0E9BE57028A4C99F0096A1F5 /* WritingTimeDiary */,
-				0EBD21A128A0E6C9006F19FE /* TimeDiaryViewController.swift */,
+				0E2DED7628A514BC007F131C /* TimeDiaryViewController */,
+				0E9BE57028A4C99F0096A1F5 /* WritingTimeDiaryController */,
 				0E9BE57528A4EC850096A1F5 /* FullImageViewController.swift */,
 			);
 			path = ViewController;
@@ -273,6 +290,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E2DED7A28A52438007F131C /* test.JPG in Resources */,
 				0E161C0C289FCDA60055B84F /* LaunchScreen.storyboard in Resources */,
 				0E161C09289FCDA60055B84F /* Assets.xcassets in Resources */,
 			);
@@ -295,6 +313,7 @@
 				0E20739028A12CBF006FE55D /* CalendarManager.swift in Sources */,
 				0E9BE57228A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift in Sources */,
 				0EFC165228A3C8BB00006AB0 /* UITextView+Extension.swift in Sources */,
+				0E2DED7828A514DA007F131C /* TimeDiaryViewModel.swift in Sources */,
 				0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */,
 				0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */,
 				0E3142C628A218CF00149E34 /* UIColor+Extension.swift in Sources */,
@@ -302,6 +321,7 @@
 				0EBD219B28A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift in Sources */,
 				0E3142C928A24CD300149E34 /* DTCalendarViewModel.swift in Sources */,
 				0EBD21A528A0E809006F19FE /* DateLineView.swift in Sources */,
+				0E2DED7D28A524D7007F131C /* ImageCacheManager.swift in Sources */,
 				0E9BE57428A4CBBB0096A1F5 /* UIImage+Extension.swift in Sources */,
 				0E9BE57A28A4F4D50096A1F5 /* UIAlertController+Extension.swift in Sources */,
 				0EBD219528A0D531006F19FE /* CoreDataManager.swift in Sources */,

@@ -20,7 +20,7 @@ final class WritingTimeDiaryViewModel: NSObject {
     init(timeDiary: TimeDiary?) {
         self.time = CurrentValueSubject<String, Never>(timeDiary?.time ?? String.getTime())
         self.diary = timeDiary?.content ?? ""
-        self.image = CurrentValueSubject<UIImage?, Never>(UIImage.getImage(to: timeDiary?.image))
+        self.image = CurrentValueSubject<UIImage?, Never>(UIImage.getImage(with: timeDiary))
         self.date = CurrentValueSubject<String, Never>(timeDiary?.date ?? String.getDate())
     }
     
@@ -29,6 +29,9 @@ final class WritingTimeDiaryViewModel: NSObject {
             content: diary,
             date: date.value,
             id: UUID().uuidString,
+            // TODO: - JPEGData? pngData?
+            // TODO: - UIImage(data:) 함수는 느린가?
+            // TODO: - 그렇다면 리사이징을 해야하나?
             image: image.value?.pngData(),
             time: time.value
         )
@@ -41,7 +44,7 @@ final class WritingTimeDiaryViewModel: NSObject {
     }
 }
 
-// MARK: - UIImagePickerControllerDelegate
+// MARK: - UII magePickerControllerDelegate
 extension WritingTimeDiaryViewModel: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)

@@ -43,6 +43,7 @@ final class TimeDiaryViewController: UIViewController {
     // MARK: - Properties
     private var calendarHidden = true
     private var subscriptions = Set<AnyCancellable>()
+    private let viewModel = TimeDiaryViewModel()
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -53,6 +54,8 @@ final class TimeDiaryViewController: UIViewController {
         setConstraintsOfDateLineView()
         setConstraintsOfCalendar()
         setConstraintsOfTimeDiaryCollectionView()
+        
+        bindingViewModel()
     }
 }
 
@@ -95,6 +98,16 @@ extension TimeDiaryViewController {
         } completion: { _ in
             self.calendar.bottomLineHidden()
         }
+    }
+}
+
+// MARK: - Binding
+extension TimeDiaryViewController {
+    private func bindingViewModel() {
+        viewModel.updateDiarys
+            .sink { [weak self] in
+                self?.timeDiaryCollectionView.reloadData()
+            }.store(in: &subscriptions)
     }
 }
 
@@ -152,11 +165,15 @@ extension TimeDiaryViewController {
 // MARK: - UICollectionViewDataSource
 extension TimeDiaryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return viewModel.diarys.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeDiaryCollectionViewCell.identifier, for: indexPath) as? TimeDiaryCollectionViewCell else { return UICollectionViewCell() }
+        
+        let timeDiary = viewModel.diarys[indexPath.row]
+        let image = UIImage.getImage(with: timeDiary)
+        cell.configureCell(with: timeDiary, image: image)
         
         return cell
     }
