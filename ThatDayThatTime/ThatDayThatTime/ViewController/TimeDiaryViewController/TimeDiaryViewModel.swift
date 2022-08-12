@@ -20,7 +20,7 @@ final class TimeDiaryViewModel {
             updateDiarys.send()
         }
     }
-    let date = String.getDate()
+    private var date = String.getDate()
     let updateDiarys = PassthroughSubject<Void, Never>()
     private let coreDataManager = CoreDataManager()
     private var subscriptions = Set<AnyCancellable>()
@@ -31,6 +31,14 @@ final class TimeDiaryViewModel {
         bindingCoreDataManager()
         bindingSelf()
         coreDataManager.getDiary(type: .time)
+    }
+}
+
+// MARK: - Method
+extension TimeDiaryViewModel {
+    func changeDate(date: String) {
+        self.date = date
+        filterDiary.send()
     }
 }
 

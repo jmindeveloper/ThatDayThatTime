@@ -25,6 +25,7 @@ final class TimeDiaryViewController: UIViewController {
         let calendar = DTCalendar()
         calendar.bindingSelectedDate { [weak self] date in
             self?.dateLineView.configureDateLabel(date: date)
+            self?.viewModel.changeDate(date: date)
         }
         
         return calendar
