@@ -121,6 +121,16 @@ extension TimeDiaryViewController {
         
         self.present(vc, animated: true)
     }
+    
+    private func presentDeleteAlert(_ index: Int) {
+        let alert = AlertManager(message: "일기를 정말 삭제하시겠습니까?").createAlert()
+            .addAction(actionTytle: "확인", style: .default) { [weak self] in
+                self?.viewModel.deleteDiary(index: index)
+            }
+            .addAction(actionTytle: "취소", style: .cancel)
+        
+        present(alert, animated: true)
+    }
 }
 
 // MARK: - ConfigureGesture
@@ -160,8 +170,23 @@ extension TimeDiaryViewController {
                 self?.calendar.updateBeforeDay()
             }.store(in: &subscriptions)
         
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: nil)
+        longPressGesture.minimumPressDuration = 0.35
+        longPressGesture.longPressPublisher
+            .sink { [weak self] gesture in
+                guard let self = self else { return }
+                if gesture.state == .began {
+                    let pressPoint = gesture.location(in: self.timeDiaryCollectionView)
+                    guard let indexPath = self.timeDiaryCollectionView.indexPathForItem(
+                        at: pressPoint
+                    ) else { return }
+                    self.presentDeleteAlert(indexPath.row)
+                }
+            }.store(in: &subscriptions)
+        
         timeDiaryCollectionView.addGestureRecognizer(leftSwipeGesture)
         timeDiaryCollectionView.addGestureRecognizer(rightSwipeGesture)
+        timeDiaryCollectionView.addGestureRecognizer(longPressGesture)
     }
 }
 
@@ -173,7 +198,7 @@ extension TimeDiaryViewController {
                 guard let self = self else { return }
                 self.noTimeDiaryLabel.isHidden =
                 self.viewModel.diarys.isEmpty ? false : true
-                self.timeDiaryCollectionView.reloadData()
+                self.timeDiaryCollectionView.reloadSections(IndexSet(0...0))
             }.store(in: &subscriptions)
     }
     

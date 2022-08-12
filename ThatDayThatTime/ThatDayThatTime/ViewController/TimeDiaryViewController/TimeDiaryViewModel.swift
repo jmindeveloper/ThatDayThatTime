@@ -41,6 +41,11 @@ extension TimeDiaryViewModel {
         self.date = date
         filterDiary.send()
     }
+    
+    func deleteDiary(index: Int) {
+        let diary = diarys[index]
+        coreDataManager.deleteDiary(diary: diary, type: .time)
+    }
 }
 
 // MARK: - Binding

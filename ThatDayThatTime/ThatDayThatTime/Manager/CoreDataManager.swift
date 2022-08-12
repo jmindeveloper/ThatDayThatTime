@@ -63,7 +63,7 @@ final class CoreDataManager {
     }
     
     /// diary 삭제하기
-    func deleteDiary(diary: Diary) {
+    func deleteDiary(diary: Diary, type: DiaryType) {
         guard let object = diary as? NSManagedObject else { return }
         persistentContainer.viewContext.delete(object)
         
@@ -72,6 +72,7 @@ final class CoreDataManager {
         } catch {
             persistentContainer.viewContext.rollback()
         }
+        getDiary(type: type)
     }
     
     /// diary 수정하기
