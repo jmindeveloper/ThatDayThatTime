@@ -20,7 +20,7 @@ final class TimeDiaryViewModel {
             updateDiarys.send()
         }
     }
-    private var date = String.getDate()
+    var date = String.getDate()
     let updateDiarys = PassthroughSubject<Void, Never>()
     private let coreDataManager = CoreDataManager()
     private var subscriptions = Set<AnyCancellable>()

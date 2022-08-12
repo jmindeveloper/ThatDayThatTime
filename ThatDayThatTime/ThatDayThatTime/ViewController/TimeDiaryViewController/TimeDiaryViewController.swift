@@ -96,7 +96,9 @@ extension TimeDiaryViewController {
     }
     
     private func pushWritingTimeDiaryViewController() {
-        let vc = WritingTimeDiaryViewController()
+        let writingTimeDiaryViewModel = WritingTimeDiaryViewModel(timeDiary: nil, date: viewModel.date)
+        
+        let vc = WritingTimeDiaryViewController(viewModel: writingTimeDiaryViewModel)
         vc.modalTransitionStyle = .crossDissolve
         vc.modalPresentationStyle = .fullScreen
         
@@ -152,11 +154,8 @@ extension TimeDiaryViewController {
         viewModel.updateDiarys
             .sink { [weak self] in
                 guard let self = self else { return }
-                if self.viewModel.diarys.isEmpty {
-                    self.noTimeDiaryLabel.isHidden = false
-                } else {
-                    self.noTimeDiaryLabel.isHidden = true
-                }
+                self.noTimeDiaryLabel.isHidden =
+                self.viewModel.diarys.isEmpty ? false : true
                 self.timeDiaryCollectionView.reloadData()
             }.store(in: &subscriptions)
     }

@@ -17,11 +17,11 @@ final class WritingTimeDiaryViewModel: NSObject {
     var date: CurrentValueSubject<String, Never>
     private let coreDataManager = CoreDataManager()
     
-    init(timeDiary: TimeDiary?) {
+    init(timeDiary: TimeDiary?, date: String?) {
         self.time = CurrentValueSubject<String, Never>(timeDiary?.time ?? String.getTime())
         self.diary = timeDiary?.content ?? ""
         self.image = CurrentValueSubject<UIImage?, Never>(UIImage.getImage(with: timeDiary))
-        self.date = CurrentValueSubject<String, Never>(timeDiary?.date ?? String.getDate())
+        self.date = CurrentValueSubject<String, Never>(timeDiary?.date ?? date ?? String.getDate())
     }
     
     func saveTimeDiary(completion: @escaping () -> Void) {
