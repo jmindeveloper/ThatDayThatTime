@@ -176,6 +176,19 @@ extension TimeDiaryViewController {
                 self.timeDiaryCollectionView.reloadData()
             }.store(in: &subscriptions)
     }
+    
+    private func bindingTimeDiaryImage(
+        cell: TimeDiaryCollectionViewCell,
+        index: Int
+    ) {
+        cell.tapImage = { [weak self] in
+            let image = UIImage.getImage(with: self?.viewModel.diarys[index])
+            let vc = FullPhotoViewController(image: image)
+            vc.modalPresentationStyle = .fullScreen
+            
+            self?.present(vc, animated: true)
+        }
+    }
 }
 
 // MARK: - UI
@@ -250,6 +263,7 @@ extension TimeDiaryViewController: UICollectionViewDataSource {
         let timeDiary = viewModel.diarys[indexPath.row]
         let image = UIImage.getImage(with: timeDiary)
         cell.configureCell(with: timeDiary, image: image)
+        bindingTimeDiaryImage(cell: cell, index: indexPath.row)
         
         return cell
     }

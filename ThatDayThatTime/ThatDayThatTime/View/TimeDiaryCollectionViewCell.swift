@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import Combine
+import CombineCocoa
 
 final class TimeDiaryCollectionViewCell: UICollectionViewCell {
     
@@ -46,6 +48,7 @@ final class TimeDiaryCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
         
         return imageView
     }()
@@ -58,6 +61,11 @@ final class TimeDiaryCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - Properties
+    var tapImage: (() -> Void)?
+    private var subscriptions = Set<AnyCancellable>()
+    
+    // MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .viewBackgroundColor
@@ -68,6 +76,8 @@ final class TimeDiaryCollectionViewCell: UICollectionViewCell {
         setConstraintsOfTimeLabel()
         setConstraintsOfImageView()
         setConstraintsOfContentLabel()
+        
+        configureImageViewGesture()
     }
     
     required init?(coder: NSCoder) {
@@ -85,6 +95,19 @@ extension TimeDiaryCollectionViewCell {
         imageView.snp.updateConstraints {
             $0.height.equalTo(image == nil ? 0 : 60)
         }
+    }
+}
+
+// MARK: - ConfigureGesture
+extension TimeDiaryCollectionViewCell {
+    private func configureImageViewGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        tapGesture.tapPublisher
+            .sink { [weak self] _ in
+                self?.tapImage?()
+            }.store(in: &subscriptions)
+        
+        imageView.addGestureRecognizer(tapGesture)
     }
 }
 
