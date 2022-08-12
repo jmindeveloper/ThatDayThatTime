@@ -88,12 +88,24 @@ final class TimeDiaryCollectionViewCell: UICollectionViewCell {
 
 // MARK: - Method
 extension TimeDiaryCollectionViewCell {
-    func configureCell(with diary: TimeDiary, image: UIImage?) {
+    func configureCell(with diary: TimeDiary, isFirst: Bool, isLast: Bool) {
         timeLabel.text = diary.time
         contentLabel.text = diary.content
-        imageView.image = image
+        imageView.image = UIImage.getImage(with: diary)
         imageView.snp.updateConstraints {
-            $0.height.equalTo(image == nil ? 0 : 60)
+            $0.height.equalTo(imageView.image == nil ? 0 : 60)
+        }
+        
+        if isFirst {
+            connectionTopLine.isHidden = true
+        } else {
+            connectionTopLine.isHidden = false
+        }
+        
+        if isLast {
+            connectionBottomLine.isHidden = true
+        } else {
+            connectionBottomLine.isHidden = false
         }
     }
 }

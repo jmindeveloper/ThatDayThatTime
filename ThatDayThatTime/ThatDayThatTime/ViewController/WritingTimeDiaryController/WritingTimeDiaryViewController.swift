@@ -50,6 +50,7 @@ final class WritingTimeDiaryViewController: UIViewController {
         textView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
         textView.font = .systemFont(ofSize: 17)
         textView.backgroundColor = .viewBackgroundColor
+        textView.textColor = .black
         textView.configure()
         
         return textView

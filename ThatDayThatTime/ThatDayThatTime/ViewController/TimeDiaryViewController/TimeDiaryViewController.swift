@@ -286,8 +286,12 @@ extension TimeDiaryViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeDiaryCollectionViewCell.identifier, for: indexPath) as? TimeDiaryCollectionViewCell else { return UICollectionViewCell() }
         
         let timeDiary = viewModel.diarys[indexPath.row]
-        let image = UIImage.getImage(with: timeDiary)
-        cell.configureCell(with: timeDiary, image: image)
+        
+        cell.configureCell(
+            with: timeDiary,
+            isFirst: indexPath.row == 0,
+            isLast: indexPath.row == viewModel.diarys.count - 1
+        )
         bindingTimeDiaryImage(cell: cell, index: indexPath.row)
         
         return cell
