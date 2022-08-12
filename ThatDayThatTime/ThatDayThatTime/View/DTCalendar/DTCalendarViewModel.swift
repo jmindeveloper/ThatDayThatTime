@@ -42,6 +42,36 @@ final class DTCalendarViewModel {
         manager.minusMonth()
     }
     
+    func updateNextDay() {
+        manager.plusDay { date in
+            if !selectedDay(date: date) {
+                updateNextMonth()
+                selectedDay(date: date)
+            }
+        }
+    }
+    
+    func updateBeforeDay() {
+        manager.minusDay { date in
+            if !selectedDay(date: date) {
+                updateBeforeMonth()
+                selectedDay(date: date)
+            }
+        }
+            
+    }
+    
+    @discardableResult
+    private func selectedDay(date: String) -> Bool {
+        if let index = days.firstIndex(where: { component in
+            component.date == date
+        }) {
+            selectedDay(index: index)
+            return true
+        }
+        return false
+    }
+    
     func mapCalendarCellComponentIsToday(_ component: CalendarCellComponents) -> CalendarCellComponents {
         if component.date == String.getDate() {
             var day = component
@@ -65,7 +95,7 @@ final class DTCalendarViewModel {
     }
     
     // MARK: - Binding
-    func bindingManager() {
+    private func bindingManager() {
         manager.sendNewDay
             .map(mapCalendarCellComponentIsToday(_:))
             .map(mapCalendarCellComponentIsSelected(_:))
@@ -76,16 +106,16 @@ final class DTCalendarViewModel {
     }
     
     func selectedDay(index: Int) {
-        var dayss = days
-        for i in 0..<dayss.count {
+        var days = days
+        for i in 0..<days.count {
             if i == index {
-                dayss[index].cellColor = .daySelectedColor
-                updateCurrentDate.send(dayss[index].date)
+                days[index].cellColor = .daySelectedColor
+                updateCurrentDate.send(days[index].date)
             } else {
-                dayss[i].cellColor = .clear
+                days[i].cellColor = .clear
             }
         }
         
-        days = dayss
+        self.days = days
     }
 }

@@ -15,8 +15,6 @@ final class TimeDiaryViewController: UIViewController {
     // MARK: - ViewProperties
     private lazy var dateLineView: DateLineView = {
         let view = DateLineView()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dateLineViewTapped))
-        view.addGestureRecognizer(tapGesture)
         
         return view
     }()
@@ -56,6 +54,9 @@ final class TimeDiaryViewController: UIViewController {
         setConstraintsOfCalendar()
         setConstraintsOfTimeDiaryCollectionView()
         
+        configureDateLineViewGesture()
+        configureTimeDiaryCollectionViewGesture()
+        
         bindingViewModel()
     }
 }
@@ -86,19 +87,47 @@ extension TimeDiaryViewController {
     }
 }
 
-// MARK: - TargetMethod
+// MARK: - ConfigureGesture
 extension TimeDiaryViewController {
-    @objc private func dateLineViewTapped() {
-        calendarHidden.toggle()
-        calendar.snp.updateConstraints {
-            $0.height.equalTo(calendarHidden ? 0 : 300)
-        }
+    private func configureDateLineViewGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        tapGesture.tapPublisher
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.calendarHidden.toggle()
+                self.calendar.snp.updateConstraints {
+                    $0.height.equalTo(self.calendarHidden ? 0 : 300)
+                }
+                
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+                    self.view.layoutIfNeeded()
+                } completion: { _ in
+                    self.calendar.bottomLineHidden()
+                }
+            }.store(in: &subscriptions)
         
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            self.calendar.bottomLineHidden()
-        }
+        dateLineView.addGestureRecognizer(tapGesture)
+    }
+    
+    private func configureTimeDiaryCollectionViewGesture() {
+        let leftSwipeGesture = UISwipeGestureRecognizer()
+        leftSwipeGesture.direction = .left
+        leftSwipeGesture.swipePublisher
+            .sink { [weak self] gesture in
+                print("다음일")
+                self?.calendar.updateNextDay()
+            }.store(in: &subscriptions)
+        
+        let rightSwipeGesture = UISwipeGestureRecognizer()
+        rightSwipeGesture.direction = .right
+        rightSwipeGesture.swipePublisher
+            .sink { [weak self] gesture in
+                print("이전일")
+                self?.calendar.updateBeforeDay()
+            }.store(in: &subscriptions)
+        
+        timeDiaryCollectionView.addGestureRecognizer(leftSwipeGesture)
+        timeDiaryCollectionView.addGestureRecognizer(rightSwipeGesture)
     }
 }
 
