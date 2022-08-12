@@ -39,12 +39,30 @@ final class TimeDiaryViewController: UIViewController {
         return collectionView
     }()
     
+    private let noTimeDiaryLabel: UILabel = {
+        let label = UILabel()
+        label.text = "작성된 시간일기가 없습니다."
+        label.textColor = .darkGray
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
     // MARK: - Properties
     private var calendarHidden = true
     private var subscriptions = Set<AnyCancellable>()
     private let viewModel = TimeDiaryViewModel()
     
     // MARK: - LifeCycle
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        bindingViewModel()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor
@@ -53,11 +71,10 @@ final class TimeDiaryViewController: UIViewController {
         setConstraintsOfDateLineView()
         setConstraintsOfCalendar()
         setConstraintsOfTimeDiaryCollectionView()
+        setConstraintsOfNoTimeDiaryLabel()
         
         configureDateLineViewGesture()
         configureTimeDiaryCollectionViewGesture()
-        
-        bindingViewModel()
     }
 }
 
@@ -114,7 +131,6 @@ extension TimeDiaryViewController {
         leftSwipeGesture.direction = .left
         leftSwipeGesture.swipePublisher
             .sink { [weak self] gesture in
-                print("다음일")
                 self?.calendar.updateNextDay()
             }.store(in: &subscriptions)
         
@@ -122,7 +138,6 @@ extension TimeDiaryViewController {
         rightSwipeGesture.direction = .right
         rightSwipeGesture.swipePublisher
             .sink { [weak self] gesture in
-                print("이전일")
                 self?.calendar.updateBeforeDay()
             }.store(in: &subscriptions)
         
@@ -136,7 +151,13 @@ extension TimeDiaryViewController {
     private func bindingViewModel() {
         viewModel.updateDiarys
             .sink { [weak self] in
-                self?.timeDiaryCollectionView.reloadData()
+                guard let self = self else { return }
+                if self.viewModel.diarys.isEmpty {
+                    self.noTimeDiaryLabel.isHidden = false
+                } else {
+                    self.noTimeDiaryLabel.isHidden = true
+                }
+                self.timeDiaryCollectionView.reloadData()
             }.store(in: &subscriptions)
     }
 }
@@ -144,7 +165,8 @@ extension TimeDiaryViewController {
 // MARK: - UI
 extension TimeDiaryViewController {
     private func configureSubViews() {
-        [dateLineView, calendar, timeDiaryCollectionView].forEach {
+        [dateLineView, calendar, timeDiaryCollectionView,
+         noTimeDiaryLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -172,6 +194,14 @@ extension TimeDiaryViewController {
         timeDiaryCollectionView.snp.makeConstraints {
             $0.top.equalTo(calendar.snp.bottom).offset(3)
             $0.horizontalEdges.bottom.equalToSuperview()
+        }
+    }
+    
+    private func setConstraintsOfNoTimeDiaryLabel() {
+        noTimeDiaryLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(calendar.snp.bottom).offset(15)
+            $0.width.equalToSuperview()
         }
     }
 }
