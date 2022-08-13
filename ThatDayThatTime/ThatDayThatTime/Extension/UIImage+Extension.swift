@@ -19,7 +19,7 @@ extension UIImage {
         }
         
         let image = UIImage(data: data)!
-        ImageCacheManager.shared.storeImage((diary?.id)!, image: image)
+//        ImageCacheManager.shared.storeImage((diary?.id)!, image: image)
         return UIImage(data: data)
     }
     
@@ -37,8 +37,6 @@ extension UIImage {
         let downSampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downSampleOptions)!
         let newImage = UIImage(cgImage: downSampledImage)
         
-        print(self.jpegData(compressionQuality: 1))
-        print(newImage.jpegData(compressionQuality: 1))
         return newImage
     }
 }

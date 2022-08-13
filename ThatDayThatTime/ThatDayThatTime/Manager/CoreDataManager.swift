@@ -45,12 +45,16 @@ final class CoreDataManager {
     }
     
     /// fullSize image 가져오기
-    func getFullSizeImage(id: String) {
+    func getImageObject(id: String) -> Image? {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Image")
+        let predicate = NSPredicate(format: "id = %@", id)
+        fetchRequest.predicate = predicate
         
-        guard let diary = try? persistentContainer.viewContext.fetch(fetchRequest) as? [Image] else {
-            return
+        guard let image = try? (persistentContainer.viewContext.fetch(fetchRequest) as? [Image])?.first else {
+            return nil
         }
+        
+        return image
     }
     
     /// diary 저장하기
@@ -98,16 +102,20 @@ final class CoreDataManager {
     /// diary 수정하기
     func updateDiary(type: DiaryType, originalDiary: Diary, diary: DiaryEntity) {
         fetchDate = diary.date ?? fetchDate
+        let resizeImage = diary.image?.resize(scale: 0.4)
+        
         if let timeDiary = originalDiary as? TimeDiary {
             timeDiary.content = diary.content
-            timeDiary.image = diary.image?.jpegData(compressionQuality: 1)
+            timeDiary.image = resizeImage?.jpegData(compressionQuality: 1)
             timeDiary.time = diary.time
             timeDiary.date = diary.date
         } else if let dayDiary = originalDiary as? DayDiary {
             dayDiary.content = diary.content
-            dayDiary.image = diary.image?.jpegData(compressionQuality: 1)
+            dayDiary.image = resizeImage?.jpegData(compressionQuality: 1)
             dayDiary.date = diary.date
         }
+        updateFullSizeImage(id: diary.id, image: diary.image)
+        
         
         do {
             try persistentContainer.viewContext.save()
@@ -129,9 +137,9 @@ extension CoreDataManager {
         imageObject.setValue(image?.jpegData(compressionQuality: 1), forKey: "image")
     }
     
+    ///  fullSize 이미지 업데이트
     private func updateFullSizeImage(id: String, image: UIImage?) {
-        // 이미지 가져오는 함수
-        
-        // 업데이트 함수
+        let imageObject = getImageObject(id: id)
+        imageObject?.image = image?.jpegData(compressionQuality: 1)
     }
 }
