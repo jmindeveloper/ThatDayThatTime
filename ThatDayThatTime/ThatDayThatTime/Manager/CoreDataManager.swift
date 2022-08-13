@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 import Combine
+import UIKit
 
 final class CoreDataManager {
     
@@ -40,26 +41,47 @@ final class CoreDataManager {
         fetchDiary.send(diary)
     }
     
+    /// fullSize image 가져오기
+    func getFullSizeImage(id: String) {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Image")
+        
+        guard let diary = try? persistentContainer.viewContext.fetch(fetchRequest) as? [Image] else {
+            return
+        }
+    }
+    
     /// diary 저장하기
     func saveDiary(type: DiaryType, diary: DiaryEntity) {
         guard let entity = NSEntityDescription.entity(forEntityName: type.entityName, in: persistentContainer.viewContext) else { return }
         
         let newDiary = NSManagedObject(entity: entity, insertInto: persistentContainer.viewContext)
+        let resizeImage = diary.image?.resize(scale: 0.4)
+        
         newDiary.setValue(diary.id, forKey: "id")
         newDiary.setValue(diary.date, forKey: "date")
         newDiary.setValue(diary.content, forKey: "content")
-        newDiary.setValue(diary.image, forKey: "image")
-        
+        newDiary.setValue(resizeImage?.jpegData(compressionQuality: 1), forKey: "image")
         if type == .time {
             newDiary.setValue(diary.time, forKey: "time")
         }
+        
+        saveFullSizeImage(id: diary.id, image: diary.image)
         
         do {
             try persistentContainer.viewContext.save()
         } catch {
             persistentContainer.viewContext.rollback()
         }
+        
         getDiary(type: type)
+    }
+    
+    private func saveFullSizeImage(id: String?, image: UIImage?) {
+        guard let imageEntity = NSEntityDescription.entity(forEntityName: "Image", in: persistentContainer.viewContext) else { return }
+        let imageObject = NSManagedObject(entity: imageEntity, insertInto: persistentContainer.viewContext)
+        
+        imageObject.setValue(id, forKey: "id")
+        imageObject.setValue(image?.jpegData(compressionQuality: 1), forKey: "image")
     }
     
     /// diary 삭제하기
@@ -79,12 +101,12 @@ final class CoreDataManager {
     func updateDiary(type: DiaryType, originalDiary: Diary, diary: DiaryEntity) {
         if let timeDiary = originalDiary as? TimeDiary {
             timeDiary.content = diary.content
-            timeDiary.image = diary.image
+            timeDiary.image = diary.image?.jpegData(compressionQuality: 1)
             timeDiary.time = diary.time
             timeDiary.date = diary.date
         } else if let dayDiary = originalDiary as? DayDiary {
             dayDiary.content = diary.content
-            dayDiary.image = diary.image
+            dayDiary.image = diary.image?.jpegData(compressionQuality: 1)
             dayDiary.date = diary.date
         }
         

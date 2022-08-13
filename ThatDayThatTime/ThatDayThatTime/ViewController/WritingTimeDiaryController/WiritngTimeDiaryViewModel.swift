@@ -49,7 +49,7 @@ extension WritingTimeDiaryViewModel {
             // TODO: - JPEGData? pngData?
             // TODO: - UIImage(data:) 함수는 느린가?
             // TODO: - 그렇다면 리사이징을 해야하나?
-            image: image.value?.pngData(),
+            image: image.value,
             time: time.value
         )
         
