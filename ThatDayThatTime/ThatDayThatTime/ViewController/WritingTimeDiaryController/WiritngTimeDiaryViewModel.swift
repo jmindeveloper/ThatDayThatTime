@@ -40,25 +40,24 @@ final class WritingTimeDiaryViewModel: NSObject {
 
 // MARK: - Method
 extension WritingTimeDiaryViewModel {
-    func saveTimeDiary(completion: @escaping () -> Void) {
+    func saveTimeDiary() {
         
         let newDiary = DiaryEntity(
             content: diary,
             date: date.value,
             id: originalDiary?.id ?? UUID().uuidString,
-            // TODO: - JPEGData? pngData?
-            // TODO: - UIImage(data:) 함수는 느린가?
-            // TODO: - 그렇다면 리사이징을 해야하나?
             image: image.value,
             time: time.value
         )
         
-        if let originalDiary = originalDiary {
-            coreDataManager.updateDiary(type: .time, originalDiary: originalDiary, diary: newDiary)
-        } else {
-            coreDataManager.saveDiary(type: .time, diary: newDiary)
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            if let originalDiary = self.originalDiary {
+                self.coreDataManager.updateDiary(type: .time, originalDiary: originalDiary, diary: newDiary)
+            } else {
+                self.coreDataManager.saveDiary(type: .time, diary: newDiary)
+            }
         }
-        completion()
     }
     
     func getDiaryStringCount() -> Int {

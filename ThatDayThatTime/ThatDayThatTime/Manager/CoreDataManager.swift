@@ -32,17 +32,35 @@ final class CoreDataManager {
     }
     
     // MARK: - Method
+    private func saveContext(type: DiaryType) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            do {
+                try self.persistentContainer.viewContext.save()
+            } catch {
+                self.persistentContainer.viewContext.rollback()
+            }
+            self.getDiary(type: type, date: self.fetchDate)
+        }
+    }
+    
     /// diary 목록 가져오기
     func getDiary(type: DiaryType, date: String) {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
-        let predicate = NSPredicate(format: "date = %@", date)
-        fetchRequest.predicate = predicate
-        
-        guard let diary = try? persistentContainer.viewContext.fetch(fetchRequest) as? [Diary] else {
-            return
+        DispatchQueue.global().async { [weak self] in
+            print("get: ", Thread.isMainThread)
+            guard let self = self else { return }
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
+            let predicate = NSPredicate(format: "date = %@", date)
+            fetchRequest.predicate = predicate
+            
+            guard let diary = try? self.persistentContainer.viewContext.fetch(fetchRequest) as? [Diary] else {
+                return
+            }
+            DispatchQueue.main.async {
+                print(diary.count)
+                self.fetchDiary.send(diary)
+            }
         }
-        print(diary.count)
-        fetchDiary.send(diary)
     }
     
     /// fullSize image 가져오기
@@ -67,6 +85,7 @@ final class CoreDataManager {
     
     /// diary 저장하기
     func saveDiary(type: DiaryType, diary: DiaryEntity) {
+        print("save: ", Thread.isMainThread)
         fetchDate = diary.date ?? fetchDate
         guard let entity = NSEntityDescription.entity(forEntityName: type.entityName, in: persistentContainer.viewContext) else { return }
         
@@ -82,33 +101,22 @@ final class CoreDataManager {
         }
         
         saveFullSizeImage(id: diary.id, image: diary.image)
-        
-        do {
-            try persistentContainer.viewContext.save()
-        } catch {
-            persistentContainer.viewContext.rollback()
-        }
-        
-        getDiary(type: type, date: fetchDate)
+        saveContext(type: type)
     }
     
     /// diary 삭제하기
     func deleteDiary(diary: Diary, type: DiaryType) {
+        print("delete: ", Thread.isMainThread)
         guard let object = diary as? NSManagedObject else { return }
         fetchDate = diary.date ?? fetchDate
         persistentContainer.viewContext.delete(object)
         
-        do {
-            try persistentContainer.viewContext.save()
-        } catch {
-            persistentContainer.viewContext.rollback()
-        }
-        
-        getDiary(type: type, date: fetchDate)
+        saveContext(type: type)
     }
     
     /// diary 수정하기
     func updateDiary(type: DiaryType, originalDiary: Diary, diary: DiaryEntity) {
+        print("update: ", Thread.isMainThread)
         fetchDate = diary.date ?? fetchDate
         let resizeImage = diary.image?.resize(scale: 0.4)
         
@@ -124,14 +132,7 @@ final class CoreDataManager {
         }
         updateFullSizeImage(id: diary.id, image: diary.image)
         
-        
-        do {
-            try persistentContainer.viewContext.save()
-        } catch {
-            persistentContainer.viewContext.rollback()
-        }
-        
-        getDiary(type: type, date: fetchDate)
+        saveContext(type: type)
     }
 }
 

@@ -30,7 +30,6 @@ final class TimeDiaryViewModel {
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
         bindingCoreDataManager()
-        coreDataManager.getDiary(type: .time, date: String.getDate())
     }
 }
 
@@ -42,8 +41,11 @@ extension TimeDiaryViewModel {
     }
     
     func deleteDiary(index: Int) {
-        let diary = diarys[index]
-        coreDataManager.deleteDiary(diary: diary, type: .time)
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            let diary = self.diarys[index]
+            self.coreDataManager.deleteDiary(diary: diary, type: .time)
+        }
     }
     
     func getFullSizeImage(id: String) {
@@ -59,6 +61,7 @@ extension TimeDiaryViewModel {
                 filterDiarys(diarys: $0)
             }
             .sink { [weak self] diarys in
+                print("sink: ",Thread.isMainThread)
                 self?.diarys = diarys
             }.store(in: &subscriptions)
         
