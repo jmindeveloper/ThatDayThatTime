@@ -16,6 +16,7 @@ final class CoreDataManager {
     private let containerName = "ThatDayThatTime"
     private let persistentContainer: NSPersistentContainer
     let fetchDiary = PassthroughSubject<[Diary], Never>()
+    let fetchFullSizeImage = PassthroughSubject<Data?, Never>()
     private var fetchDate = String.getDate()
     
     // MARK: - LifeCycle
@@ -55,6 +56,13 @@ final class CoreDataManager {
         }
         
         return image
+    }
+    
+    func getFullSizeImage(id: String) {
+        let imageObject = getImageObject(id: id)
+        let image = imageObject?.image
+        
+        fetchFullSizeImage.send(image)
     }
     
     /// diary 저장하기

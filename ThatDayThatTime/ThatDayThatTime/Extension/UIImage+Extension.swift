@@ -13,14 +13,16 @@ extension UIImage {
         guard let data = diary?.image else {
             return nil
         }
-        
-        if let image = ImageCacheManager.shared.getImage((diary?.id)!) {
-            return image
+        let image = UIImage(data: data)
+        return image
+    }
+    
+    static func getImage(data: Data?) -> UIImage? {
+        guard let data = data else {
+            return nil
         }
-        
-        let image = UIImage(data: data)!
-//        ImageCacheManager.shared.storeImage((diary?.id)!, image: image)
-        return UIImage(data: data)
+        let image = UIImage(data: data)
+        return image
     }
     
     func resize(scale: CGFloat) -> UIImage {

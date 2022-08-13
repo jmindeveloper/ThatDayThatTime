@@ -200,6 +200,13 @@ extension TimeDiaryViewController {
                 self.viewModel.diarys.isEmpty ? false : true
                 self.timeDiaryCollectionView.reloadSections(IndexSet(0...0))
             }.store(in: &subscriptions)
+        
+        viewModel.updateFullSizeImage
+            .sink { [weak self] image in
+                let vc = FullPhotoViewController(image: image)
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
+            }.store(in: &subscriptions)
     }
     
     private func bindingTimeDiaryImage(
@@ -207,11 +214,9 @@ extension TimeDiaryViewController {
         index: Int
     ) {
         cell.tapImage = { [weak self] in
-            let image = UIImage.getImage(with: self?.viewModel.diarys[index])
-            let vc = FullPhotoViewController(image: image)
-            vc.modalPresentationStyle = .fullScreen
-            
-            self?.present(vc, animated: true)
+            guard let self = self else { return }
+            let id = self.viewModel.diarys[index].id
+            self.viewModel.getFullSizeImage(id: id)
         }
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 final class TimeDiaryViewModel {
     
@@ -21,6 +22,7 @@ final class TimeDiaryViewModel {
     }
     var date = String.getDate()
     let updateDiarys = PassthroughSubject<Void, Never>()
+    let updateFullSizeImage = PassthroughSubject<UIImage?, Never>()
     let coreDataManager: CoreDataManager
     private var subscriptions = Set<AnyCancellable>()
         
@@ -43,6 +45,10 @@ extension TimeDiaryViewModel {
         let diary = diarys[index]
         coreDataManager.deleteDiary(diary: diary, type: .time)
     }
+    
+    func getFullSizeImage(id: String) {
+        coreDataManager.getFullSizeImage(id: id)
+    }
 }
 
 // MARK: - Binding
@@ -54,6 +60,14 @@ extension TimeDiaryViewModel {
             }
             .sink { [weak self] diarys in
                 self?.diarys = diarys
+            }.store(in: &subscriptions)
+        
+        coreDataManager.fetchFullSizeImage
+            .map {
+                UIImage.getImage(data: $0)
+            }
+            .sink { [weak self] image in
+                self?.updateFullSizeImage.send(image)
             }.store(in: &subscriptions)
     }
     
