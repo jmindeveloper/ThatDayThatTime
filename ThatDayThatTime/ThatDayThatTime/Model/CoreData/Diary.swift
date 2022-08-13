@@ -10,6 +10,7 @@ import UIKit
 protocol Diary {
     var id: String { get }
     var image: Data? { get }
+    var date: String? { get }
 }
 
 struct DiaryEntity {

@@ -16,6 +16,7 @@ final class CoreDataManager {
     private let containerName = "ThatDayThatTime"
     private let persistentContainer: NSPersistentContainer
     let fetchDiary = PassthroughSubject<[Diary], Never>()
+    private var fetchDate = String.getDate()
     
     // MARK: - LifeCycle
     init() {
@@ -31,13 +32,15 @@ final class CoreDataManager {
     
     // MARK: - Method
     /// diary 목록 가져오기
-    func getDiary(type: DiaryType) {
+    func getDiary(type: DiaryType, date: String) {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
+        let predicate = NSPredicate(format: "date = %@", date)
+        fetchRequest.predicate = predicate
         
         guard let diary = try? persistentContainer.viewContext.fetch(fetchRequest) as? [Diary] else {
             return
         }
-        
+        print(diary.count)
         fetchDiary.send(diary)
     }
     
@@ -52,6 +55,7 @@ final class CoreDataManager {
     
     /// diary 저장하기
     func saveDiary(type: DiaryType, diary: DiaryEntity) {
+        fetchDate = diary.date ?? fetchDate
         guard let entity = NSEntityDescription.entity(forEntityName: type.entityName, in: persistentContainer.viewContext) else { return }
         
         let newDiary = NSManagedObject(entity: entity, insertInto: persistentContainer.viewContext)
@@ -73,12 +77,13 @@ final class CoreDataManager {
             persistentContainer.viewContext.rollback()
         }
         
-        getDiary(type: type)
+        getDiary(type: type, date: fetchDate)
     }
     
     /// diary 삭제하기
     func deleteDiary(diary: Diary, type: DiaryType) {
         guard let object = diary as? NSManagedObject else { return }
+        fetchDate = diary.date ?? fetchDate
         persistentContainer.viewContext.delete(object)
         
         do {
@@ -86,11 +91,13 @@ final class CoreDataManager {
         } catch {
             persistentContainer.viewContext.rollback()
         }
-        getDiary(type: type)
+        
+        getDiary(type: type, date: fetchDate)
     }
     
     /// diary 수정하기
     func updateDiary(type: DiaryType, originalDiary: Diary, diary: DiaryEntity) {
+        fetchDate = diary.date ?? fetchDate
         if let timeDiary = originalDiary as? TimeDiary {
             timeDiary.content = diary.content
             timeDiary.image = diary.image?.jpegData(compressionQuality: 1)
@@ -107,7 +114,8 @@ final class CoreDataManager {
         } catch {
             persistentContainer.viewContext.rollback()
         }
-        getDiary(type: type)
+        
+        getDiary(type: type, date: fetchDate)
     }
 }
 
