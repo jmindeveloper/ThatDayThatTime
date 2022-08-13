@@ -76,14 +76,6 @@ final class CoreDataManager {
         getDiary(type: type)
     }
     
-    private func saveFullSizeImage(id: String?, image: UIImage?) {
-        guard let imageEntity = NSEntityDescription.entity(forEntityName: "Image", in: persistentContainer.viewContext) else { return }
-        let imageObject = NSManagedObject(entity: imageEntity, insertInto: persistentContainer.viewContext)
-        
-        imageObject.setValue(id, forKey: "id")
-        imageObject.setValue(image?.jpegData(compressionQuality: 1), forKey: "image")
-    }
-    
     /// diary 삭제하기
     func deleteDiary(diary: Diary, type: DiaryType) {
         guard let object = diary as? NSManagedObject else { return }
@@ -116,5 +108,22 @@ final class CoreDataManager {
             persistentContainer.viewContext.rollback()
         }
         getDiary(type: type)
+    }
+}
+
+extension CoreDataManager {
+    /// fullSize 이미지 저장
+    private func saveFullSizeImage(id: String?, image: UIImage?) {
+        guard let imageEntity = NSEntityDescription.entity(forEntityName: "Image", in: persistentContainer.viewContext) else { return }
+        let imageObject = NSManagedObject(entity: imageEntity, insertInto: persistentContainer.viewContext)
+        
+        imageObject.setValue(id, forKey: "id")
+        imageObject.setValue(image?.jpegData(compressionQuality: 1), forKey: "image")
+    }
+    
+    private func updateFullSizeImage(id: String, image: UIImage?) {
+        // 이미지 가져오는 함수
+        
+        // 업데이트 함수
     }
 }
