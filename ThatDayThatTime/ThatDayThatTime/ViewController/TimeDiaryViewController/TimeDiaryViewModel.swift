@@ -7,11 +7,11 @@
 
 import Foundation
 import Combine
+import UIKit
 
 final class TimeDiaryViewModel {
     
     // MARK: - Properteis
-    private var allDiary = [Diary]()
     var diarys = [TimeDiary]() {
         didSet {
             diarys.sort {
@@ -22,16 +22,14 @@ final class TimeDiaryViewModel {
     }
     var date = String.getDate()
     let updateDiarys = PassthroughSubject<Void, Never>()
+    let updateFullSizeImage = PassthroughSubject<UIImage?, Never>()
     let coreDataManager: CoreDataManager
     private var subscriptions = Set<AnyCancellable>()
-    private let filterDiary = PassthroughSubject<Void, Never>()
         
     // MARK: - LifeCycle
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
         bindingCoreDataManager()
-        bindingSelf()
-        coreDataManager.getDiary(type: .time)
     }
 }
 
@@ -39,12 +37,19 @@ final class TimeDiaryViewModel {
 extension TimeDiaryViewModel {
     func changeDate(date: String) {
         self.date = date
-        filterDiary.send()
+        coreDataManager.getDiary(type: .time, date: date)
     }
     
     func deleteDiary(index: Int) {
-        let diary = diarys[index]
-        coreDataManager.deleteDiary(diary: diary, type: .time)
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            let diary = self.diarys[index]
+            self.coreDataManager.deleteDiary(diary: diary, type: .time)
+        }
+    }
+    
+    func getFullSizeImage(id: String) {
+        coreDataManager.getFullSizeImage(id: id)
     }
 }
 
@@ -52,29 +57,27 @@ extension TimeDiaryViewModel {
 extension TimeDiaryViewModel {
     private func bindingCoreDataManager() {
         coreDataManager.fetchDiary
-            .sink { [weak self] diarys in
-                self?.allDiary = diarys
-                self?.filterDiary.send()
-            }.store(in: &subscriptions)
-    }
-    
-    private func bindingSelf() {
-        filterDiary
             .flatMap { [unowned self] in
-                filterDiarys()
+                filterDiarys(diarys: $0)
             }
             .sink { [weak self] diarys in
+                print("sink: ",Thread.isMainThread)
                 self?.diarys = diarys
             }.store(in: &subscriptions)
+        
+        coreDataManager.fetchFullSizeImage
+            .map {
+                UIImage.getImage(data: $0)
+            }
+            .sink { [weak self] image in
+                self?.updateFullSizeImage.send(image)
+            }.store(in: &subscriptions)
     }
     
-    private func filterDiarys() -> AnyPublisher<[TimeDiary], Never> {
-        allDiary.publisher
+    private func filterDiarys(diarys: [Diary]) -> AnyPublisher<[TimeDiary], Never> {
+        diarys.publisher
             .compactMap {
                 $0 as? TimeDiary
-            }
-            .filter {
-                $0.date == date
             }
             .collect()
             .eraseToAnyPublisher()

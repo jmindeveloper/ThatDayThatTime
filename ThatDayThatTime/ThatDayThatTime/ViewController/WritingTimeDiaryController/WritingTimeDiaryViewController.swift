@@ -237,9 +237,8 @@ extension WritingTimeDiaryViewController {
                 if viewModel.diary.isEmpty {
                     self.presentCantSaveAlert()
                 } else {
-                    viewModel.saveTimeDiary {
-                        self.dismiss(animated: true)
-                    }
+                    self.dismiss(animated: true)
+                    viewModel.saveTimeDiary()
                 }
             }.store(in: &subscriptions)
         
