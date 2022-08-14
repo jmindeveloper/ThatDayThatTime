@@ -53,7 +53,7 @@ final class MoveDayDiaryView: UIView {
 
 // MARK: - Method
 extension MoveDayDiaryView {
-    func setDate(date: String) {
+    func cofigureDateLabel(date: String) {
         dateLabel.text = date
     }
 }

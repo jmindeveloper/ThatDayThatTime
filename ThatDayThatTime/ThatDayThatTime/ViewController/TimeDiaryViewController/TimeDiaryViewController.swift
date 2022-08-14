@@ -24,7 +24,7 @@ final class TimeDiaryViewController: UIViewController {
         calendar.bindingSelectedDate { [weak self] date in
             self?.dateLineView.configureDateLabel(date: date)
             self?.viewModel.changeDate(date: date)
-            self?.moveDayDiaryView.setDate(date: date)
+            self?.moveDayDiaryView.cofigureDateLabel(date: date)
         }
         
         return calendar
@@ -88,6 +88,7 @@ final class TimeDiaryViewController: UIViewController {
         
         configureDateLineViewGesture()
         configureTimeDiaryCollectionViewGesture()
+        configureMoveDayDiaryGesture()
     }
 }
 
@@ -199,6 +200,17 @@ extension TimeDiaryViewController {
         timeDiaryCollectionView.addGestureRecognizer(leftSwipeGesture)
         timeDiaryCollectionView.addGestureRecognizer(rightSwipeGesture)
         timeDiaryCollectionView.addGestureRecognizer(longPressGesture)
+    }
+    
+    private func configureMoveDayDiaryGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        tapGesture.tapPublisher
+            .sink { [weak self] _ in
+                let vc = DayDiaryViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }.store(in: &subscriptions)
+        
+        moveDayDiaryView.addGestureRecognizer(tapGesture)
     }
 }
 

@@ -24,6 +24,7 @@
 		0E81DEE728A1117A00A2B7C6 /* DTCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81DEE628A1117A00A2B7C6 /* DTCalendarCell.swift */; };
 		0E8AB4D628A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8AB4D528A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift */; };
 		0E8DB29428A8CCAE006647F4 /* MoveDayDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8DB29328A8CCAE006647F4 /* MoveDayDiaryView.swift */; };
+		0E8DB29728A8DD55006647F4 /* DayDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8DB29628A8DD55006647F4 /* DayDiaryViewController.swift */; };
 		0E9BE57228A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57128A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift */; };
 		0E9BE57428A4CBBB0096A1F5 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57328A4CBBB0096A1F5 /* UIImage+Extension.swift */; };
 		0E9BE57628A4EC850096A1F5 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57528A4EC850096A1F5 /* FullImageViewController.swift */; };
@@ -63,6 +64,7 @@
 		0E81DEE628A1117A00A2B7C6 /* DTCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendarCell.swift; sourceTree = "<group>"; };
 		0E8AB4D528A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		0E8DB29328A8CCAE006647F4 /* MoveDayDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveDayDiaryView.swift; sourceTree = "<group>"; };
+		0E8DB29628A8DD55006647F4 /* DayDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDiaryViewController.swift; sourceTree = "<group>"; };
 		0E9BE57128A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiritngTimeDiaryViewModel.swift; sourceTree = "<group>"; };
 		0E9BE57328A4CBBB0096A1F5 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		0E9BE57528A4EC850096A1F5 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +155,14 @@
 			path = DTCalendar;
 			sourceTree = "<group>";
 		};
+		0E8DB29528A8DD42006647F4 /* DayDiaryViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0E8DB29628A8DD55006647F4 /* DayDiaryViewController.swift */,
+			);
+			path = DayDiaryViewController;
+			sourceTree = "<group>";
+		};
 		0E9BE57028A4C99F0096A1F5 /* WritingTimeDiaryController */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +220,7 @@
 		0EBD21A028A0E6B4006F19FE /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0E8DB29528A8DD42006647F4 /* DayDiaryViewController */,
 				0E2DED7628A514BC007F131C /* TimeDiaryViewController */,
 				0E9BE57028A4C99F0096A1F5 /* WritingTimeDiaryController */,
 				0E9BE57528A4EC850096A1F5 /* FullImageViewController.swift */,
@@ -337,6 +348,7 @@
 				0E81DEDF28A10E6E00A2B7C6 /* String+Extension.swift in Sources */,
 				0EBD21A228A0E6C9006F19FE /* TimeDiaryViewController.swift in Sources */,
 				0E8079CC28A7B1D90050B9EB /* Image+CoreDataProperties.swift in Sources */,
+				0E8DB29728A8DD55006647F4 /* DayDiaryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
