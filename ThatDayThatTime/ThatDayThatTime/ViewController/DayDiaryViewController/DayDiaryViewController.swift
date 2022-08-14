@@ -37,7 +37,19 @@ final class DayDiaryViewController: UIViewController {
         return textView
     }()
     
+    // MARK: - Properties
+    let viewModel: DayDiaryViewModel?
+    
     // MARK: - LifeCycle
+    init(viewModel: DayDiaryViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor

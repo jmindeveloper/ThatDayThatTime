@@ -25,6 +25,7 @@ final class TimeDiaryViewController: UIViewController {
             self?.dateLineView.configureDateLabel(date: date)
             self?.viewModel.changeDate(date: date)
             self?.moveDayDiaryView.cofigureDateLabel(date: date)
+            self?.date = date
         }
         
         return calendar
@@ -63,6 +64,7 @@ final class TimeDiaryViewController: UIViewController {
     private var calendarHidden = true
     private var subscriptions = Set<AnyCancellable>()
     private let viewModel: TimeDiaryViewModel
+    private var date: String = ""
     
     // MARK: - LifeCycle
     init(viewModel: TimeDiaryViewModel) {
@@ -133,6 +135,15 @@ extension TimeDiaryViewController {
         vc.modalPresentationStyle = .fullScreen
         
         self.present(vc, animated: true)
+    }
+    
+    private func pushDayDiaryViewController() {
+        let dayDiaryViewModel = DayDiaryViewModel(
+            coreDataManager: viewModel.coreDataManager,
+            date: self.date
+        )
+        let vc = DayDiaryViewController(viewModel: dayDiaryViewModel)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func presentDeleteAlert(_ index: Int) {
@@ -206,8 +217,7 @@ extension TimeDiaryViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: nil)
         tapGesture.tapPublisher
             .sink { [weak self] _ in
-                let vc = DayDiaryViewController()
-                self?.navigationController?.pushViewController(vc, animated: true)
+                self?.pushDayDiaryViewController()
             }.store(in: &subscriptions)
         
         moveDayDiaryView.addGestureRecognizer(tapGesture)
