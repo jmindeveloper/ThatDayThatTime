@@ -16,6 +16,7 @@ final class DayDiaryViewModel {
     var coreDataManager: CoreDataManager
     private var subscriptions = Set<AnyCancellable>()
     let notExistDayDiary = PassthroughSubject<Void, Never>()
+    let existDayDiary = PassthroughSubject<DayDiary, Never>()
     
     // MARK: - LifeCycle
     init(coreDataManager: CoreDataManager, date: String) {
@@ -40,10 +41,11 @@ extension DayDiaryViewModel {
                 $0.first as? DayDiary
             }
             .sink { [weak self] diary in
-                if diary == nil {
-                    self?.notExistDayDiary.send()
-                } else {
+                if let diary = diary {
+                    self?.existDayDiary.send(diary)
                     self?.dayDiary = diary
+                } else {
+                    self?.notExistDayDiary.send()
                 }
             }.store(in: &subscriptions)
     }

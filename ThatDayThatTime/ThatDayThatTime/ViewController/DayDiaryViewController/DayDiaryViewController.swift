@@ -89,6 +89,15 @@ extension DayDiaryViewController {
             .sink { [weak self] in
                 self?.presentWritingDayDiaryViewController()
             }.store(in: &subscriptions)
+        
+        viewModel.existDayDiary
+            .sink { [weak self] diary in
+                self?.diaryTextView.text = diary.content
+                self?.imageView.image = UIImage.getImage(data: diary.image)
+                self?.imageView.snp.updateConstraints {
+                    $0.height.equalTo(self?.imageView.image == nil ? 0 : 60)
+                }
+            }.store(in: &subscriptions)
     }
 }
 
