@@ -105,13 +105,13 @@ extension TimeDiaryViewController {
          )
         addTimeDiaryButton.tapPublisher
             .sink { [weak self] in
-                self?.pushWritingTimeDiaryViewController()
+                self?.presentWritingTimeDiaryViewController()
             }.store(in: &subscriptions)
         
         navigationItem.rightBarButtonItem = addTimeDiaryButton
     }
     
-    private func pushWritingTimeDiaryViewController() {
+    private func presentWritingTimeDiaryViewController() {
         let writingTimeDiaryViewModel = WritingTimeDiaryViewModel(
             date: viewModel.date,
             coreDataManager: viewModel.coreDataManager
@@ -124,7 +124,7 @@ extension TimeDiaryViewController {
         self.present(vc, animated: true)
     }
     
-    private func pushWritingTimeDiaryViewController(with diary: TimeDiary) {
+    private func presentWritingTimeDiaryViewController(with diary: TimeDiary) {
         let writingTimeDiaryViewModel = WritingTimeDiaryViewModel(
             timeDiary: diary,
             coreDataManager: viewModel.coreDataManager
@@ -350,6 +350,6 @@ extension TimeDiaryViewController: UICollectionViewDataSource {
 extension TimeDiaryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let diary = viewModel.diarys[indexPath.row]
-        pushWritingTimeDiaryViewController(with: diary)
+        presentWritingTimeDiaryViewController(with: diary)
     }
 }
