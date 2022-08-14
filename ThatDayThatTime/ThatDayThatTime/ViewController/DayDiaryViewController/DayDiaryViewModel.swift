@@ -12,8 +12,8 @@ final class DayDiaryViewModel {
     
     // MARK: - Properties
     private var dayDiary: DayDiary?
-    private var date: String
-    private var coreDataManager: CoreDataManager
+    var date: String
+    var coreDataManager: CoreDataManager
     private var subscriptions = Set<AnyCancellable>()
     let notExistDayDiary = PassthroughSubject<Void, Never>()
     
@@ -21,8 +21,14 @@ final class DayDiaryViewModel {
     init(coreDataManager: CoreDataManager, date: String) {
         self.coreDataManager = coreDataManager
         self.date = date
-        coreDataManager.getDiary(type: .day, date: date)
         bindingCoreDataManager()
+    }
+}
+
+// MARK: - Method
+extension DayDiaryViewModel {
+    func getDiary() {
+        coreDataManager.getDiary(type: .day, date: date)
     }
 }
 

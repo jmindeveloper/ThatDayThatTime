@@ -81,7 +81,7 @@ final class WritingTimeDiaryViewController: UIViewController {
     
     // MARK: - Properteis
     private var subscriptions = Set<AnyCancellable>()
-    private var viewModel: WritingTimeDiaryViewModel?
+    private var viewModel: WritingTimeDiaryViewModel
     private var isTimeChangeMode = false
     
     // MARK: - LifeCycle
@@ -108,7 +108,7 @@ final class WritingTimeDiaryViewController: UIViewController {
         setConstraintsOfDiaryStringCountLabel()
         keyboardObserve()
         
-        diaryTextView.text = viewModel?.diary
+        diaryTextView.text = viewModel.diary
         bindingViewModel()
         bindingViewProperties()
         
@@ -163,7 +163,7 @@ extension WritingTimeDiaryViewController {
             
             picker.datePublisher
                 .sink { [weak self] date in
-                    self?.viewModel?.time.send(String.getTime(date: date))
+                    self?.viewModel.time.send(String.getTime(date: date))
                 }.store(in: &subscriptions)
             
             diaryTextView.inputView = picker
@@ -212,19 +212,19 @@ extension WritingTimeDiaryViewController {
 // MARK: - Binding
 extension WritingTimeDiaryViewController {
     private func bindingViewModel() {
-        viewModel?.time
+        viewModel.time
             .sink { [weak self] time in
                 self?.timeLabel.text = time
             }.store(in: &subscriptions)
         
-        viewModel?.image.sink { [weak self] image in
+        viewModel.image.sink { [weak self] image in
             self?.imageView.image = image
             self?.imageView.snp.updateConstraints {
                 $0.height.equalTo(self?.imageView.image == nil ? 0 : 60)
             }
         }.store(in: &subscriptions)
         
-        viewModel?.date.sink { [weak self] date in
+        viewModel.date.sink { [weak self] date in
             self?.dateLineView.configureDateLabel(date: date)
         }.store(in: &subscriptions)
     }
@@ -232,13 +232,12 @@ extension WritingTimeDiaryViewController {
     private func bindingViewProperties() {
         saveButton.tapPublisher
             .sink { [weak self] in
-                guard let self = self,
-                      let viewModel = self.viewModel else { return }
-                if viewModel.diary.isEmpty {
+                guard let self = self else { return }
+                if self.viewModel.diary.isEmpty {
                     self.presentCantSaveAlert()
                 } else {
                     self.dismiss(animated: true)
-                    viewModel.saveTimeDiary()
+                    self.viewModel.saveTimeDiary()
                 }
             }.store(in: &subscriptions)
         
@@ -249,8 +248,8 @@ extension WritingTimeDiaryViewController {
         
         diaryTextView.textPublisher
             .sink { [weak self] diary in
-                self?.viewModel?.diary = diary ?? ""
-                let diaryStringCount = self?.viewModel?.getDiaryStringCount() ?? 0
+                self?.viewModel.diary = diary ?? ""
+                let diaryStringCount = self?.viewModel.getDiaryStringCount() ?? 0
                 self?.diaryStringCountLabel.text = "\(diaryStringCount)/300"
             }.store(in: &subscriptions)
     }

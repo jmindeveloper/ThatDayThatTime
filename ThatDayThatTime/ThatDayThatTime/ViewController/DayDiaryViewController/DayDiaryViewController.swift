@@ -39,7 +39,7 @@ final class DayDiaryViewController: UIViewController {
     }()
     
     // MARK: - Properties
-    private let viewModel: DayDiaryViewModel?
+    private let viewModel: DayDiaryViewModel
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
@@ -61,6 +61,7 @@ final class DayDiaryViewController: UIViewController {
         setConstraintsOfDiaryTextView()
         
         bindingViewModel()
+        viewModel.getDiary()
     }
     
 }
@@ -68,7 +69,12 @@ final class DayDiaryViewController: UIViewController {
 // MARK: - Method
 extension DayDiaryViewController {
     private func presentWritingDayDiaryViewController() {
-        let vc = WritingDayDiaryViewController()
+        let viewModel = WritingDayDiaryViewModel(
+            date: viewModel.date,
+            coreDataManager: viewModel.coreDataManager
+        ) 
+        
+        let vc = WritingDayDiaryViewController(viewModel: viewModel)
         vc.modalTransitionStyle = .crossDissolve
         vc.modalPresentationStyle = .fullScreen
         
@@ -79,7 +85,7 @@ extension DayDiaryViewController {
 // MARK: - Binding
 extension DayDiaryViewController {
     private func bindingViewModel() {
-        viewModel?.notExistDayDiary
+        viewModel.notExistDayDiary
             .sink { [weak self] in
                 self?.presentWritingDayDiaryViewController()
             }.store(in: &subscriptions)

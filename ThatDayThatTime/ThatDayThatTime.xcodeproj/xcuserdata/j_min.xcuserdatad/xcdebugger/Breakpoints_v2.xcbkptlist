@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C23A817C-7395-4740-8206-1BCF40CE2400"
+            uuid = "F7FEE0E9-927F-4DF2-B324-F38B5B3DC388"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ThatDayThatTime/Manager/CoreDataManager.swift"
+            filePath = "ThatDayThatTime/ViewController/WritingDayDiaryViewController/WritingDayDiaryViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
-            landmarkName = "deleteFullSizeImage(id:)"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "init(date:coreDataManager:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
