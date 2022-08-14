@@ -56,7 +56,7 @@ extension TimeDiaryViewModel {
 // MARK: - Binding
 extension TimeDiaryViewModel {
     private func bindingCoreDataManager() {
-        coreDataManager.fetchDiary
+        coreDataManager.fetchTimeDiary
             .flatMap { [unowned self] in
                 filterDiarys(diarys: $0)
             }
