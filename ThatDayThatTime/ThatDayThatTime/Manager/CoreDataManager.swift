@@ -15,7 +15,8 @@ final class CoreDataManager {
     // MARK: - Properties
     private let containerName = "ThatDayThatTime"
     private let persistentContainer: NSPersistentContainer
-    let fetchDiary = PassthroughSubject<[Diary], Never>()
+    let fetchTimeDiary = PassthroughSubject<[Diary], Never>()
+    let fetchDayDiary = PassthroughSubject<[Diary], Never>()
     let fetchFullSizeImage = PassthroughSubject<Data?, Never>()
     private var fetchDate = String.getDate()
     
@@ -56,7 +57,11 @@ final class CoreDataManager {
                 return
             }
             DispatchQueue.main.async {
-                self.fetchDiary.send(diary)
+                if type == .time {
+                    self.fetchTimeDiary.send(diary)
+                } else {
+                    self.fetchDayDiary.send(diary)
+                }
             }
         }
     }

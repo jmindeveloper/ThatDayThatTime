@@ -1,8 +1,8 @@
 //
-//  WritingTimeDiaryViewController.swift
+//  WritingDayDiaryViewController.swift
 //  ThatDayThatTime
 //
-//  Created by J_Min on 2022/08/10.
+//  Created by J_Min on 2022/08/14.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import Combine
 import CombineCocoa
 import PhotosUI
 
-final class WritingTimeDiaryViewController: UIViewController {
+final class WritingDayDiaryViewController: UIViewController {
     
     // MARK: - ViewProperties
     private let navigationBar: UINavigationBar = {
@@ -25,16 +25,6 @@ final class WritingTimeDiaryViewController: UIViewController {
         let dateLineView = DateLineView()
         
         return dateLineView
-    }()
-    
-    private let timeLabel: UILabel = {
-        let label = UILabel()
-        label.text = String.getTime()
-        label.textColor = .darkGray
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 20, weight: .semibold)
-        
-        return label
     }()
     
     private let imageView: UIImageView = {
@@ -81,11 +71,11 @@ final class WritingTimeDiaryViewController: UIViewController {
     
     // MARK: - Properteis
     private var subscriptions = Set<AnyCancellable>()
-    private var viewModel: WritingTimeDiaryViewModel
+    private var viewModel: WritingDayDiaryViewModel
     private var isTimeChangeMode = false
     
     // MARK: - LifeCycle
-    init(viewModel: WritingTimeDiaryViewModel) {
+    init(viewModel: WritingDayDiaryViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -101,7 +91,6 @@ final class WritingTimeDiaryViewController: UIViewController {
         configureSubViews()
         setConstraintsNavigationBar()
         setConstraintsOfDateLineView()
-        setConstraintsOfTimeLabel()
         setConstraintsOfBottomButtons()
         setConstraintsOfImageView()
         setConstraintsOfDiaryTextView()
@@ -113,7 +102,6 @@ final class WritingTimeDiaryViewController: UIViewController {
         bindingViewProperties()
         
         configureImageViewGesture()
-        configureTimeLabelGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,7 +112,7 @@ final class WritingTimeDiaryViewController: UIViewController {
 }
 
 // MARK: - Method
-extension WritingTimeDiaryViewController {
+extension WritingDayDiaryViewController {
     private func configureNavigation() {
         let addTimeDiaryButton = UIBarButtonItem(
             image: UIImage(systemName: "xmark"),
@@ -147,30 +135,6 @@ extension WritingTimeDiaryViewController {
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
-    }
-    
-    private func keyboardTimePickerMode(isTimeChange: Bool) {
-        diaryTextView.resignFirstResponder()
-        
-        if isTimeChange {
-            let picker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 400))
-            
-            if #available(iOS 13.4, *) {
-                picker.preferredDatePickerStyle = .wheels
-            }
-            picker.datePickerMode = .time
-            picker.locale = Locale(identifier: "ko_KR")
-            
-            picker.datePublisher
-                .sink { [weak self] date in
-                    self?.viewModel.time.send(String.getTime(date: date))
-                }.store(in: &subscriptions)
-            
-            diaryTextView.inputView = picker
-        } else {
-            diaryTextView.inputView = nil
-        }
-        diaryTextView.becomeFirstResponder()
     }
     
     private func openCamera() {
@@ -197,7 +161,7 @@ extension WritingTimeDiaryViewController {
 }
 
 // MARK: - TargetMethod
-extension WritingTimeDiaryViewController {
+extension WritingDayDiaryViewController {
     @objc func keyboardWillShowChangeConstraint(_ sender: Notification) {
         var keyboardHeight: CGFloat = 0
         
@@ -210,13 +174,8 @@ extension WritingTimeDiaryViewController {
 }
 
 // MARK: - Binding
-extension WritingTimeDiaryViewController {
+extension WritingDayDiaryViewController {
     private func bindingViewModel() {
-        viewModel.time
-            .sink { [weak self] time in
-                self?.timeLabel.text = time
-            }.store(in: &subscriptions)
-        
         viewModel.image.sink { [weak self] image in
             self?.imageView.image = image
             self?.imageView.snp.updateConstraints {
@@ -232,7 +191,7 @@ extension WritingTimeDiaryViewController {
     private func bindingViewProperties() {
         saveButton.tapPublisher
             .sink { [weak self] in
-                guard let self = self else { return }
+                guard let self = self  else { return }
                 if self.viewModel.diary.isEmpty {
                     self.presentCantSaveAlert()
                 } else {
@@ -250,13 +209,13 @@ extension WritingTimeDiaryViewController {
             .sink { [weak self] diary in
                 self?.viewModel.diary = diary ?? ""
                 let diaryStringCount = self?.viewModel.getDiaryStringCount() ?? 0
-                self?.diaryStringCountLabel.text = "\(diaryStringCount)/300"
+                self?.diaryStringCountLabel.text = "\(diaryStringCount)/700"
             }.store(in: &subscriptions)
     }
 }
 
 // MARK: - ConfigureGesture
-extension WritingTimeDiaryViewController {
+extension WritingDayDiaryViewController {
     private func configureImageViewGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: nil)
         
@@ -270,23 +229,10 @@ extension WritingTimeDiaryViewController {
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(tapGesture)
     }
-    
-    private func configureTimeLabelGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
-        tapGesture.tapPublisher
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.isTimeChangeMode.toggle()
-                self.keyboardTimePickerMode(isTimeChange: self.isTimeChangeMode)
-            }.store(in: &subscriptions)
-        
-        timeLabel.isUserInteractionEnabled = true
-        timeLabel.addGestureRecognizer(tapGesture)
-    }
 }
 
 // MARK: - Alert
-extension WritingTimeDiaryViewController {
+extension WritingDayDiaryViewController {
     private func presentImagePickerActionSheet() {
         let alert = AlertManager(style: .actionSheet).createAlert()
             .addAction(actionTytle: "사진앨범", style: .default) { [weak self] in
@@ -318,11 +264,11 @@ extension WritingTimeDiaryViewController {
 }
 
 // MARK: - UI
-extension WritingTimeDiaryViewController {
+extension WritingDayDiaryViewController {
     private func configureSubViews() {
-        [dateLineView, navigationBar, timeLabel,
-         diaryTextView, diaryStringCountLabel,
-         imageView, photoButton, saveButton].forEach {
+        [dateLineView, navigationBar, diaryTextView,
+         diaryStringCountLabel, imageView, photoButton,
+         saveButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -344,13 +290,6 @@ extension WritingTimeDiaryViewController {
         }
     }
     
-    private func setConstraintsOfTimeLabel() {
-        timeLabel.snp.makeConstraints {
-            $0.top.equalTo(dateLineView.snp.bottom).offset(5)
-            $0.centerX.width.equalToSuperview()
-        }
-    }
-    
     private func setConstraintsOfBottomButtons() {
         photoButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-5)
@@ -365,7 +304,7 @@ extension WritingTimeDiaryViewController {
     
     private func setConstraintsOfImageView() {
         imageView.snp.makeConstraints {
-            $0.top.equalTo(timeLabel.snp.bottom).offset(5)
+            $0.top.equalTo(dateLineView.snp.bottom).offset(5)
             $0.width.equalToSuperview().multipliedBy(0.9)
             $0.height.equalTo(60)
             $0.centerX.equalToSuperview()
@@ -407,3 +346,4 @@ extension WritingTimeDiaryViewController {
         }
     }
 }
+

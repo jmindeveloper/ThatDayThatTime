@@ -24,6 +24,8 @@ final class TimeDiaryViewController: UIViewController {
         calendar.bindingSelectedDate { [weak self] date in
             self?.dateLineView.configureDateLabel(date: date)
             self?.viewModel.changeDate(date: date)
+            self?.moveDayDiaryView.cofigureDateLabel(date: date)
+            self?.date = date
         }
         
         return calendar
@@ -41,17 +43,28 @@ final class TimeDiaryViewController: UIViewController {
     
     private let noTimeDiaryLabel: UILabel = {
         let label = UILabel()
-        label.text = "작성된 시간일기가 없습니다."
+        label.text = "작성된 시간의 기록이 없습니다."
         label.textColor = .darkGray
         label.textAlignment = .center
         
         return label
     }()
     
+    private let moveDayDiaryView: MoveDayDiaryView = {
+        let moveDayDiaryView = MoveDayDiaryView()
+        moveDayDiaryView.backgroundColor = .viewBackgroundColor
+        moveDayDiaryView.layer.shadowColor = UIColor.black.cgColor
+        moveDayDiaryView.layer.shadowOpacity = 0.1
+        moveDayDiaryView.layer.shadowRadius = 1
+        moveDayDiaryView.layer.shadowOffset = CGSize(width: 0, height: -3)
+        return moveDayDiaryView
+    }()
+    
     // MARK: - Properties
     private var calendarHidden = true
     private var subscriptions = Set<AnyCancellable>()
     private let viewModel: TimeDiaryViewModel
+    private var date: String = ""
     
     // MARK: - LifeCycle
     init(viewModel: TimeDiaryViewModel) {
@@ -71,11 +84,13 @@ final class TimeDiaryViewController: UIViewController {
         configureSubViews()
         setConstraintsOfDateLineView()
         setConstraintsOfCalendar()
+        setConstraintsOfMoveDayDiaryView()
         setConstraintsOfTimeDiaryCollectionView()
         setConstraintsOfNoTimeDiaryLabel()
         
         configureDateLineViewGesture()
         configureTimeDiaryCollectionViewGesture()
+        configureMoveDayDiaryGesture()
     }
 }
 
@@ -90,13 +105,13 @@ extension TimeDiaryViewController {
          )
         addTimeDiaryButton.tapPublisher
             .sink { [weak self] in
-                self?.pushWritingTimeDiaryViewController()
+                self?.presentWritingTimeDiaryViewController()
             }.store(in: &subscriptions)
         
         navigationItem.rightBarButtonItem = addTimeDiaryButton
     }
     
-    private func pushWritingTimeDiaryViewController() {
+    private func presentWritingTimeDiaryViewController() {
         let writingTimeDiaryViewModel = WritingTimeDiaryViewModel(
             date: viewModel.date,
             coreDataManager: viewModel.coreDataManager
@@ -109,7 +124,7 @@ extension TimeDiaryViewController {
         self.present(vc, animated: true)
     }
     
-    private func pushWritingTimeDiaryViewController(with diary: TimeDiary) {
+    private func presentWritingTimeDiaryViewController(with diary: TimeDiary) {
         let writingTimeDiaryViewModel = WritingTimeDiaryViewModel(
             timeDiary: diary,
             coreDataManager: viewModel.coreDataManager
@@ -120,6 +135,15 @@ extension TimeDiaryViewController {
         vc.modalPresentationStyle = .fullScreen
         
         self.present(vc, animated: true)
+    }
+    
+    private func pushDayDiaryViewController() {
+        let dayDiaryViewModel = DayDiaryViewModel(
+            coreDataManager: viewModel.coreDataManager,
+            date: self.date
+        )
+        let vc = DayDiaryViewController(viewModel: dayDiaryViewModel)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func presentDeleteAlert(_ index: Int) {
@@ -188,6 +212,16 @@ extension TimeDiaryViewController {
         timeDiaryCollectionView.addGestureRecognizer(rightSwipeGesture)
         timeDiaryCollectionView.addGestureRecognizer(longPressGesture)
     }
+    
+    private func configureMoveDayDiaryGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        tapGesture.tapPublisher
+            .sink { [weak self] _ in
+                self?.pushDayDiaryViewController()
+            }.store(in: &subscriptions)
+        
+        moveDayDiaryView.addGestureRecognizer(tapGesture)
+    }
 }
 
 // MARK: - Binding
@@ -225,7 +259,7 @@ extension TimeDiaryViewController {
 extension TimeDiaryViewController {
     private func configureSubViews() {
         [dateLineView, calendar, timeDiaryCollectionView,
-         noTimeDiaryLabel].forEach {
+         noTimeDiaryLabel, moveDayDiaryView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -252,7 +286,16 @@ extension TimeDiaryViewController {
     private func setConstraintsOfTimeDiaryCollectionView() {
         timeDiaryCollectionView.snp.makeConstraints {
             $0.top.equalTo(calendar.snp.bottom).offset(3)
-            $0.horizontalEdges.bottom.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(moveDayDiaryView.snp.top)
+        }
+    }
+    
+    private func setConstraintsOfMoveDayDiaryView() {
+        moveDayDiaryView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(70)
         }
     }
     
@@ -307,6 +350,6 @@ extension TimeDiaryViewController: UICollectionViewDataSource {
 extension TimeDiaryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let diary = viewModel.diarys[indexPath.row]
-        pushWritingTimeDiaryViewController(with: diary)
+        presentWritingTimeDiaryViewController(with: diary)
     }
 }
