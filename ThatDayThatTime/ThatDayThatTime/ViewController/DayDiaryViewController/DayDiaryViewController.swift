@@ -55,6 +55,7 @@ final class DayDiaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor
+        configureNavigation()
         configureSubViews()
         setConstraintsOfDateLineView()
         setConstraintsOfImageView()
@@ -68,11 +69,43 @@ final class DayDiaryViewController: UIViewController {
 
 // MARK: - Method
 extension DayDiaryViewController {
+    private func configureNavigation() {
+        let editDayDiaryButton = UIBarButtonItem(
+            image: UIImage(systemName: "pencil"),
+            style: .plain,
+            target: self,
+            action: nil
+        )
+        editDayDiaryButton.tapPublisher
+            .sink { [weak self] in
+                if let diary = self?.viewModel.dayDiary {
+                    self?.presentWritingDayDiaryViewController(with: diary)
+                } else {
+                    self?.presentWritingDayDiaryViewController()
+                }
+            }.store(in: &subscriptions)
+        
+        navigationItem.rightBarButtonItem = editDayDiaryButton
+    }
+    
     private func presentWritingDayDiaryViewController() {
         let viewModel = WritingDayDiaryViewModel(
             date: viewModel.date,
             coreDataManager: viewModel.coreDataManager
         ) 
+        
+        let vc = WritingDayDiaryViewController(viewModel: viewModel)
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .fullScreen
+        
+        self.present(vc, animated: true)
+    }
+    
+    private func presentWritingDayDiaryViewController(with diary: DayDiary) {
+        let viewModel = WritingDayDiaryViewModel(
+            dayDiary: diary,
+            coreDataManager: viewModel.coreDataManager
+        )
         
         let vc = WritingDayDiaryViewController(viewModel: viewModel)
         vc.modalTransitionStyle = .crossDissolve

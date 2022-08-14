@@ -11,7 +11,7 @@ import Combine
 final class DayDiaryViewModel {
     
     // MARK: - Properties
-    private var dayDiary: DayDiary?
+    var dayDiary: DayDiary?
     var date: String
     var coreDataManager: CoreDataManager
     private var subscriptions = Set<AnyCancellable>()
