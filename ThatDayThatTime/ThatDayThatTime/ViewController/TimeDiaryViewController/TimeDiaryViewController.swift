@@ -41,11 +41,21 @@ final class TimeDiaryViewController: UIViewController {
     
     private let noTimeDiaryLabel: UILabel = {
         let label = UILabel()
-        label.text = "작성된 시간일기가 없습니다."
+        label.text = "작성된 시간의 기록이 없습니다."
         label.textColor = .darkGray
         label.textAlignment = .center
         
         return label
+    }()
+    
+    private let moveDayDiaryView: MoveDayDiaryView = {
+        let moveDayDiaryView = MoveDayDiaryView()
+        moveDayDiaryView.backgroundColor = .viewBackgroundColor
+        moveDayDiaryView.layer.shadowColor = UIColor.black.cgColor
+        moveDayDiaryView.layer.shadowOpacity = 0.1
+        moveDayDiaryView.layer.shadowRadius = 1
+        moveDayDiaryView.layer.shadowOffset = CGSize(width: 0, height: -3)
+        return moveDayDiaryView
     }()
     
     // MARK: - Properties
@@ -71,6 +81,7 @@ final class TimeDiaryViewController: UIViewController {
         configureSubViews()
         setConstraintsOfDateLineView()
         setConstraintsOfCalendar()
+        setConstraintsOfMoveDayDiaryView()
         setConstraintsOfTimeDiaryCollectionView()
         setConstraintsOfNoTimeDiaryLabel()
         
@@ -225,7 +236,7 @@ extension TimeDiaryViewController {
 extension TimeDiaryViewController {
     private func configureSubViews() {
         [dateLineView, calendar, timeDiaryCollectionView,
-         noTimeDiaryLabel].forEach {
+         noTimeDiaryLabel, moveDayDiaryView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -252,7 +263,16 @@ extension TimeDiaryViewController {
     private func setConstraintsOfTimeDiaryCollectionView() {
         timeDiaryCollectionView.snp.makeConstraints {
             $0.top.equalTo(calendar.snp.bottom).offset(3)
-            $0.horizontalEdges.bottom.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(moveDayDiaryView.snp.top)
+        }
+    }
+    
+    private func setConstraintsOfMoveDayDiaryView() {
+        moveDayDiaryView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(70)
         }
     }
     
