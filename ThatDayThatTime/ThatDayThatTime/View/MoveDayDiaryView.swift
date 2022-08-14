@@ -13,7 +13,6 @@ final class MoveDayDiaryView: UIView {
     // MARK: - ViewProperties
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "2022년 8월 14일 일요일"
         label.font = .systemFont(ofSize: 17, weight: .bold)
         label.textColor = .black
         
@@ -49,6 +48,13 @@ final class MoveDayDiaryView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Method
+extension MoveDayDiaryView {
+    func setDate(date: String) {
+        dateLabel.text = date
     }
 }
 
