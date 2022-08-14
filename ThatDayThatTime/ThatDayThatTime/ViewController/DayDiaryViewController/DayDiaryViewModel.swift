@@ -5,7 +5,7 @@
 //  Created by J_Min on 2022/08/14.
 //
 
-import Foundation
+import UIKit
 import Combine
 
 final class DayDiaryViewModel {
@@ -17,6 +17,7 @@ final class DayDiaryViewModel {
     private var subscriptions = Set<AnyCancellable>()
     let notExistDayDiary = PassthroughSubject<Void, Never>()
     let existDayDiary = PassthroughSubject<DayDiary, Never>()
+    let updateFullSizeImage = PassthroughSubject<UIImage?, Never>()
     
     // MARK: - LifeCycle
     init(coreDataManager: CoreDataManager, date: String) {
@@ -30,6 +31,10 @@ final class DayDiaryViewModel {
 extension DayDiaryViewModel {
     func getDiary() {
         coreDataManager.getDiary(type: .day, date: date)
+    }
+    
+    func getFullSizeImage(id: String) {
+        coreDataManager.getFullSizeImage(id: id)
     }
 }
 
@@ -47,6 +52,14 @@ extension DayDiaryViewModel {
                 } else {
                     self?.notExistDayDiary.send()
                 }
+            }.store(in: &subscriptions)
+        
+        coreDataManager.fetchFullSizeImage
+            .map {
+                UIImage.getImage(data: $0)
+            }
+            .sink { [weak self] image in
+                self?.updateFullSizeImage.send(image)
             }.store(in: &subscriptions)
     }
 }

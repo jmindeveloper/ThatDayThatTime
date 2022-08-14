@@ -63,6 +63,8 @@ final class DayDiaryViewController: UIViewController {
         
         bindingViewModel()
         viewModel.getDiary()
+        
+        configureImageViewGesture()
     }
     
 }
@@ -115,6 +117,22 @@ extension DayDiaryViewController {
     }
 }
 
+// MARK: - ConfigureGesture
+extension DayDiaryViewController {
+    private func configureImageViewGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        
+        tapGesture.tapPublisher
+            .sink { [weak self] _ in
+                guard let id = self?.viewModel.dayDiary?.id else { return }
+                self?.viewModel.getFullSizeImage(id: id)
+            }.store(in: &subscriptions)
+        
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGesture)
+    }
+}
+
 // MARK: - Binding
 extension DayDiaryViewController {
     private func bindingViewModel() {
@@ -130,6 +148,13 @@ extension DayDiaryViewController {
                 self?.imageView.snp.updateConstraints {
                     $0.height.equalTo(self?.imageView.image == nil ? 0 : 60)
                 }
+            }.store(in: &subscriptions)
+        
+        viewModel.updateFullSizeImage
+            .sink { [weak self] image in
+                let vc = FullPhotoViewController(image: image)
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
             }.store(in: &subscriptions)
     }
 }
