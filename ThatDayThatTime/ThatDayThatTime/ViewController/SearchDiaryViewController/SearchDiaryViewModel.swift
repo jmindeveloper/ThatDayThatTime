@@ -17,6 +17,7 @@ final class SearchDiaryViewModel {
     private let doneFetchDiary = PassthroughSubject<Void, Never>()
     var timeDiary = [[TimeDiary]]()
     var dayDiary = [DayDiary]()
+    let updateDiary = PassthroughSubject<Void, Never>()
     
     // MARK: - LifeCycle
     init(coreDataManager: CoreDataManager) {
@@ -125,6 +126,7 @@ extension SearchDiaryViewModel {
             .sink { [weak self] time, day in
                 self?.timeDiary = time
                 self?.dayDiary = day
+                self?.updateDiary.send()
             }.store(in: &subscriptions)
     }
 }

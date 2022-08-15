@@ -10,7 +10,7 @@ import SnapKit
 
 final class DTSideMenuViewController: UIViewController {
     
-    enum MenuSelectedViewController: Int {
+    enum MenuItem: Int {
         case search = 0, gather, setting
         
         var viewController: UIViewController {
@@ -22,6 +22,36 @@ final class DTSideMenuViewController: UIViewController {
                 return GatherDiaryViewController()
             case .setting:
                 return SettingViewController()
+            }
+        }
+        
+        var title: String {
+            switch self {
+            case .search:
+                return "검색"
+            case .gather:
+                return "모아보기"
+            case .setting:
+                return "설정"
+            }
+        }
+        
+        var image: UIImage? {
+            switch self {
+            case .search:
+                return UIImage(systemName: "magnifyingglass")
+            case .gather:
+                if #available(iOS 14, *) {
+                    return UIImage(systemName: "book.closed")
+                } else {
+                    return UIImage(systemName: "book")
+                }
+            case .setting:
+                if #available(iOS 14, *) {
+                    return UIImage(systemName: "gearshape")
+                } else {
+                    return UIImage(systemName: "gear")
+                }
             }
         }
     }
@@ -37,13 +67,6 @@ final class DTSideMenuViewController: UIViewController {
         
         return tableView
     }()
-    
-    // MARK: - Properties
-    private let tableViewItems = [
-        (UIImage(systemName: "magnifyingglass"), "검색"),
-        (UIImage(systemName: "book.closed"), "모아보기"),
-        (UIImage(systemName: "gearshape"), "설정")
-    ]
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -78,8 +101,10 @@ extension DTSideMenuViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let item = tableViewItems[indexPath.row]
-        cell.configureCell(image: item.0, menu: item.1)
+        guard let item = MenuItem(rawValue: indexPath.row) else {
+            return UITableViewCell()
+        }
+        cell.configureCell(image: item.image, menu: item.title)
         
         return cell
     }
@@ -89,7 +114,7 @@ extension DTSideMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let vc = MenuSelectedViewController(rawValue: indexPath.row)?.viewController else {
+        guard let vc = MenuItem(rawValue: indexPath.row)?.viewController else {
             return
         }
         

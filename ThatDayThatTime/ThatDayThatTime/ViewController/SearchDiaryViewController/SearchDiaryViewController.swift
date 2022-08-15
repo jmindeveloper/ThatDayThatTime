@@ -35,6 +35,7 @@ final class SearchDiaryViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(TimeDiaryCollectionViewCell.self, forCellWithReuseIdentifier: TimeDiaryCollectionViewCell.identifier)
+        collectionView.register(DayDiaryCollectionViewCell.self, forCellWithReuseIdentifier: DayDiaryCollectionViewCell.identifier)
         
         return collectionView
     }()
@@ -61,6 +62,7 @@ final class SearchDiaryViewController: UIViewController {
         setConstraintsOfSearchResultCollectionView()
         
         bindingSelf()
+        bindingViewModel()
     }
 }
 
@@ -78,6 +80,13 @@ extension SearchDiaryViewController {
             .sink { [weak self] searchText in
                 guard let searchText = searchText else { return }
                 self?.viewModel.searchDiary.send(searchText)
+            }.store(in: &subscriptions)
+    }
+    
+    private func bindingViewModel() {
+        viewModel.updateDiary
+            .sink { [weak self] in
+                self?.searchResultCollectionView.reloadData()
             }.store(in: &subscriptions)
     }
 }
@@ -99,19 +108,42 @@ extension SearchDiaryViewController {
 // MARK: - UICollectionViewDataSource
 extension SearchDiaryViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return viewModel.timeDiary.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        if section < viewModel.timeDiary.count {
+            return viewModel.timeDiary[section].count
+        } else {
+            return viewModel.dayDiary.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeDiaryCollectionViewCell.identifier, for: indexPath) as? TimeDiaryCollectionViewCell else {
+        guard let timeDiaryCell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: TimeDiaryCollectionViewCell.identifier,
+            for: indexPath
+        ) as? TimeDiaryCollectionViewCell else {
             return UICollectionViewCell()
         }
         
-        return cell
+        guard let dayDiaryCell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: DayDiaryCollectionViewCell.identifier,
+            for: indexPath
+        ) as? DayDiaryCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        if indexPath.section < viewModel.timeDiary.count {
+            let diary = viewModel.timeDiary[indexPath.section][indexPath.row]
+            
+            timeDiaryCell.configureCell(with: diary, isFirst: indexPath.row == 0, isLast: indexPath.row == viewModel.timeDiary[indexPath.section].count - 1)
+            return timeDiaryCell
+        } else {
+            let diary = viewModel.dayDiary[indexPath.row]
+            dayDiaryCell.configureCell(with: diary)
+            return dayDiaryCell
+        }
     }
 }
 

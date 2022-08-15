@@ -110,13 +110,23 @@ extension TimeDiaryViewController {
             .sink { [weak self] in
                 self?.presentWritingTimeDiaryViewController()
             }.store(in: &subscriptions)
+        var showSideMenuButton: UIBarButtonItem
         
-        let showSideMenuButton = UIBarButtonItem(
-            image: UIImage(systemName: "line.3.horizontal"),
-            style: .plain,
-            target: self,
-            action: nil
-        )
+        if #available(iOS 15, *) {
+            showSideMenuButton = UIBarButtonItem(
+                image: UIImage(systemName: "line.3.horizontal"),
+                style: .plain,
+                target: self,
+                action: nil
+            )
+        } else {
+            showSideMenuButton = UIBarButtonItem(
+                image: UIImage(systemName: "line.horizontal.3"),
+                style: .plain,
+                target: self,
+                action: nil
+            )
+        }
         
         showSideMenuButton.tapPublisher
             .sink { [weak self] in
