@@ -10,6 +10,21 @@ import SnapKit
 
 final class DTSideMenuViewController: UIViewController {
     
+    enum MenuSelectedViewController: Int {
+        case search = 0, gather, setting
+        
+        var viewController: UIViewController {
+            switch self {
+            case .search:
+                return SearchDiaryViewController()
+            case .gather:
+                return GatherDiaryViewController()
+            case .setting:
+                return SettingViewController()
+            }
+        }
+    }
+    
     // MARK: - ViewProperties
     private lazy var menuTableView: UITableView = {
         let tableView = UITableView()
@@ -71,8 +86,12 @@ extension DTSideMenuViewController: UITableViewDataSource {
 
 extension DTSideMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.dismiss(animated: true)
-        print(indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard let vc = MenuSelectedViewController(rawValue: indexPath.row)?.viewController else {
+            return
+        }
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
