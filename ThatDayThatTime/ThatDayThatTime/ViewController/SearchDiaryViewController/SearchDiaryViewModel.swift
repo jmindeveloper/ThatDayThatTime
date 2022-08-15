@@ -15,7 +15,7 @@ final class SearchDiaryViewModel {
     private let coreDataManager: CoreDataManager
     let searchDiary = PassthroughSubject<String, Never>()
     private let doneFetchDiary = PassthroughSubject<Void, Never>()
-    var timeDiary = [TimeDiary]()
+    var timeDiary = [[TimeDiary]]()
     var dayDiary = [DayDiary]()
     
     // MARK: - LifeCycle
@@ -31,7 +31,7 @@ extension SearchDiaryViewModel {
         coreDataManager.getDiary(type: .time, filterType: .content, query: query)
     }
     
-    private func fetchTimeDiaryToPublisher() -> AnyPublisher<[TimeDiary], Never> {
+    private func fetchTimeDiaryToPublisher() -> AnyPublisher<[[TimeDiary]], Never> {
         return coreDataManager.fetchTimeDiary
             .flatMap { [unowned self] in
                 castingToTimeDiary(diary: $0)
@@ -39,13 +39,43 @@ extension SearchDiaryViewModel {
             .eraseToAnyPublisher()
     }
     
-    private func castingToTimeDiary(diary: [Diary]) -> AnyPublisher<[TimeDiary], Never> {
+    private func castingToTimeDiary(diary: [Diary]) -> AnyPublisher<[[TimeDiary]], Never> {
         diary.publisher
             .compactMap {
                 $0 as? TimeDiary
             }
             .collect()
+            .map(sliceTimeDiaryToDate(diary:))
             .eraseToAnyPublisher()
+    }
+    
+    private func sliceTimeDiaryToDate(diary: [TimeDiary]) -> [[TimeDiary]] {
+        guard diary.count > 0 else {
+            return []
+        }
+        let diary = diary.sorted {
+            $0.date ?? "" < $1.date ?? ""
+        }
+        var diarys = [[TimeDiary]]()
+        var filterDiary = [TimeDiary]()
+        var date: String? = ""
+        
+        for i in 0..<diary.count {
+            if diary[i].date == date {
+                filterDiary.append(diary[i])
+            } else {
+                filterDiary.sort {
+                    $0.time ?? "" < $1.time ?? ""
+                }
+                diarys.append(filterDiary)
+                date = diary[i].date
+                filterDiary = [diary[i]]
+            }
+        }
+        diarys.append(filterDiary)
+        
+        diarys.removeFirst()
+        return diarys
     }
     
     private func getSearchDayDiary(search query: String) {
@@ -66,6 +96,11 @@ extension SearchDiaryViewModel {
                 $0 as? DayDiary
             }
             .collect()
+            .map {
+                $0.sorted {
+                    $0.date ?? "" < $1.date ?? ""
+                }
+            }
             .eraseToAnyPublisher()
     }
     
