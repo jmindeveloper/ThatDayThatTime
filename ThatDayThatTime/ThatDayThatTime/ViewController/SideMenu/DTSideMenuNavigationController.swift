@@ -22,5 +22,4 @@ final class DTSideMenuNavigationController: SideMenuNavigationController {
         presentationStyle.onTopShadowRadius = 1
         presentationStyle.onTopShadowOffset = CGSize(width: 3, height: 0)
     }
-    
 }

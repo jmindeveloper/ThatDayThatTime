@@ -33,7 +33,8 @@ final class TimeDiaryViewController: UIViewController {
     }()
     
     private lazy var timeDiaryCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: timeDiaryCollectionViewLayout())
+        let layout = UICollectionView.diaryLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .viewBackgroundColor
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -326,22 +327,6 @@ extension TimeDiaryViewController {
             $0.top.equalTo(calendar.snp.bottom).offset(15)
             $0.width.equalToSuperview()
         }
-    }
-}
-
-// MARK: - CompositionalLayout
-extension TimeDiaryViewController {
-    private func timeDiaryCollectionViewLayout() -> UICollectionViewCompositionalLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
-        
-        return UICollectionViewCompositionalLayout(section: section)
     }
 }
 
