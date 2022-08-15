@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Combine
 import CombineCocoa
+import SideMenu
 
 final class TimeDiaryViewController: UIViewController {
     
@@ -57,6 +58,7 @@ final class TimeDiaryViewController: UIViewController {
         moveDayDiaryView.layer.shadowOpacity = 0.1
         moveDayDiaryView.layer.shadowRadius = 1
         moveDayDiaryView.layer.shadowOffset = CGSize(width: 0, height: -3)
+        
         return moveDayDiaryView
     }()
     
@@ -108,7 +110,26 @@ extension TimeDiaryViewController {
                 self?.presentWritingTimeDiaryViewController()
             }.store(in: &subscriptions)
         
+        let showSideMenuButton = UIBarButtonItem(
+            image: UIImage(systemName: "line.3.horizontal"),
+            style: .plain,
+            target: self,
+            action: nil
+        )
+        
+        showSideMenuButton.tapPublisher
+            .sink { [weak self] in
+                self?.presentSideMenu()
+            }.store(in: &subscriptions)
+        
         navigationItem.rightBarButtonItem = addTimeDiaryButton
+        navigationItem.leftBarButtonItem = showSideMenuButton
+    }
+    
+    private func presentSideMenu() {
+        let vc = DTSideMenuViewController()
+        let sideMenu = DTSideMenuNavigationController(rootViewController: vc)
+        present(sideMenu, animated: true)
     }
     
     private func presentWritingTimeDiaryViewController() {

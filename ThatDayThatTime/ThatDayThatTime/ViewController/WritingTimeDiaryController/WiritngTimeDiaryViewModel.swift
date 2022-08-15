@@ -20,7 +20,7 @@ final class WritingTimeDiaryViewModel: NSObject {
     private let coreDataManager: CoreDataManager
     
     // MARK: - LifeCycle
-    init(timeDiary: TimeDiary?, date: String?, coreDataManager: CoreDataManager) {
+    private init(timeDiary: TimeDiary?, date: String?, coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
         self.originalDiary = timeDiary
         self.time = CurrentValueSubject<String, Never>(timeDiary?.time ?? String.getTime())

@@ -19,7 +19,7 @@ final class WritingDayDiaryViewModel: NSObject {
     private let coreDataManager: CoreDataManager
     
     // MARK: - LifeCycle
-    init(dayDiary: DayDiary?, date: String?, coreDataManager: CoreDataManager) {
+    private init(dayDiary: DayDiary?, date: String?, coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
         self.originalDiary = dayDiary
         self.diary = dayDiary?.content ?? ""

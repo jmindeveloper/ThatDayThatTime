@@ -41,7 +41,7 @@ struct CalendarCellComponents {
     var isCurrentMonth: Bool
     
     var weekday: String {
-        WeekDay.init(rawValue: week)?.weekday ?? "월요일"
+        WeekDay(rawValue: week)?.weekday ?? "월요일"
     }
     
     var date: String {

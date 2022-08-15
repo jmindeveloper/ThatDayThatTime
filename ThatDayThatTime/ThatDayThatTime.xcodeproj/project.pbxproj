@@ -18,6 +18,12 @@
 		0E2DED7D28A524D7007F131C /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2DED7C28A524D7007F131C /* ImageCacheManager.swift */; };
 		0E3142C628A218CF00149E34 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3142C528A218CF00149E34 /* UIColor+Extension.swift */; };
 		0E3142C928A24CD300149E34 /* DTCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3142C828A24CD300149E34 /* DTCalendarViewModel.swift */; };
+		0E60014428A9FC450006A1CF /* DTSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60014328A9FC450006A1CF /* DTSideMenuNavigationController.swift */; };
+		0E60014628A9FCD90006A1CF /* DTSideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60014528A9FCD90006A1CF /* DTSideMenuViewController.swift */; };
+		0E60014828AA05D70006A1CF /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60014728AA05D70006A1CF /* MenuTableViewCell.swift */; };
+		0E60014D28AA0C5F0006A1CF /* SearchDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60014C28AA0C5F0006A1CF /* SearchDiaryViewController.swift */; };
+		0E60014F28AA0C690006A1CF /* GatherDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60014E28AA0C690006A1CF /* GatherDiaryViewController.swift */; };
+		0E60015128AA0C780006A1CF /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60015028AA0C780006A1CF /* SettingViewController.swift */; };
 		0E8079CC28A7B1D90050B9EB /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8079CA28A7B1D90050B9EB /* Image+CoreDataProperties.swift */; };
 		0E81DEDF28A10E6E00A2B7C6 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81DEDE28A10E6E00A2B7C6 /* String+Extension.swift */; };
 		0E81DEE328A10F3300A2B7C6 /* DTCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81DEE228A10F3300A2B7C6 /* DTCalendar.swift */; };
@@ -61,6 +67,12 @@
 		0E2DED7C28A524D7007F131C /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		0E3142C528A218CF00149E34 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		0E3142C828A24CD300149E34 /* DTCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendarViewModel.swift; sourceTree = "<group>"; };
+		0E60014328A9FC450006A1CF /* DTSideMenuNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTSideMenuNavigationController.swift; sourceTree = "<group>"; };
+		0E60014528A9FCD90006A1CF /* DTSideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTSideMenuViewController.swift; sourceTree = "<group>"; };
+		0E60014728AA05D70006A1CF /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		0E60014C28AA0C5F0006A1CF /* SearchDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDiaryViewController.swift; sourceTree = "<group>"; };
+		0E60014E28AA0C690006A1CF /* GatherDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatherDiaryViewController.swift; sourceTree = "<group>"; };
+		0E60015028AA0C780006A1CF /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		0E8079CA28A7B1D90050B9EB /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0E81DEDE28A10E6E00A2B7C6 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		0E81DEE228A10F3300A2B7C6 /* DTCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendar.swift; sourceTree = "<group>"; };
@@ -137,6 +149,39 @@
 				0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */,
 			);
 			path = TimeDiaryViewController;
+			sourceTree = "<group>";
+		};
+		0E60014228A9FC370006A1CF /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				0E60014328A9FC450006A1CF /* DTSideMenuNavigationController.swift */,
+				0E60014528A9FCD90006A1CF /* DTSideMenuViewController.swift */,
+			);
+			path = SideMenu;
+			sourceTree = "<group>";
+		};
+		0E60014928AA0BE90006A1CF /* SearchDiaryViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0E60014C28AA0C5F0006A1CF /* SearchDiaryViewController.swift */,
+			);
+			path = SearchDiaryViewController;
+			sourceTree = "<group>";
+		};
+		0E60014A28AA0C040006A1CF /* GatherDiaryViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0E60014E28AA0C690006A1CF /* GatherDiaryViewController.swift */,
+			);
+			path = GatherDiaryViewController;
+			sourceTree = "<group>";
+		};
+		0E60014B28AA0C520006A1CF /* SettingViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0E60015028AA0C780006A1CF /* SettingViewController.swift */,
+			);
+			path = SettingViewController;
 			sourceTree = "<group>";
 		};
 		0E81DEDD28A10E3900A2B7C6 /* Extension */ = {
@@ -236,6 +281,10 @@
 		0EBD21A028A0E6B4006F19FE /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0E60014B28AA0C520006A1CF /* SettingViewController */,
+				0E60014A28AA0C040006A1CF /* GatherDiaryViewController */,
+				0E60014928AA0BE90006A1CF /* SearchDiaryViewController */,
+				0E60014228A9FC370006A1CF /* SideMenu */,
 				0E8DB29C28A8EF1E006647F4 /* WritingDayDiaryViewController */,
 				0E8DB29528A8DD42006647F4 /* DayDiaryViewController */,
 				0E2DED7628A514BC007F131C /* TimeDiaryViewController */,
@@ -252,6 +301,7 @@
 				0EBD21A428A0E809006F19FE /* DateLineView.swift */,
 				0E8AB4D528A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift */,
 				0E8DB29328A8CCAE006647F4 /* MoveDayDiaryView.swift */,
+				0E60014728AA05D70006A1CF /* MenuTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -345,11 +395,16 @@
 				0E20739228A13FA5006FE55D /* CalendarCellComponents.swift in Sources */,
 				0E8DB29428A8CCAE006647F4 /* MoveDayDiaryView.swift in Sources */,
 				0E81DEE328A10F3300A2B7C6 /* DTCalendar.swift in Sources */,
+				0E60014F28AA0C690006A1CF /* GatherDiaryViewController.swift in Sources */,
 				0E9BE57828A4F4240096A1F5 /* AlertManager.swift in Sources */,
+				0E60014828AA05D70006A1CF /* MenuTableViewCell.swift in Sources */,
 				0E20739028A12CBF006FE55D /* CalendarManager.swift in Sources */,
 				0E9BE57228A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift in Sources */,
+				0E60014D28AA0C5F0006A1CF /* SearchDiaryViewController.swift in Sources */,
 				0EFC165228A3C8BB00006AB0 /* UITextView+Extension.swift in Sources */,
+				0E60014428A9FC450006A1CF /* DTSideMenuNavigationController.swift in Sources */,
 				0E2DED7828A514DA007F131C /* TimeDiaryViewModel.swift in Sources */,
+				0E60014628A9FCD90006A1CF /* DTSideMenuViewController.swift in Sources */,
 				0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */,
 				0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */,
 				0E3142C628A218CF00149E34 /* UIColor+Extension.swift in Sources */,
@@ -367,6 +422,7 @@
 				0E81DEDF28A10E6E00A2B7C6 /* String+Extension.swift in Sources */,
 				0EBD21A228A0E6C9006F19FE /* TimeDiaryViewController.swift in Sources */,
 				0E8079CC28A7B1D90050B9EB /* Image+CoreDataProperties.swift in Sources */,
+				0E60015128AA0C780006A1CF /* SettingViewController.swift in Sources */,
 				0E8DB29B28A8EF16006647F4 /* WritingDayDiaryViewController.swift in Sources */,
 				0E8DB29728A8DD55006647F4 /* DayDiaryViewController.swift in Sources */,
 			);
