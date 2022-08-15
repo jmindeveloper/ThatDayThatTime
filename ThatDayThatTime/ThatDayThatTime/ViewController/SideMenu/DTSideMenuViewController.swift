@@ -16,7 +16,8 @@ final class DTSideMenuViewController: UIViewController {
         var viewController: UIViewController {
             switch self {
             case .search:
-                return SearchDiaryViewController()
+                let searchDiaryViewModel = SearchDiaryViewModel(coreDataManager: CoreDataManager())
+                return SearchDiaryViewController(viewModel: searchDiaryViewModel)
             case .gather:
                 return GatherDiaryViewController()
             case .setting:

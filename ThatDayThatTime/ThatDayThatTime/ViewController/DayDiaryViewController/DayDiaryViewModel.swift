@@ -30,7 +30,7 @@ final class DayDiaryViewModel {
 // MARK: - Method
 extension DayDiaryViewModel {
     func getDiary() {
-        coreDataManager.getDiary(type: .day, date: date)
+        coreDataManager.getDiary(type: .day, filterType: .date, query: date)
     }
     
     func getFullSizeImage(id: String) {
