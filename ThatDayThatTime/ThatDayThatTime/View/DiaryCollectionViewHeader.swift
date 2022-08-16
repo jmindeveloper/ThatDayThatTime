@@ -15,7 +15,6 @@ final class DiaryCollectionViewHeader: UICollectionReusableView {
     // MARK: - ViewProperties
     private let diaryKindLabel: UILabel = {
         let label = UILabel()
-        label.text = "시간의 기록"
         label.font = .systemFont(ofSize: 40, weight: .bold)
         label.textColor = .black
         
@@ -73,6 +72,13 @@ extension DiaryCollectionViewHeader {
             diaryKindLabel.text = "하루의 기록"
         }
     }
+    
+    func configureHeader(date: String) {
+        diaryKindLabel.isHidden = false
+        dateLineView.isHidden = true
+        diaryKindLabel.text = date
+        diaryKindLabel.font = .systemFont(ofSize: 22, weight: .semibold)
+    }
 }
 
 // MARK: - UI
@@ -95,7 +101,7 @@ extension DiaryCollectionViewHeader {
     
     private func setConstraintsOfDiaryKindLabel() {
         diaryKindLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(14)
+            $0.leading.equalToSuperview().offset(12)
         }
     }
     
