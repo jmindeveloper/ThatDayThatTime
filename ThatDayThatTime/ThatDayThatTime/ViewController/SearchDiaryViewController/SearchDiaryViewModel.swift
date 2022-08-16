@@ -73,6 +73,9 @@ extension SearchDiaryViewModel {
                 filterDiary = [diary[i]]
             }
         }
+        filterDiary.sort {
+            $0.time ?? "" < $1.time ?? ""
+        }
         diarys.append(filterDiary)
         
         diarys.removeFirst()

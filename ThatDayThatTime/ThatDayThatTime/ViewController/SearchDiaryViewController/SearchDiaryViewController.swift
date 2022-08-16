@@ -29,14 +29,14 @@ final class SearchDiaryViewController: UIViewController {
     }()
     
     private lazy var searchResultCollectionView: UICollectionView = {
-        let layout = UICollectionView.diaryLayout(supplementaryItem: [UICollectionView.diaryHeader()])
+        let layout = UICollectionView.diaryLayout(supplementaryItems: [UICollectionView.diaryHeader()])
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .viewBackgroundColor
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(TimeDiaryCollectionViewCell.self, forCellWithReuseIdentifier: TimeDiaryCollectionViewCell.identifier)
         collectionView.register(DayDiaryCollectionViewCell.self, forCellWithReuseIdentifier: DayDiaryCollectionViewCell.identifier)
-        collectionView.register(SearchDiaryCollectinViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchDiaryCollectinViewHeader.identifier)
+        collectionView.register(SearchDiaryCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchDiaryCollectionViewHeader.identifier)
         
         return collectionView
     }()
@@ -150,7 +150,20 @@ extension SearchDiaryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         if kind == UICollectionView.elementKindSectionHeader {
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchDiaryCollectinViewHeader.identifier, for: indexPath)
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchDiaryCollectionViewHeader.identifier, for: indexPath) as? SearchDiaryCollectionViewHeader else { return UICollectionReusableView() }
+            
+            if indexPath.section < viewModel.timeDiary.count {
+                guard let diary = viewModel.timeDiary[indexPath.section].first else {
+                    return header 
+                }
+                header.configureHeader(diary: diary, section: indexPath.section)
+            } else {
+                guard let diary = viewModel.dayDiary.first else {
+                    return header
+                }
+                header.configureHeader(diary: diary, section: indexPath.section)
+            }
+            
             return header
         } else {
             return UICollectionReusableView()
