@@ -174,7 +174,7 @@ extension TimeDiaryViewController {
             coreDataManager: viewModel.coreDataManager,
             date: self.date
         )
-        let vc = DayDiaryViewController(viewModel: dayDiaryViewModel)
+        let vc = DayDiaryViewController(viewModel: dayDiaryViewModel, isCanEdit: true)
         navigationController?.pushViewController(vc, animated: true)
     }
     

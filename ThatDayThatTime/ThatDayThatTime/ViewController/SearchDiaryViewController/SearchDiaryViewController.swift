@@ -72,6 +72,15 @@ extension SearchDiaryViewController {
     private func configureNavigation() {
         navigationItem.titleView = searchBar
     }
+    
+    private func pushDayDiaryViewController(date: String) {
+        let dayDiaryViewModel = DayDiaryViewModel(
+            coreDataManager: CoreDataManager(),
+            date: date
+        )
+        let vc = DayDiaryViewController(viewModel: dayDiaryViewModel, isCanEdit: false)
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // MARK: - Binding
@@ -173,5 +182,12 @@ extension SearchDiaryViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension SearchDiaryViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section < viewModel.timeDiary.count {
+            return
+        } else {
+            guard let date = viewModel.dayDiary[indexPath.row].date else { return }
+            pushDayDiaryViewController(date: date)
+        }
+    }
 }
