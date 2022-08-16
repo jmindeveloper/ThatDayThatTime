@@ -5,7 +5,7 @@
 //  Created by J_Min on 2022/08/15.
 //
 
-import Foundation
+import UIKit
 import Combine
 
 final class SearchDiaryViewModel {
@@ -14,6 +14,7 @@ final class SearchDiaryViewModel {
     private var subscriptions = Set<AnyCancellable>()
     private let coreDataManager: CoreDataManager
     let searchDiary = PassthroughSubject<String, Never>()
+    let updateFullSizeImage = PassthroughSubject<UIImage?, Never>()
     private let doneFetchDiary = PassthroughSubject<Void, Never>()
     var timeDiary = [[TimeDiary]]()
     var dayDiary = [DayDiary]()
@@ -23,6 +24,7 @@ final class SearchDiaryViewModel {
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
         bindingSelf()
+        bindingCoreDataManager()
     }
 }
 
@@ -112,6 +114,10 @@ extension SearchDiaryViewModel {
         getSearchTimeDiary(search: query)
         getSearchDayDiary(search: query)
     }
+    
+    func getFullSizeImage(id: String) {
+        coreDataManager.getFullSizeImage(id: id)
+    }
 }
 
 // MARK: - Binding
@@ -130,6 +136,16 @@ extension SearchDiaryViewModel {
                 self?.timeDiary = time
                 self?.dayDiary = day
                 self?.updateDiary.send()
+            }.store(in: &subscriptions)
+    }
+    
+    private func bindingCoreDataManager() {
+        coreDataManager.fetchFullSizeImage
+            .map {
+                UIImage.getImage(data: $0)
+            }
+            .sink { [weak self] image in
+                self?.updateFullSizeImage.send(image)
             }.store(in: &subscriptions)
     }
 }

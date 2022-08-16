@@ -98,6 +98,25 @@ extension SearchDiaryViewController {
             .sink { [weak self] in
                 self?.searchResultCollectionView.reloadData()
             }.store(in: &subscriptions)
+        
+        viewModel.updateFullSizeImage
+            .sink { [weak self] image in
+                let vc = FullPhotoViewController(image: image)
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
+            }.store(in: &subscriptions)
+    }
+    
+    private func bindingTimeDiaryImage(
+        cell: TimeDiaryCollectionViewCell,
+        section: Int,
+        index: Int
+    ) {
+        cell.tapImage = { [weak self] in
+            guard let self = self else { return }
+            let id = self.viewModel.timeDiary[section][index].id
+            self.viewModel.getFullSizeImage(id: id)
+        }
     }
 }
 
@@ -148,6 +167,9 @@ extension SearchDiaryViewController: UICollectionViewDataSource {
             let diary = viewModel.timeDiary[indexPath.section][indexPath.row]
             
             timeDiaryCell.configureCell(with: diary, isFirst: indexPath.row == 0, isLast: indexPath.row == viewModel.timeDiary[indexPath.section].count - 1)
+            
+            bindingTimeDiaryImage(cell: timeDiaryCell, section: indexPath.section, index: indexPath.row)
+            
             return timeDiaryCell
         } else {
             let diary = viewModel.dayDiary[indexPath.row]
