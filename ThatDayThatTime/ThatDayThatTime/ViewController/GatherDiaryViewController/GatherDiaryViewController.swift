@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import Combine
+import CombineCocoa
 
 final class GatherDiaryViewController: UIViewController {
     
@@ -23,7 +25,7 @@ final class GatherDiaryViewController: UIViewController {
         return collectionView
     }()
     
-    private lazy var segmentedCollectionView: UICollectionView = {
+    private lazy var segmentCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionView.segmentedLayout())
         collectionView.backgroundColor = .viewBackgroundColor
         collectionView.dataSource = self
@@ -36,6 +38,7 @@ final class GatherDiaryViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: GatherDiaryViewModel
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
     init(viewModel: GatherDiaryViewModel) {
@@ -54,13 +57,26 @@ final class GatherDiaryViewController: UIViewController {
         setConstraintsOfDateLineView()
         setConstraintsOfSegmentedCollectionView()
         setConstraintsOfDiaryCollectionView()
+        
+        bindingViewModel()
+    }
+}
+
+// MARK: - Binding
+extension GatherDiaryViewController {
+    private func bindingViewModel() {
+        viewModel.updateDiary
+            .sink { [weak self] in
+                self?.diaryCollectionView.reloadData()
+                self?.segmentCollectionView.reloadData()
+            }.store(in: &subscriptions)
     }
 }
 
 // MARK: - UI
 extension GatherDiaryViewController {
     private func configureSubViews() {
-        [dateLineView, diaryCollectionView, segmentedCollectionView].forEach {
+        [dateLineView, diaryCollectionView, segmentCollectionView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -79,12 +95,12 @@ extension GatherDiaryViewController {
         diaryCollectionView.snp.makeConstraints {
             $0.top.equalTo(dateLineView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalTo(segmentedCollectionView.snp.top)
+            $0.bottom.equalTo(segmentCollectionView.snp.top)
         }
     }
     
     private func setConstraintsOfSegmentedCollectionView() {
-        segmentedCollectionView.snp.makeConstraints {
+        segmentCollectionView.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(60)
@@ -98,7 +114,7 @@ extension GatherDiaryViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if collectionView === diaryCollectionView {
             return 3
-        } else if collectionView === segmentedCollectionView {
+        } else if collectionView === segmentCollectionView {
             return 1
         }
         return 1
@@ -107,7 +123,7 @@ extension GatherDiaryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView === diaryCollectionView {
             return 5
-        } else if collectionView === segmentedCollectionView {
+        } else if collectionView === segmentCollectionView {
             return 12
         }
         return 0
@@ -118,11 +134,11 @@ extension GatherDiaryViewController: UICollectionViewDataSource {
             guard let diaryCell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeDiaryCollectionViewCell.identifier, for: indexPath) as? TimeDiaryCollectionViewCell else { return UICollectionViewCell() }
             
             return diaryCell
-        } else if collectionView === segmentedCollectionView {
+        } else if collectionView === segmentCollectionView {
             guard let segmentedCell = collectionView.dequeueReusableCell(withReuseIdentifier: SegmentedCollectionViewCell.identifier, for: indexPath) as? SegmentedCollectionViewCell else { return UICollectionViewCell() }
             
-            segmentedCell.selectedCell(isSelected: viewModel.segmentedItems[indexPath.row].1)
-            segmentedCell.configureCell(month: viewModel.segmentedItems[indexPath.row].0)
+            segmentedCell.selectedCell(isSelected: viewModel.segmentItems[indexPath.row].1)
+            segmentedCell.configureCell(month: viewModel.segmentItems[indexPath.row].0)
             
             return segmentedCell
         }
@@ -146,6 +162,8 @@ extension GatherDiaryViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension GatherDiaryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        if collectionView === segmentCollectionView {
+            viewModel.changeMonth(month: viewModel.segmentItems[indexPath.row].0)
+        }
     }
 }
