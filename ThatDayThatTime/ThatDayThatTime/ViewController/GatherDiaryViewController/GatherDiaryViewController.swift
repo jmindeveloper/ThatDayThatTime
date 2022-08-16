@@ -28,10 +28,24 @@ final class GatherDiaryViewController: UIViewController {
         collectionView.backgroundColor = .viewBackgroundColor
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.isScrollEnabled = false
         collectionView.register(SegmentedCollectionViewCell.self, forCellWithReuseIdentifier: SegmentedCollectionViewCell.identifier)
         
         return collectionView
     }()
+    
+    // MARK: - Properties
+    private let viewModel: GatherDiaryViewModel
+    
+    // MARK: - LifeCycle
+    init(viewModel: GatherDiaryViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,6 +121,9 @@ extension GatherDiaryViewController: UICollectionViewDataSource {
         } else if collectionView === segmentedCollectionView {
             guard let segmentedCell = collectionView.dequeueReusableCell(withReuseIdentifier: SegmentedCollectionViewCell.identifier, for: indexPath) as? SegmentedCollectionViewCell else { return UICollectionViewCell() }
             
+            segmentedCell.selectedCell(isSelected: viewModel.segmentedItems[indexPath.row].1)
+            segmentedCell.configureCell(month: viewModel.segmentedItems[indexPath.row].0)
+            
             return segmentedCell
         }
         return UICollectionViewCell()
@@ -128,5 +145,7 @@ extension GatherDiaryViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension GatherDiaryViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
 }

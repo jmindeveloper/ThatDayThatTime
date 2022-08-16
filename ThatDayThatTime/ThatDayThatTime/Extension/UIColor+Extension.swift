@@ -15,4 +15,12 @@ extension UIColor {
     static var viewBackgroundColor: UIColor {
         return UIColor(named: "ViewBackgroundColor") ?? UIColor.clear
     }
+    
+    static var segmentedSelectedColor: UIColor {
+        return UIColor(named: "SegmentedSelectedColor") ?? UIColor.clear
+    }
+    
+    static var segmentedNonSelectedColor: UIColor {
+        return UIColor(named: "SegmentedNonSelectedColor") ?? UIColor.clear
+    }
 }
