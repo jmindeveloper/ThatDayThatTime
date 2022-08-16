@@ -50,4 +50,8 @@ extension GatherDiaryViewModel {
         self.month = month
         changeSegmenteItemsSelected()
     }
+    
+    func selectedDate() -> String {
+        return "\(year) \(month)"
+    }
 }

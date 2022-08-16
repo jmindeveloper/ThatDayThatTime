@@ -13,7 +13,12 @@ import CombineCocoa
 final class GatherDiaryViewController: UIViewController {
     
     // MARK: - ViewProperties
-    private let dateLineView = DateLineView()
+    private lazy var dateLineView: DateLineView = {
+        let dateLineView = DateLineView()
+        dateLineView.configureDateLabel(date: viewModel.selectedDate())
+        
+        return dateLineView
+    }()
     
     private lazy var diaryCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionView.diaryLayout(supplementaryItems: [UICollectionView.diaryHeader()]))
@@ -67,8 +72,11 @@ extension GatherDiaryViewController {
     private func bindingViewModel() {
         viewModel.updateDiary
             .sink { [weak self] in
-                self?.diaryCollectionView.reloadData()
-                self?.segmentCollectionView.reloadData()
+                guard let self = self else { return }
+                self.diaryCollectionView.reloadData()
+                self.segmentCollectionView.reloadData()
+                let date = self.viewModel.selectedDate()
+                self.dateLineView.configureDateLabel(date: date)
             }.store(in: &subscriptions)
     }
 }
