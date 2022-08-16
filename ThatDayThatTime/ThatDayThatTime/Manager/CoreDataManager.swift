@@ -13,12 +13,13 @@ import UIKit
 final class CoreDataManager {
     
     enum FetchFilterType {
-        case date, content
+        case date, content, all
         
         var type: String {
             switch self {
             case .date: return "date"
             case .content: return "content"
+            default: return ""
             }
         }
     }
@@ -61,14 +62,17 @@ final class CoreDataManager {
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
-            let predicate = NSPredicate(format: "\(filterType.type) Contains %@", query)
-            fetchRequest.predicate = predicate
+            
+            if filterType != .all {
+                let predicate = NSPredicate(format: "\(filterType.type) Contains %@", query)
+                fetchRequest.predicate = predicate
+            }
             
             guard let diary = try? self.persistentContainer.viewContext.fetch(fetchRequest) as? [Diary] else {
                 return
             }
             DispatchQueue.main.async {
-                if type == .time {
+                if type == .time || filterType == .all {
                     self.fetchTimeDiary.send(diary)
                 } else {
                     self.fetchDayDiary.send(diary)
