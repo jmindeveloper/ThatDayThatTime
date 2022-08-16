@@ -29,13 +29,14 @@ final class SearchDiaryViewController: UIViewController {
     }()
     
     private lazy var searchResultCollectionView: UICollectionView = {
-        let layout = UICollectionView.diaryLayout()
+        let layout = UICollectionView.diaryLayout(supplementaryItem: [UICollectionView.diaryHeader()])
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .viewBackgroundColor
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(TimeDiaryCollectionViewCell.self, forCellWithReuseIdentifier: TimeDiaryCollectionViewCell.identifier)
         collectionView.register(DayDiaryCollectionViewCell.self, forCellWithReuseIdentifier: DayDiaryCollectionViewCell.identifier)
+        collectionView.register(SearchDiaryCollectinViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchDiaryCollectinViewHeader.identifier)
         
         return collectionView
     }()
@@ -143,6 +144,16 @@ extension SearchDiaryViewController: UICollectionViewDataSource {
             let diary = viewModel.dayDiary[indexPath.row]
             dayDiaryCell.configureCell(with: diary)
             return dayDiaryCell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionView.elementKindSectionHeader {
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchDiaryCollectinViewHeader.identifier, for: indexPath)
+            return header
+        } else {
+            return UICollectionReusableView()
         }
     }
 }

@@ -135,7 +135,7 @@ extension TimeDiaryCollectionViewCell {
     
     private func setConstraintsOfConnectionCircle() {
         connectionCircle.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(30)
             $0.top.equalToSuperview().offset(15)
             $0.size.equalTo(10)
         }

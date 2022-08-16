@@ -8,7 +8,7 @@
 import UIKit
 
 extension UICollectionView {
-    static func diaryLayout() -> UICollectionViewCompositionalLayout {
+    static func diaryLayout(supplementaryItem: [NSCollectionLayoutBoundarySupplementaryItem] = []) -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -16,10 +16,20 @@ extension UICollectionView {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
+        section.contentInsets = .init(top: 10, leading: 0, bottom: 10, trailing: 0)
+        
+        section.boundarySupplementaryItems = supplementaryItem
         
         let layout =  UICollectionViewCompositionalLayout(section: section)
         
         return layout
+    }
+    
+    static func diaryHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
+        
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        
+        return header
     }
 }

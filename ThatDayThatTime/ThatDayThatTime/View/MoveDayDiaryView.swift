@@ -70,7 +70,7 @@ extension MoveDayDiaryView {
     private func setConstraintsOfDateLabel() {
         dateLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
-            $0.leading.equalToSuperview().offset(7)
+            $0.leading.equalToSuperview().offset(14)
             $0.trailing.equalTo(indicatorImageView.snp.leading).offset(-10)
         }
     }
