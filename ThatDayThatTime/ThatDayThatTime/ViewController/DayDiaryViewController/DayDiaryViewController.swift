@@ -13,7 +13,6 @@ final class DayDiaryViewController: UIViewController {
     // MARK: - ViewProperties
     private let dateLineView: DateLineView = {
         let dateLineView = DateLineView()
-        dateLineView.configureDateLabel(date: String.getDate())
         
         return dateLineView
     }()
@@ -40,11 +39,13 @@ final class DayDiaryViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: DayDiaryViewModel
+    private let isCanEdit: Bool
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
-    init(viewModel: DayDiaryViewModel) {
+    init(viewModel: DayDiaryViewModel, isCanEdit: Bool) {
         self.viewModel = viewModel
+        self.isCanEdit = isCanEdit
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -55,7 +56,9 @@ final class DayDiaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor
-        configureNavigation()
+        if isCanEdit {
+            configureNavigation()
+        }
         configureSubViews()
         setConstraintsOfDateLineView()
         setConstraintsOfImageView()
@@ -138,16 +141,20 @@ extension DayDiaryViewController {
     private func bindingViewModel() {
         viewModel.notExistDayDiary
             .sink { [weak self] in
-                self?.presentWritingDayDiaryViewController()
+                guard let self = self else { return }
+                self.presentWritingDayDiaryViewController()
+                self.dateLineView.configureDateLabel(date: self.viewModel.date)
             }.store(in: &subscriptions)
         
         viewModel.existDayDiary
             .sink { [weak self] diary in
-                self?.diaryTextView.text = diary.content
-                self?.imageView.image = UIImage.getImage(data: diary.image)
-                self?.imageView.snp.updateConstraints {
-                    $0.height.equalTo(self?.imageView.image == nil ? 0 : 60)
+                guard let self = self else { return }
+                self.diaryTextView.text = diary.content
+                self.imageView.image = UIImage.getImage(data: diary.image)
+                self.imageView.snp.updateConstraints {
+                    $0.height.equalTo(self.imageView.image == nil ? 0 : 60)
                 }
+                self.dateLineView.configureDateLabel(date: self.viewModel.date)
             }.store(in: &subscriptions)
         
         viewModel.updateFullSizeImage

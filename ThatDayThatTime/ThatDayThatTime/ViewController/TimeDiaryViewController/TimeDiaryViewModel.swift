@@ -37,7 +37,7 @@ final class TimeDiaryViewModel {
 extension TimeDiaryViewModel {
     func changeDate(date: String) {
         self.date = date
-        coreDataManager.getDiary(type: .time, date: date)
+        coreDataManager.getDiary(type: .time, filterType: .date, query: date)
     }
     
     func deleteDiary(index: Int) {

@@ -33,7 +33,8 @@ final class TimeDiaryViewController: UIViewController {
     }()
     
     private lazy var timeDiaryCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: timeDiaryCollectionViewLayout())
+        let layout = UICollectionView.diaryLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .viewBackgroundColor
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -109,13 +110,23 @@ extension TimeDiaryViewController {
             .sink { [weak self] in
                 self?.presentWritingTimeDiaryViewController()
             }.store(in: &subscriptions)
+        var showSideMenuButton: UIBarButtonItem
         
-        let showSideMenuButton = UIBarButtonItem(
-            image: UIImage(systemName: "line.3.horizontal"),
-            style: .plain,
-            target: self,
-            action: nil
-        )
+        if #available(iOS 15, *) {
+            showSideMenuButton = UIBarButtonItem(
+                image: UIImage(systemName: "line.3.horizontal"),
+                style: .plain,
+                target: self,
+                action: nil
+            )
+        } else {
+            showSideMenuButton = UIBarButtonItem(
+                image: UIImage(systemName: "line.horizontal.3"),
+                style: .plain,
+                target: self,
+                action: nil
+            )
+        }
         
         showSideMenuButton.tapPublisher
             .sink { [weak self] in
@@ -163,7 +174,7 @@ extension TimeDiaryViewController {
             coreDataManager: viewModel.coreDataManager,
             date: self.date
         )
-        let vc = DayDiaryViewController(viewModel: dayDiaryViewModel)
+        let vc = DayDiaryViewController(viewModel: dayDiaryViewModel, isCanEdit: true)
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -326,22 +337,6 @@ extension TimeDiaryViewController {
             $0.top.equalTo(calendar.snp.bottom).offset(15)
             $0.width.equalToSuperview()
         }
-    }
-}
-
-// MARK: - CompositionalLayout
-extension TimeDiaryViewController {
-    private func timeDiaryCollectionViewLayout() -> UICollectionViewCompositionalLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
-        
-        return UICollectionViewCompositionalLayout(section: section)
     }
 }
 

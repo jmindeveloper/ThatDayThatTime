@@ -12,6 +12,17 @@ import UIKit
 
 final class CoreDataManager {
     
+    enum FetchFilterType {
+        case date, content
+        
+        var type: String {
+            switch self {
+            case .date: return "date"
+            case .content: return "content"
+            }
+        }
+    }
+    
     // MARK: - Properties
     private let containerName = "ThatDayThatTime"
     private let persistentContainer: NSPersistentContainer
@@ -41,16 +52,16 @@ final class CoreDataManager {
             } catch {
                 self.persistentContainer.viewContext.rollback()
             }
-            self.getDiary(type: type, date: self.fetchDate)
+            self.getDiary(type: type, filterType: .date, query: self.fetchDate)
         }
     }
     
     /// diary 목록 가져오기
-    func getDiary(type: DiaryType, date: String) {
+    func getDiary(type: DiaryType, filterType: FetchFilterType, query: String) {
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
-            let predicate = NSPredicate(format: "date = %@", date)
+            let predicate = NSPredicate(format: "\(filterType.type) Contains %@", query)
             fetchRequest.predicate = predicate
             
             guard let diary = try? self.persistentContainer.viewContext.fetch(fetchRequest) as? [Diary] else {
