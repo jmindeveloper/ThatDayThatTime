@@ -1,5 +1,5 @@
 //
-//  SearchDiaryCollectinViewHeader.swift
+//  DiaryCollectionViewHeader.swift
 //  ThatDayThatTime
 //
 //  Created by J_Min on 2022/08/15.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class SearchDiaryCollectionViewHeader: UICollectionReusableView {
+final class DiaryCollectionViewHeader: UICollectionReusableView {
     
     static let identifier = "SearchDiaryCollectinViewHeader"
     
@@ -49,7 +49,7 @@ final class SearchDiaryCollectionViewHeader: UICollectionReusableView {
 }
 
 // MARK: - Method
-extension SearchDiaryCollectionViewHeader {
+extension DiaryCollectionViewHeader {
     override func prepareForReuse() {
         super.prepareForReuse()
         diaryKindLabel.isHidden = true
@@ -76,7 +76,7 @@ extension SearchDiaryCollectionViewHeader {
 }
 
 // MARK: - UI
-extension SearchDiaryCollectionViewHeader {
+extension DiaryCollectionViewHeader {
     private func configureSubViews() {
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
