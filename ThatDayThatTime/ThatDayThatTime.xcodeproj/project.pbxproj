@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E01AF5A28AB7BB4003B2586 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E01AF5928AB7BB4003B2586 /* UINavigationController+Extension.swift */; };
 		0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161BFF289FCDA40055B84F /* AppDelegate.swift */; };
 		0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161C01289FCDA40055B84F /* SceneDelegate.swift */; };
 		0E161C09289FCDA60055B84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C08289FCDA60055B84F /* Assets.xcassets */; };
@@ -58,6 +59,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E01AF5928AB7BB4003B2586 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		0E161BFC289FCDA40055B84F /* ThatDayThatTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThatDayThatTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E161BFF289FCDA40055B84F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E161C01289FCDA40055B84F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				0E9BE57328A4CBBB0096A1F5 /* UIImage+Extension.swift */,
 				0E9BE57928A4F4D50096A1F5 /* UIAlertController+Extension.swift */,
 				0E60015228AA1F600006A1CF /* UICollectionView+Extension.swift */,
+				0E01AF5928AB7BB4003B2586 /* UINavigationController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				0E35238A28AA5CF90039EA19 /* SearchDiaryCollectionViewHeader.swift in Sources */,
 				0E60015128AA0C780006A1CF /* SettingViewController.swift in Sources */,
 				0E35238828AA4CF30039EA19 /* DayDiaryCollectionViewCell.swift in Sources */,
+				0E01AF5A28AB7BB4003B2586 /* UINavigationController+Extension.swift in Sources */,
 				0E8DB29B28A8EF16006647F4 /* WritingDayDiaryViewController.swift in Sources */,
 				0E8DB29728A8DD55006647F4 /* DayDiaryViewController.swift in Sources */,
 			);

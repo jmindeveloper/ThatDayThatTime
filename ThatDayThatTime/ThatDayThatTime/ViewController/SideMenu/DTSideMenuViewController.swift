@@ -118,6 +118,8 @@ extension DTSideMenuViewController: UITableViewDelegate {
             return
         }
         
-        navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: false) {
+            self.dismiss(animated: true)
+        }
     }
 }
