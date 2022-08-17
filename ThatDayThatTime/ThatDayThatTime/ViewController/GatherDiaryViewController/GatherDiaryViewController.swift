@@ -63,6 +63,8 @@ final class GatherDiaryViewController: UIViewController {
         setConstraintsOfSegmentedCollectionView()
         setConstraintsOfDiaryCollectionView()
         
+        configureDiaryCollectionViewGesture()
+        
         bindingViewModel()
     }
     
@@ -74,6 +76,30 @@ final class GatherDiaryViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         viewModel.getSelectedSegmentIndex()
+    }
+}
+
+// MARK: - ConfigureGesture
+extension GatherDiaryViewController {
+    private func configureDiaryCollectionViewGesture() {
+        let leftSwipeGesture = UISwipeGestureRecognizer()
+        leftSwipeGesture.direction = .left
+        leftSwipeGesture.swipePublisher
+            .sink { [weak self] gesture in
+                print("다음달")
+                self?.viewModel.moveNextMonth()
+            }.store(in: &subscriptions)
+        
+        let rightSwipeGesture = UISwipeGestureRecognizer()
+        rightSwipeGesture.direction = .right
+        rightSwipeGesture.swipePublisher
+            .sink { [weak self] gesture in
+                print("이전달")
+                self?.viewModel.moveBeforeMonth()
+            }.store(in: &subscriptions)
+        
+        diaryCollectionView.addGestureRecognizer(leftSwipeGesture)
+        diaryCollectionView.addGestureRecognizer(rightSwipeGesture)
     }
 }
 

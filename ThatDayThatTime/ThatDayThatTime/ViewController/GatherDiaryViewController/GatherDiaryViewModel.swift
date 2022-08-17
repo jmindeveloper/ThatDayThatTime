@@ -25,6 +25,7 @@ final class GatherDiaryViewModel {
     lazy var selectedSegment = PassthroughSubject<Int, Never>()
     private var month = String.getMonth()
     private var year = String.getYear()
+    private var date = Date()
     private var subscriptions = Set<AnyCancellable>()
     var timeDiary = [[TimeDiary]]()
     var selectedSegmentIndex = 0
@@ -106,21 +107,31 @@ extension GatherDiaryViewModel {
         return diarys
     }
     
-    private func castingToTimeDiary(diary: [Diary]) -> AnyPublisher<[[TimeDiary]], Never> {
-        diary.publisher
-            .compactMap {
-                $0 as? TimeDiary
-            }
-            .collect()
-            .map(sliceTimeDiaryToDate(diary:))
-            .eraseToAnyPublisher()
-    }
-    
     func sliceDate(date: String) -> String {
         var sliceDiayrDate = date.components(separatedBy: " ")
         sliceDiayrDate.removeFirst()
         
         return sliceDiayrDate.joined(separator: " ")
+    }
+    
+    func moveNextMonth() {
+        date = Calendar.current.date(byAdding: DateComponents(month: 1), to: date) ?? Date()
+        year = String.getYear(date: date)
+        month = String.getMonth(date: date)
+        
+        getDiary(date: selectedDate())
+        changeMonth(month: month)
+        getSelectedSegmentIndex()
+    }
+    
+    func moveBeforeMonth() {
+        date = Calendar.current.date(byAdding: DateComponents(month: -1), to: date) ?? Date()
+        year = String.getYear(date: date)
+        month = String.getMonth(date: date)
+        
+        getDiary(date: selectedDate())
+        changeMonth(month: month)
+        getSelectedSegmentIndex()
     }
 }
 
@@ -143,5 +154,15 @@ extension GatherDiaryViewModel {
             .sink { [weak self] image in
                 self?.updateFullSizeImage.send(image)
             }.store(in: &subscriptions)
+    }
+    
+    private func castingToTimeDiary(diary: [Diary]) -> AnyPublisher<[[TimeDiary]], Never> {
+        diary.publisher
+            .compactMap {
+                $0 as? TimeDiary
+            }
+            .collect()
+            .map(sliceTimeDiaryToDate(diary:))
+            .eraseToAnyPublisher()
     }
 }
