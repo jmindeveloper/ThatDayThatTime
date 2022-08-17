@@ -80,16 +80,21 @@ final class GatherDiaryViewController: UIViewController {
         configureDateLineViewGesture()
         
         bindingViewModel()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
         viewModel.changeMonth(month: String.getMonth())
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         viewModel.getSelectedSegmentIndex()
+    }
+}
+
+// MARK: - Method
+extension GatherDiaryViewController {
+    private func pushDayDiaryViewController(diary: DayDiary) {
+        let viewModel = DayDiaryViewModel(diary: diary)
+        let vc = DayDiaryViewController(viewModel: viewModel, isCanEdit: false)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -304,9 +309,7 @@ extension GatherDiaryViewController: UICollectionViewDelegate {
             viewModel.changeMonth(month: viewModel.segmentItems[indexPath.row].0)
         } else if collectionView === diaryCollectionView {
             if let diary = viewModel.diarys[indexPath.section][indexPath.row] as? DayDiary {
-                let viewModel = DayDiaryViewModel(diary: diary)
-                let vc = DayDiaryViewController(viewModel: viewModel, isCanEdit: false)
-                navigationController?.pushViewController(vc, animated: true)
+                pushDayDiaryViewController(diary: diary)
             }
         }
     }
