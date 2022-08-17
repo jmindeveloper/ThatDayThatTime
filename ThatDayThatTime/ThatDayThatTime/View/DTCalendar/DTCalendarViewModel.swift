@@ -11,7 +11,7 @@ import Combine
 final class DTCalendarViewModel {
     
     // MARK: - Properties
-    let manager = CalendarManager()
+    let manager = DTCalendarManager()
     let week = ["일", "월", "화", "수", "목", "금", "토"]
     var days = [CalendarCellComponents]() {
         didSet {
@@ -85,7 +85,7 @@ final class DTCalendarViewModel {
     
     // MARK: - Binding
     private func bindingManager() {
-        manager.sendNewDay
+        manager.updateDay
             .map(mapCalendarCellComponentIsToday(_:))
             .map(mapCalendarCellComponentIsSelected(_:))
             .collect(daysCount)

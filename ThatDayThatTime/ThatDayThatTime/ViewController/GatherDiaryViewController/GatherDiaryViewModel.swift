@@ -22,7 +22,8 @@ final class GatherDiaryViewModel {
     ]
     let updateDiary = PassthroughSubject<Void, Never>()
     let updateFullSizeImage = PassthroughSubject<UIImage?, Never>()
-    lazy var selectedSegment = PassthroughSubject<Int, Never>()
+    let selectedSegment = PassthroughSubject<Int, Never>()
+    let updateCalendarYear = PassthroughSubject<String, Never>()
     private var month = String.getMonth()
     private var year = String.getYear()
     private var date = Date()
@@ -49,6 +50,13 @@ extension GatherDiaryViewModel {
         
         segmentItems[index ?? 0].1 = true
         selectedSegmentIndex = index ?? 0
+    }
+    
+    func changeYear(year: String) {
+        self.year = year
+        let date = selectedDate()
+        getDiary(date: date)
+        updateSelectedDate(with: selectedDate())
     }
     
     func changeMonth(month: String) {
@@ -128,6 +136,7 @@ extension GatherDiaryViewModel {
         year = String.getYear(date: date)
         month = String.getMonth(date: date)
         
+        updateCalendarYear.send(year)
         getDiary(date: selectedDate())
         changeMonth(month: month)
         getSelectedSegmentIndex()
@@ -138,6 +147,7 @@ extension GatherDiaryViewModel {
         year = String.getYear(date: date)
         month = String.getMonth(date: date)
         
+        updateCalendarYear.send(year)
         getDiary(date: selectedDate())
         changeMonth(month: month)
         getSelectedSegmentIndex()

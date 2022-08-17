@@ -1,5 +1,5 @@
 //
-//  CalendarManager.swift
+//  DTCalendarManager.swift
 //  ThatDayThatTime
 //
 //  Created by J_Min on 2022/08/08.
@@ -10,13 +10,13 @@ import Combine
 import UIKit
 
 
-final class CalendarManager {
+final class DTCalendarManager {
     
     private let calendar = Calendar.current
     private var calendarDate = Date()
     private var currentCalendarMonthDate = Date()
     private var selectedCalendarDate = Date()
-    let sendNewDay = PassthroughSubject<CalendarCellComponents, Never>()
+    let updateDay = PassthroughSubject<CalendarCellComponents, Never>()
     
     private func startDateOfMonth(from date: Date) -> Int {
         return calendar.component(.weekday, from: date) - 1
@@ -57,18 +57,18 @@ final class CalendarManager {
         
         for i in 0..<42 {
             if i < startDayOfTheWeek {
-                sendNewDay.send(createCalendarCellComponents(color: .lightGray, date: calendarDate, isCurrentMonth: false))
+                updateDay.send(createCalendarCellComponents(color: .lightGray, date: calendarDate, isCurrentMonth: false))
                 beforeDayOffset += 1
                 calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
                 continue
             }
             if i > currentEndDate + startDayOfTheWeek - 1 {
-                sendNewDay.send(createCalendarCellComponents(color: .lightGray, date: calendarDate, isCurrentMonth: false))
+                updateDay.send(createCalendarCellComponents(color: .lightGray, date: calendarDate, isCurrentMonth: false))
                 afterDayOffset += 1
                 calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
                 continue
             }
-            sendNewDay.send(createCalendarCellComponents(color: .darkGray, date: calendarDate, isCurrentMonth: true))
+            updateDay.send(createCalendarCellComponents(color: .darkGray, date: calendarDate, isCurrentMonth: true))
             calendarDate = calendar.date(byAdding: DateComponents(day: 1), to: calendarDate) ?? Date()
         }
     }

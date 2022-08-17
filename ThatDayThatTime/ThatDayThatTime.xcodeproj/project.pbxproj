@@ -12,7 +12,7 @@
 		0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161C01289FCDA40055B84F /* SceneDelegate.swift */; };
 		0E161C09289FCDA60055B84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C08289FCDA60055B84F /* Assets.xcassets */; };
 		0E161C0C289FCDA60055B84F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C0A289FCDA60055B84F /* LaunchScreen.storyboard */; };
-		0E20739028A12CBF006FE55D /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E20738F28A12CBF006FE55D /* CalendarManager.swift */; };
+		0E20739028A12CBF006FE55D /* DTCalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E20738F28A12CBF006FE55D /* DTCalendarManager.swift */; };
 		0E20739228A13FA5006FE55D /* CalendarCellComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */; };
 		0E2DED7828A514DA007F131C /* TimeDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */; };
 		0E2DED7A28A52438007F131C /* test.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 0E2DED7928A52438007F131C /* test.JPG */; };
@@ -46,6 +46,9 @@
 		0E9BE57628A4EC850096A1F5 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57528A4EC850096A1F5 /* FullImageViewController.swift */; };
 		0E9BE57828A4F4240096A1F5 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57728A4F4240096A1F5 /* AlertManager.swift */; };
 		0E9BE57A28A4F4D50096A1F5 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57928A4F4D50096A1F5 /* UIAlertController+Extension.swift */; };
+		0EAAA42028ACB4AA00B0A1EB /* YearCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAAA41F28ACB4AA00B0A1EB /* YearCalendar.swift */; };
+		0EAAA42328ACBA0100B0A1EB /* YearCalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAAA42228ACBA0100B0A1EB /* YearCalendarManager.swift */; };
+		0EAAA42628ACBB7B00B0A1EB /* YearCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAAA42528ACBB7B00B0A1EB /* YearCalendarViewModel.swift */; };
 		0EBD218328A0D296006F19FE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218228A0D296006F19FE /* SnapKit */; };
 		0EBD218628A0D2AD006F19FE /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218528A0D2AD006F19FE /* SideMenu */; };
 		0EBD218C28A0D2EF006F19FE /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218B28A0D2EF006F19FE /* CombineCocoa */; };
@@ -68,7 +71,7 @@
 		0E161C08289FCDA60055B84F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E161C0B289FCDA60055B84F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E161C0D289FCDA60055B84F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0E20738F28A12CBF006FE55D /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
+		0E20738F28A12CBF006FE55D /* DTCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendarManager.swift; sourceTree = "<group>"; };
 		0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellComponents.swift; sourceTree = "<group>"; };
 		0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryViewModel.swift; sourceTree = "<group>"; };
 		0E2DED7928A52438007F131C /* test.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.JPG; sourceTree = "<group>"; };
@@ -102,6 +105,9 @@
 		0E9BE57528A4EC850096A1F5 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		0E9BE57728A4F4240096A1F5 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		0E9BE57928A4F4D50096A1F5 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
+		0EAAA41F28ACB4AA00B0A1EB /* YearCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearCalendar.swift; sourceTree = "<group>"; };
+		0EAAA42228ACBA0100B0A1EB /* YearCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearCalendarManager.swift; sourceTree = "<group>"; };
+		0EAAA42528ACBB7B00B0A1EB /* YearCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearCalendarViewModel.swift; sourceTree = "<group>"; };
 		0EBD219128A0D37D006F19FE /* ThatDayThatTime.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ThatDayThatTime.xcdatamodel; sourceTree = "<group>"; };
 		0EBD219428A0D531006F19FE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		0EBD219728A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeDiary+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -251,6 +257,24 @@
 			path = WritingTimeDiaryController;
 			sourceTree = "<group>";
 		};
+		0EAAA42128ACB4B800B0A1EB /* YearCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				0EAAA41F28ACB4AA00B0A1EB /* YearCalendar.swift */,
+				0EAAA42528ACBB7B00B0A1EB /* YearCalendarViewModel.swift */,
+			);
+			path = YearCalendar;
+			sourceTree = "<group>";
+		};
+		0EAAA42428ACBA1D00B0A1EB /* CalendarManager */ = {
+			isa = PBXGroup;
+			children = (
+				0E20738F28A12CBF006FE55D /* DTCalendarManager.swift */,
+				0EAAA42228ACBA0100B0A1EB /* YearCalendarManager.swift */,
+			);
+			path = CalendarManager;
+			sourceTree = "<group>";
+		};
 		0EBD218D28A0D353006F19FE /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,7 +312,7 @@
 		0EBD219328A0D522006F19FE /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				0E20738F28A12CBF006FE55D /* CalendarManager.swift */,
+				0EAAA42428ACBA1D00B0A1EB /* CalendarManager */,
 				0EBD219428A0D531006F19FE /* CoreDataManager.swift */,
 				0E9BE57728A4F4240096A1F5 /* AlertManager.swift */,
 				0E2DED7C28A524D7007F131C /* ImageCacheManager.swift */,
@@ -315,6 +339,7 @@
 		0EBD21A328A0E766006F19FE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0EAAA42128ACB4B800B0A1EB /* YearCalendar */,
 				0E81DEE528A1116C00A2B7C6 /* DTCalendar */,
 				0EBD21A428A0E809006F19FE /* DateLineView.swift */,
 				0E8AB4D528A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift */,
@@ -422,7 +447,7 @@
 				0E60014F28AA0C690006A1CF /* GatherDiaryViewController.swift in Sources */,
 				0E9BE57828A4F4240096A1F5 /* AlertManager.swift in Sources */,
 				0E60014828AA05D70006A1CF /* MenuTableViewCell.swift in Sources */,
-				0E20739028A12CBF006FE55D /* CalendarManager.swift in Sources */,
+				0E20739028A12CBF006FE55D /* DTCalendarManager.swift in Sources */,
 				0E9BE57228A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift in Sources */,
 				0E60014D28AA0C5F0006A1CF /* SearchDiaryViewController.swift in Sources */,
 				0EFC165228A3C8BB00006AB0 /* UITextView+Extension.swift in Sources */,
@@ -431,13 +456,16 @@
 				0E60014628A9FCD90006A1CF /* DTSideMenuViewController.swift in Sources */,
 				0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */,
 				0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */,
+				0EAAA42328ACBA0100B0A1EB /* YearCalendarManager.swift in Sources */,
 				0E3142C628A218CF00149E34 /* UIColor+Extension.swift in Sources */,
 				0EBD219D28A0D7CC006F19FE /* DayDiary+CoreDataProperties.swift in Sources */,
 				0EBD219B28A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift in Sources */,
 				0E3142C928A24CD300149E34 /* DTCalendarViewModel.swift in Sources */,
 				0EBD21A528A0E809006F19FE /* DateLineView.swift in Sources */,
+				0EAAA42628ACBB7B00B0A1EB /* YearCalendarViewModel.swift in Sources */,
 				0E2DED7D28A524D7007F131C /* ImageCacheManager.swift in Sources */,
 				0E9BE57428A4CBBB0096A1F5 /* UIImage+Extension.swift in Sources */,
+				0EAAA42028ACB4AA00B0A1EB /* YearCalendar.swift in Sources */,
 				0E84E79928ABA09200BF968B /* SegmentedCollectionViewCell.swift in Sources */,
 				0E8DB29928A8E0DB006647F4 /* DayDiaryViewModel.swift in Sources */,
 				0E9BE57A28A4F4D50096A1F5 /* UIAlertController+Extension.swift in Sources */,

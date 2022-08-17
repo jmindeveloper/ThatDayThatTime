@@ -30,6 +30,15 @@ final class GatherDiaryViewController: UIViewController {
         return collectionView
     }()
     
+    private lazy var yearCalendar: YearCalendar = {
+        let calendar = YearCalendar()
+        calendar.bindingSelectedYear { [weak self] year in
+            self?.viewModel.changeYear(year: year + "년")
+        }
+        
+        return calendar
+    }()
+    
     private lazy var segmentCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionView.segmentedLayout())
         collectionView.backgroundColor = .viewBackgroundColor
@@ -43,6 +52,7 @@ final class GatherDiaryViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: GatherDiaryViewModel
+    private var calendarHidden = true
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
@@ -62,8 +72,10 @@ final class GatherDiaryViewController: UIViewController {
         setConstraintsOfDateLineView()
         setConstraintsOfSegmentedCollectionView()
         setConstraintsOfDiaryCollectionView()
+        setConstraintsOfYearCalendar()
         
         configureDiaryCollectionViewGesture()
+        configureDateLineViewGesture()
         
         bindingViewModel()
     }
@@ -81,6 +93,26 @@ final class GatherDiaryViewController: UIViewController {
 
 // MARK: - ConfigureGesture
 extension GatherDiaryViewController {
+    private func configureDateLineViewGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        tapGesture.tapPublisher
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.calendarHidden.toggle()
+                self.yearCalendar.snp.updateConstraints {
+                    $0.height.equalTo(self.calendarHidden ? 0 : 60)
+                }
+                
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+                    self.view.layoutIfNeeded()
+                } completion: { _ in
+                    self.yearCalendar.bottomLineHidden()
+                }
+            }.store(in: &subscriptions)
+        
+        dateLineView.addGestureRecognizer(tapGesture)
+    }
+    
     private func configureDiaryCollectionViewGesture() {
         let leftSwipeGesture = UISwipeGestureRecognizer()
         leftSwipeGesture.direction = .left
@@ -124,6 +156,11 @@ extension GatherDiaryViewController {
                 vc.modalPresentationStyle = .fullScreen
                 self?.present(vc, animated: true)
             }.store(in: &subscriptions)
+        
+        viewModel.updateCalendarYear
+            .sink { [weak self] year in
+                self?.yearCalendar.updateCalendarYear(year: year)
+            }.store(in: &subscriptions)
     }
     
     private func bindingTimeDiaryImage(
@@ -142,7 +179,8 @@ extension GatherDiaryViewController {
 // MARK: - UI
 extension GatherDiaryViewController {
     private func configureSubViews() {
-        [dateLineView, diaryCollectionView, segmentCollectionView].forEach {
+        [dateLineView, diaryCollectionView,
+         segmentCollectionView, yearCalendar].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -159,7 +197,7 @@ extension GatherDiaryViewController {
     
     private func setConstraintsOfDiaryCollectionView() {
         diaryCollectionView.snp.makeConstraints {
-            $0.top.equalTo(dateLineView.snp.bottom).offset(14)
+            $0.top.equalTo(yearCalendar.snp.bottom).offset(7)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(segmentCollectionView.snp.top)
         }
@@ -170,6 +208,15 @@ extension GatherDiaryViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(60)
+        }
+    }
+    
+    private func setConstraintsOfYearCalendar() {
+        yearCalendar.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.top.equalTo(dateLineView.snp.bottom)
+            $0.leading.equalToSuperview()
+            $0.height.equalTo(0)
         }
     }
 }
