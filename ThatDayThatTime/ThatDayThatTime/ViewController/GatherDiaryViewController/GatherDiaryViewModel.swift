@@ -21,15 +21,16 @@ final class GatherDiaryViewModel {
         ("11월", false), ("12월", false)
     ]
     let updateDiary = PassthroughSubject<Void, Never>()
+    lazy var selectedSegment = PassthroughSubject<Int, Never>()
     private var month = String.getMonth()
     private var year = String.getYear()
     private var subscriptions = Set<AnyCancellable>()
     var timeDiary = [[TimeDiary]]()
+    var selectedSegmentIndex = 0
     
     // MARK: - LifeCycle
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
-        changeSegmenteItemsSelected()
         bindingCoreDataManager()
     }
 }
@@ -45,7 +46,7 @@ extension GatherDiaryViewModel {
         }
         
         segmentItems[index ?? 0].1 = true
-        updateDiary.send()
+        selectedSegmentIndex = index ?? 0
     }
     
     func changeMonth(month: String) {
@@ -58,6 +59,10 @@ extension GatherDiaryViewModel {
     func selectedDate() -> String {
         let date = "\(year) \(month)"
         return date
+    }
+    
+    func getSelectedSegmentIndex() {
+        selectedSegment.send(selectedSegmentIndex)
     }
     
     private func getDiary(date: String) {
@@ -122,7 +127,6 @@ extension GatherDiaryViewModel {
                 castingToTimeDiary(diary: $0)
             }
             .sink { [weak self] diary in
-                print(diary.count)
                 self?.timeDiary = diary
                 self?.updateDiary.send()
             }.store(in: &subscriptions)

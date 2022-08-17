@@ -58,13 +58,22 @@ final class GatherDiaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor
-        viewModel.changeMonth(month: String.getMonth())
         configureSubViews()
         setConstraintsOfDateLineView()
         setConstraintsOfSegmentedCollectionView()
         setConstraintsOfDiaryCollectionView()
         
         bindingViewModel()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        viewModel.changeMonth(month: String.getMonth())
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        viewModel.getSelectedSegmentIndex()
     }
 }
 
@@ -78,6 +87,11 @@ extension GatherDiaryViewController {
                 self.segmentCollectionView.reloadData()
                 let date = self.viewModel.selectedDate()
                 self.dateLineView.configureDateLabel(date: date)
+            }.store(in: &subscriptions)
+        
+        viewModel.selectedSegment
+            .sink { [weak self] index in
+                self?.segmentCollectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredHorizontally, animated: true)
             }.store(in: &subscriptions)
     }
 }
@@ -131,7 +145,6 @@ extension GatherDiaryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView === diaryCollectionView {
-            print(viewModel.timeDiary[section].count)
             return viewModel.timeDiary[section].count
         } else if collectionView === segmentCollectionView {
             return 12
