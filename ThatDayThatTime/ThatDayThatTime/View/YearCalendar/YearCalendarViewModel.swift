@@ -39,9 +39,11 @@ final class YearCalendarViewModel {
     }
     
     func selectedYear(year: String) {
-        selectedYear = year
-        manager.updateCalendar()
-        updateCurrentYear.send(year)
+        if selectedYear != year {
+            selectedYear = year
+            manager.updateCalendar()
+            updateCurrentYear.send(year)
+        }
     }
     
     private func updateSelectedYear(years: [String]) -> [(String, Bool)] {

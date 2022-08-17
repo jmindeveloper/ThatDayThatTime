@@ -24,8 +24,6 @@ final class GatherDiaryViewModel {
     let updateFullSizeImage = PassthroughSubject<UIImage?, Never>()
     let selectedSegment = PassthroughSubject<Int, Never>()
     let updateCalendarYear = PassthroughSubject<String, Never>()
-    private let gatherDiary = PassthroughSubject<String, Never>()
-    private let doneFetchDiary = PassthroughSubject<Void, Never>()
     private var month = String.getMonth()
     private var year = String.getYear()
     private var date = Date()
@@ -58,7 +56,8 @@ extension GatherDiaryViewModel {
     func changeYear(year: String) {
         self.year = year
         let date = selectedDate()
-        getDiary(date: date)
+        let month = date.components(separatedBy: " ").last
+        changeMonth(month: month ?? "1월")
         updateSelectedDate(with: selectedDate())
     }
     
@@ -142,13 +141,11 @@ extension GatherDiaryViewModel {
         }
         diarys.append(contentsOf: filterDiary)
         
-        diarys.removeFirst()
         return diarys
     }
     
     private func joinDiayrsToDate(timeDiary: [Diary], dayDiary: [Diary]) -> [[Diary]] {
         let diarys = timeDiary + dayDiary
-        print("beforejoin: ", diarys.count)
         let diary = diarys.sorted {
             $0.date ?? "" < $1.date ?? ""
         }
@@ -200,7 +197,6 @@ extension GatherDiaryViewModel {
     }
     
     // MARK: - tt
-    
     func sliceDate(date: String) -> String {
         var sliceDiayrDate = date.components(separatedBy: " ")
         sliceDiayrDate.removeFirst()
@@ -214,7 +210,6 @@ extension GatherDiaryViewModel {
         month = String.getMonth(date: date)
         
         updateCalendarYear.send(year)
-        getDiary(date: selectedDate())
         changeMonth(month: month)
         getSelectedSegmentIndex()
     }
@@ -225,7 +220,6 @@ extension GatherDiaryViewModel {
         month = String.getMonth(date: date)
         
         updateCalendarYear.send(year)
-        getDiary(date: selectedDate())
         changeMonth(month: month)
         getSelectedSegmentIndex()
     }
@@ -235,17 +229,10 @@ extension GatherDiaryViewModel {
 extension GatherDiaryViewModel {
     
     private func bindingSelf() {
-        gatherDiary
-            .sink { [weak self] date in
-                self?.getDiary(date: date)
-                self?.doneFetchDiary.send()
-            }.store(in: &subscriptions)
-        
         fetchTimeDiaryToPublisher()
             .zip(fetchDayDiaryToPublisher())
             .map(joinDiayrsToDate(timeDiary:dayDiary:))
             .sink { [weak self] diarys in
-                print(diarys.count)
                 self?.diarys = diarys
                 self?.updateDiary.send()
             }.store(in: &subscriptions)
