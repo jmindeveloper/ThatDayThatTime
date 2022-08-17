@@ -25,6 +25,11 @@ final class DayDiaryViewModel {
         self.date = date
         bindingCoreDataManager()
     }
+    
+    convenience init(diary: DayDiary) {
+        self.init(coreDataManager: CoreDataManager(), date: diary.date ?? String.getDate())
+        dayDiary = diary
+    }
 }
 
 // MARK: - Method

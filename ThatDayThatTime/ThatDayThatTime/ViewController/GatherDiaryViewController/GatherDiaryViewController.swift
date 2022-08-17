@@ -24,6 +24,7 @@ final class GatherDiaryViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionView.diaryLayout(supplementaryItems: [UICollectionView.diaryHeader()]))
         collectionView.backgroundColor = .viewBackgroundColor
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.register(TimeDiaryCollectionViewCell.self, forCellWithReuseIdentifier: TimeDiaryCollectionViewCell.identifier)
         collectionView.register(DayDiaryCollectionViewCell.self, forCellWithReuseIdentifier: DayDiaryCollectionViewCell.identifier)
         collectionView.register(DiaryCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DiaryCollectionViewHeader.identifier)
@@ -301,6 +302,12 @@ extension GatherDiaryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView === segmentCollectionView {
             viewModel.changeMonth(month: viewModel.segmentItems[indexPath.row].0)
+        } else if collectionView === diaryCollectionView {
+            if let diary = viewModel.diarys[indexPath.section][indexPath.row] as? DayDiary {
+                let viewModel = DayDiaryViewModel(diary: diary)
+                let vc = DayDiaryViewController(viewModel: viewModel, isCanEdit: false)
+                navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
 }

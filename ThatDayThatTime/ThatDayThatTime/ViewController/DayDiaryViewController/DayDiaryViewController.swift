@@ -69,7 +69,6 @@ final class DayDiaryViewController: UIViewController {
         
         configureImageViewGesture()
     }
-    
 }
 
 // MARK: - Method
