@@ -24,16 +24,19 @@ final class GatherDiaryViewModel {
     let updateFullSizeImage = PassthroughSubject<UIImage?, Never>()
     let selectedSegment = PassthroughSubject<Int, Never>()
     let updateCalendarYear = PassthroughSubject<String, Never>()
+    private let gatherDiary = PassthroughSubject<String, Never>()
+    private let doneFetchDiary = PassthroughSubject<Void, Never>()
     private var month = String.getMonth()
     private var year = String.getYear()
     private var date = Date()
     private var subscriptions = Set<AnyCancellable>()
-    var timeDiary = [[TimeDiary]]()
+    var diarys = [[Diary]]()
     var selectedSegmentIndex = 0
     
     // MARK: - LifeCycle
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
+        bindingSelf()
         bindingCoreDataManager()
     }
 }
@@ -84,22 +87,41 @@ extension GatherDiaryViewModel {
         selectedSegment.send(selectedSegmentIndex)
     }
     
-    private func getDiary(date: String) {
-        coreDataManager.getDiary(type: .time, filterType: .date, query: date)
-    }
-    
     func getFullSizeImage(id: String) {
         coreDataManager.getFullSizeImage(id: id)
     }
     
-    private func sliceTimeDiaryToDate(diary: [TimeDiary]) -> [[TimeDiary]] {
+    // MARK: - tttt
+    private func getTimeDiary(date: String) {
+        coreDataManager.getDiary(type: .time, filterType: .date, query: date)
+    }
+    
+    private func fetchTimeDiaryToPublisher() -> AnyPublisher<[TimeDiary], Never> {
+        return coreDataManager.fetchTimeDiary
+            .flatMap { [unowned self] in
+                castingToTimeDiary(diary: $0)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func castingToTimeDiary(diary: [Diary]) -> AnyPublisher<[TimeDiary], Never> {
+        diary.publisher
+            .compactMap {
+                $0 as? TimeDiary
+            }
+            .collect()
+            .map(sliceTimeDiaryToDate(diary:))
+            .eraseToAnyPublisher()
+    }
+    
+    private func sliceTimeDiaryToDate(diary: [TimeDiary]) -> [TimeDiary] {
         guard diary.count > 0 else {
             return []
         }
         let diary = diary.sorted {
             $0.date ?? "" < $1.date ?? ""
         }
-        var diarys = [[TimeDiary]]()
+        var diarys = [TimeDiary]()
         var filterDiary = [TimeDiary]()
         var date: String? = ""
         
@@ -110,7 +132,7 @@ extension GatherDiaryViewModel {
                 filterDiary.sort {
                     $0.time ?? "" < $1.time ?? ""
                 }
-                diarys.append(filterDiary)
+                diarys.append(contentsOf: filterDiary)
                 date = diary[i].date
                 filterDiary = [diary[i]]
             }
@@ -118,11 +140,66 @@ extension GatherDiaryViewModel {
         filterDiary.sort {
             $0.time ?? "" < $1.time ?? ""
         }
-        diarys.append(filterDiary)
+        diarys.append(contentsOf: filterDiary)
         
         diarys.removeFirst()
         return diarys
     }
+    
+    private func joinDiayrsToDate(timeDiary: [Diary], dayDiary: [Diary]) -> [[Diary]] {
+        let diarys = timeDiary + dayDiary
+        print("beforejoin: ", diarys.count)
+        let diary = diarys.sorted {
+            $0.date ?? "" < $1.date ?? ""
+        }
+        
+        var joinDiary = [[Diary]]()
+        var filterDiary = [Diary]()
+        var date: String? = ""
+        
+        for i in 0..<diary.count {
+            if diary[i].date == date {
+                filterDiary.append(diary[i])
+            } else {
+                joinDiary.append(filterDiary)
+                date = diary[i].date
+                filterDiary = [diary[i]]
+            }
+        }
+        joinDiary.append(filterDiary)
+        joinDiary.removeFirst()
+        return joinDiary
+    }
+    
+    private func getDayDiary(date: String) {
+        coreDataManager.getDiary(type: .day, filterType: .date, query: date)
+    }
+    
+    private func fetchDayDiaryToPublisher() -> AnyPublisher<[Diary], Never> {
+        return coreDataManager.fetchDayDiary
+            .flatMap { [unowned self] in
+                castingToDayDiary(diary: $0)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func castingToDayDiary(diary: [Diary]) -> AnyPublisher<[Diary], Never> {
+        diary.publisher
+            .collect()
+            .map {
+                $0.sorted {
+                    $0.date ?? "" < $1.date ?? ""
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func getDiary(date: String) {
+        getTimeDiary(date: date)
+        getDayDiary(date: date)
+    }
+    
+    // MARK: - tt
     
     func sliceDate(date: String) -> String {
         var sliceDiayrDate = date.components(separatedBy: " ")
@@ -156,16 +233,25 @@ extension GatherDiaryViewModel {
 
 // MARK: - Binding
 extension GatherDiaryViewModel {
-    private func bindingCoreDataManager() {
-        coreDataManager.fetchTimeDiary
-            .flatMap { [unowned self] in
-                castingToTimeDiary(diary: $0)
-            }
-            .sink { [weak self] diary in
-                self?.timeDiary = diary
-                self?.updateDiary.send()
+    
+    private func bindingSelf() {
+        gatherDiary
+            .sink { [weak self] date in
+                self?.getDiary(date: date)
+                self?.doneFetchDiary.send()
             }.store(in: &subscriptions)
         
+        fetchTimeDiaryToPublisher()
+            .zip(fetchDayDiaryToPublisher())
+            .map(joinDiayrsToDate(timeDiary:dayDiary:))
+            .sink { [weak self] diarys in
+                print(diarys.count)
+                self?.diarys = diarys
+                self?.updateDiary.send()
+            }.store(in: &subscriptions)
+    }
+    
+    private func bindingCoreDataManager() {
         coreDataManager.fetchFullSizeImage
             .map {
                 UIImage.getImage(data: $0)
@@ -175,13 +261,4 @@ extension GatherDiaryViewModel {
             }.store(in: &subscriptions)
     }
     
-    private func castingToTimeDiary(diary: [Diary]) -> AnyPublisher<[[TimeDiary]], Never> {
-        diary.publisher
-            .compactMap {
-                $0 as? TimeDiary
-            }
-            .collect()
-            .map(sliceTimeDiaryToDate(diary:))
-            .eraseToAnyPublisher()
-    }
 }

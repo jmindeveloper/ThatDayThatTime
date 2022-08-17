@@ -25,6 +25,7 @@ final class GatherDiaryViewController: UIViewController {
         collectionView.backgroundColor = .viewBackgroundColor
         collectionView.dataSource = self
         collectionView.register(TimeDiaryCollectionViewCell.self, forCellWithReuseIdentifier: TimeDiaryCollectionViewCell.identifier)
+        collectionView.register(DayDiaryCollectionViewCell.self, forCellWithReuseIdentifier: DayDiaryCollectionViewCell.identifier)
         collectionView.register(DiaryCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DiaryCollectionViewHeader.identifier)
         
         return collectionView
@@ -170,7 +171,7 @@ extension GatherDiaryViewController {
     ) {
         cell.tapImage = { [weak self] in
             guard let self = self else { return }
-            let id = self.viewModel.timeDiary[section][index].id
+            let id = self.viewModel.diarys[section][index].id
             self.viewModel.getFullSizeImage(id: id)
         }
     }
@@ -226,7 +227,7 @@ extension GatherDiaryViewController {
 extension GatherDiaryViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if collectionView === diaryCollectionView {
-            return viewModel.timeDiary.count
+            return viewModel.diarys.count
         } else if collectionView === segmentCollectionView {
             return 1
         }
@@ -235,7 +236,7 @@ extension GatherDiaryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView === diaryCollectionView {
-            return viewModel.timeDiary[section].count
+            return viewModel.diarys[section].count
         } else if collectionView === segmentCollectionView {
             return 12
         }
@@ -244,14 +245,26 @@ extension GatherDiaryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView === diaryCollectionView {
-            guard let diaryCell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeDiaryCollectionViewCell.identifier, for: indexPath) as? TimeDiaryCollectionViewCell else { return UICollectionViewCell() }
+            guard let timeDiaryCell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeDiaryCollectionViewCell.identifier, for: indexPath) as? TimeDiaryCollectionViewCell,
+                  let dayDiaryCell = collectionView.dequeueReusableCell(withReuseIdentifier: DayDiaryCollectionViewCell.identifier, for: indexPath) as? DayDiaryCollectionViewCell else {
+                return UICollectionViewCell()
+            }
             
-            let diary = viewModel.timeDiary[indexPath.section][indexPath.row]
-            diaryCell.configureCell(with: diary, isFirst: indexPath.row == 0, isLast: indexPath.row == viewModel.timeDiary[indexPath.section].count - 1)
+            let diary = viewModel.diarys[indexPath.section][indexPath.row]
             
-            bindingTimeDiaryImage(cell: diaryCell, section: indexPath.section, index: indexPath.row)
-            
-            return diaryCell
+            if let diary = diary as? TimeDiary {
+                let isLast = (viewModel.diarys[indexPath.section].last is DayDiary &&
+                              indexPath.row == viewModel.diarys[indexPath.section].count - 2) ||
+                              indexPath.row == viewModel.diarys[indexPath.section].count - 1
+                
+                timeDiaryCell.configureCell(with: diary, isFirst: indexPath.row == 0, isLast: isLast)
+                bindingTimeDiaryImage(cell: timeDiaryCell, section: indexPath.section, index: indexPath.row)
+                return timeDiaryCell
+            } else if (diary as? DayDiary) != nil {
+                dayDiaryCell.configureCell()
+                dayDiaryCell.bottomLineHidden(true)
+                return dayDiaryCell
+            }
         } else if collectionView === segmentCollectionView {
             guard let segmentedCell = collectionView.dequeueReusableCell(withReuseIdentifier: SegmentedCollectionViewCell.identifier, for: indexPath) as? SegmentedCollectionViewCell else { return UICollectionViewCell() }
             
@@ -267,11 +280,12 @@ extension GatherDiaryViewController: UICollectionViewDataSource {
         if collectionView === diaryCollectionView {
             if kind == UICollectionView.elementKindSectionHeader {
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DiaryCollectionViewHeader.identifier, for: indexPath) as? DiaryCollectionViewHeader else { return UICollectionReusableView() }
-                
-                guard var date = viewModel.timeDiary[indexPath.section].first?.date else { return UICollectionReusableView() }
+
+                guard var date = viewModel.diarys[indexPath.section].first?.date else {
+                    return UICollectionReusableView() }
                 date = viewModel.sliceDate(date: date)
                 header.configureHeader(date: date)
-                
+
                 return header
             } else {
                 return UICollectionReusableView()
