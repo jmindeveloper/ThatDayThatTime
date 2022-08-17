@@ -41,6 +41,14 @@ extension DayDiaryCollectionViewCell {
     func configureCell(with diary: DayDiary) {
         moveDayDiaryView.cofigureDateLabel(date: diary.date ?? "")
     }
+    
+    func configureCell() {
+        moveDayDiaryView.dateLabelHidden(hidden: true)
+    }
+    
+    func bottomLineHidden(_ hidden: Bool) {
+        bottomLine.isHidden = hidden
+    }
 }
 
 // MARK: - UI

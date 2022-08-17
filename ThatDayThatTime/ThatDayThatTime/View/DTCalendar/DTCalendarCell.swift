@@ -42,6 +42,14 @@ final class DTCalendarCell: UICollectionViewCell {
         self.dateLabel.textColor = day.dayColor
         self.dateLabel.backgroundColor = day.cellColor
     }
+    
+    func configureCell(year: String, isSelected: Bool) {
+        self.dateLabel.text = year
+        self.dateLabel.font = .systemFont(ofSize: 16)
+        self.contentView.backgroundColor = isSelected ? .daySelectedColor : .clear
+        self.dateLabel.textColor = .darkGray
+        contentView.layer.cornerRadius = 5
+    }
 }
 
 // MARK: - UI

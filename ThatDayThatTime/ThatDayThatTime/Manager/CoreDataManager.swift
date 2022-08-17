@@ -61,6 +61,7 @@ final class CoreDataManager {
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
+            
             let predicate = NSPredicate(format: "\(filterType.type) Contains %@", query)
             fetchRequest.predicate = predicate
             

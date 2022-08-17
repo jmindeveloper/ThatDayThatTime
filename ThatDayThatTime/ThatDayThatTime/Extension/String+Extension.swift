@@ -19,6 +19,20 @@ extension String {
         return "\(components.year)년 \(components.month)월 \(components.day)일 \(components.weekday)"
     }
     
+    static func getMonth(date: Date = Date()) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M월"
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter.string(from: date)
+    }
+    
+    static func getYear(date: Date = Date()) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년"
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter.string(from: date)
+    }
+    
     static func getTime(date: Date = Date()) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"

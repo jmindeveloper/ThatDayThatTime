@@ -23,6 +23,23 @@ extension UICollectionView {
         return layout
     }
     
+    static func segmentedLayout() -> UICollectionViewCompositionalLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(66), heightDimension: .absolute(35))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = .init(top: 0, leading: 3, bottom: 0, trailing: 3)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .absolute(35))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = .init(top: 10, leading: 10, bottom: 0, trailing: 10)
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        
+        return layout
+    }
+    
     static func diaryHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
         

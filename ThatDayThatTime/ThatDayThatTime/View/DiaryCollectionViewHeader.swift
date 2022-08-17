@@ -1,5 +1,5 @@
 //
-//  SearchDiaryCollectinViewHeader.swift
+//  DiaryCollectionViewHeader.swift
 //  ThatDayThatTime
 //
 //  Created by J_Min on 2022/08/15.
@@ -8,14 +8,13 @@
 import UIKit
 import SnapKit
 
-final class SearchDiaryCollectionViewHeader: UICollectionReusableView {
+final class DiaryCollectionViewHeader: UICollectionReusableView {
     
     static let identifier = "SearchDiaryCollectinViewHeader"
     
     // MARK: - ViewProperties
     private let diaryKindLabel: UILabel = {
         let label = UILabel()
-        label.text = "시간의 기록"
         label.font = .systemFont(ofSize: 40, weight: .bold)
         label.textColor = .black
         
@@ -49,7 +48,7 @@ final class SearchDiaryCollectionViewHeader: UICollectionReusableView {
 }
 
 // MARK: - Method
-extension SearchDiaryCollectionViewHeader {
+extension DiaryCollectionViewHeader {
     override func prepareForReuse() {
         super.prepareForReuse()
         diaryKindLabel.isHidden = true
@@ -73,10 +72,17 @@ extension SearchDiaryCollectionViewHeader {
             diaryKindLabel.text = "하루의 기록"
         }
     }
+    
+    func configureHeader(date: String) {
+        diaryKindLabel.isHidden = false
+        dateLineView.isHidden = true
+        diaryKindLabel.text = date
+        diaryKindLabel.font = .systemFont(ofSize: 22, weight: .semibold)
+    }
 }
 
 // MARK: - UI
-extension SearchDiaryCollectionViewHeader {
+extension DiaryCollectionViewHeader {
     private func configureSubViews() {
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,7 +101,7 @@ extension SearchDiaryCollectionViewHeader {
     
     private func setConstraintsOfDiaryKindLabel() {
         diaryKindLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(14)
+            $0.leading.equalToSuperview().offset(12)
         }
     }
     

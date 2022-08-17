@@ -36,7 +36,7 @@ final class SearchDiaryViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(TimeDiaryCollectionViewCell.self, forCellWithReuseIdentifier: TimeDiaryCollectionViewCell.identifier)
         collectionView.register(DayDiaryCollectionViewCell.self, forCellWithReuseIdentifier: DayDiaryCollectionViewCell.identifier)
-        collectionView.register(SearchDiaryCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchDiaryCollectionViewHeader.identifier)
+        collectionView.register(DiaryCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DiaryCollectionViewHeader.identifier)
         
         return collectionView
     }()
@@ -181,7 +181,7 @@ extension SearchDiaryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         if kind == UICollectionView.elementKindSectionHeader {
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchDiaryCollectionViewHeader.identifier, for: indexPath) as? SearchDiaryCollectionViewHeader else { return UICollectionReusableView() }
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DiaryCollectionViewHeader.identifier, for: indexPath) as? DiaryCollectionViewHeader else { return UICollectionReusableView() }
             
             if indexPath.section < viewModel.timeDiary.count {
                 guard let diary = viewModel.timeDiary[indexPath.section].first else {

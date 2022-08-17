@@ -56,6 +56,16 @@ extension MoveDayDiaryView {
     func cofigureDateLabel(date: String) {
         dateLabel.text = date
     }
+    
+    func dateLabelHidden(hidden: Bool) {
+        dateLabel.removeFromSuperview()
+        descriptionLabel.snp.remakeConstraints {
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalTo(indicatorImageView.snp.leading).offset(-10)
+            $0.verticalEdges.equalToSuperview().inset(15)
+        }
+        descriptionLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+    }
 }
 
 // MARK: - UI
