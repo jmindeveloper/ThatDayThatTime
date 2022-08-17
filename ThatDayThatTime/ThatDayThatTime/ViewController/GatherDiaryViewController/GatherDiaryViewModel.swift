@@ -55,7 +55,16 @@ extension GatherDiaryViewModel {
         self.month = month
         let date = selectedDate()
         getDiary(date: date)
+        updateSelectedDate(with: selectedDate())
         changeSegmenteItemsSelected()
+    }
+    
+    private func updateSelectedDate(with date: String) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 M월"
+        formatter.locale = Locale(identifier: "ko_KR")
+        
+        self.date = formatter.date(from: date) ?? Date()
     }
     
     func selectedDate() -> String {

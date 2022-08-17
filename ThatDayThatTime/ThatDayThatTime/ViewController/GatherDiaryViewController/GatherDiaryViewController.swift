@@ -86,7 +86,6 @@ extension GatherDiaryViewController {
         leftSwipeGesture.direction = .left
         leftSwipeGesture.swipePublisher
             .sink { [weak self] gesture in
-                print("다음달")
                 self?.viewModel.moveNextMonth()
             }.store(in: &subscriptions)
         
@@ -94,7 +93,6 @@ extension GatherDiaryViewController {
         rightSwipeGesture.direction = .right
         rightSwipeGesture.swipePublisher
             .sink { [weak self] gesture in
-                print("이전달")
                 self?.viewModel.moveBeforeMonth()
             }.store(in: &subscriptions)
         
