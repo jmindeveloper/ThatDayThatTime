@@ -5,7 +5,7 @@
 //  Created by J_Min on 2022/08/16.
 //
 
-import Foundation
+import UIKit
 import Combine
 
 final class GatherDiaryViewModel {
@@ -21,6 +21,7 @@ final class GatherDiaryViewModel {
         ("11월", false), ("12월", false)
     ]
     let updateDiary = PassthroughSubject<Void, Never>()
+    let updateFullSizeImage = PassthroughSubject<UIImage?, Never>()
     lazy var selectedSegment = PassthroughSubject<Int, Never>()
     private var month = String.getMonth()
     private var year = String.getYear()
@@ -67,6 +68,10 @@ extension GatherDiaryViewModel {
     
     private func getDiary(date: String) {
         coreDataManager.getDiary(type: .time, filterType: .date, query: date)
+    }
+    
+    func getFullSizeImage(id: String) {
+        coreDataManager.getFullSizeImage(id: id)
     }
     
     private func sliceTimeDiaryToDate(diary: [TimeDiary]) -> [[TimeDiary]] {
@@ -129,6 +134,14 @@ extension GatherDiaryViewModel {
             .sink { [weak self] diary in
                 self?.timeDiary = diary
                 self?.updateDiary.send()
+            }.store(in: &subscriptions)
+        
+        coreDataManager.fetchFullSizeImage
+            .map {
+                UIImage.getImage(data: $0)
+            }
+            .sink { [weak self] image in
+                self?.updateFullSizeImage.send(image)
             }.store(in: &subscriptions)
     }
 }
