@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 final class SettingFontViewModel {
     private let fonts = Font.allCases
     lazy var fontModels = SettingSection(sectionTitle: "폰트", settingCells: configure())
+    lazy var updateFont = PassthroughSubject<Void, Never>()
     
-    func configure() -> [SettingCellType] {
+    private func configure() -> [SettingCellType] {
         var models = [SettingCellType]()
         fonts.forEach {
             let model = SettingCellType.accessoryCell(
@@ -23,7 +25,19 @@ final class SettingFontViewModel {
             models.append(model)
         }
         return models
-
+    }
+    
+    private func updateSelectedCell(index: Int) {
+        
+    }
+    
+    func changeFont(fontIndex: Int) {
+        let fontModel = fontModels.settingCells[fontIndex]
+        if case .accessoryCell(model: let model) = fontModel {
+            model.handler?()
+            UserSettingManager.shared.setFont(fontIndex: fontIndex)
+            updateFont.send()
+        }
     }
 }
 

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 final class SettingFontViewController: UIViewController {
     
@@ -51,6 +52,7 @@ final class SettingFontViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel = SettingFontViewModel()
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -61,6 +63,19 @@ final class SettingFontViewController: UIViewController {
         setConstraintsOfFontPreviewTextView()
         setConstraintsOfFontPreviewLabel()
         setConstraintsOfFontTableView()
+        
+        bindingViewModel()
+    }
+}
+
+// MARK: - Binding
+extension SettingFontViewController {
+    private func bindingViewModel() {
+        viewModel.updateFont
+            .sink { [weak self] in
+                self?.fontTableView.reloadData()
+                self?.fontPreviewLabel.font = UserSettingManager.shared.getFont()
+            }.store(in: &subscriptions)
     }
 }
 
@@ -118,5 +133,8 @@ extension SettingFontViewController: UITableViewDataSource {
 }
 
 extension SettingFontViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.changeFont(fontIndex: indexPath.row)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
