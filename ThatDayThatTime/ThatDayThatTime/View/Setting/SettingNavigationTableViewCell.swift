@@ -39,7 +39,7 @@ final class SettingNavigationTableViewCell: UITableViewCell {
 
 // MARK: - Method
 extension SettingNavigationTableViewCell {
-    func configureCell(with model: SettingNavigationModel) {
+    func configureCell(with model: SettingAccessoryModel) {
         titleLabel.text = model.title
         accessory.image = model.accessory
         contentView.backgroundColor = .settingCellBackgroundColor

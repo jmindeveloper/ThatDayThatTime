@@ -100,5 +100,12 @@ extension SettingViewController: UITableViewDataSource {
 extension SettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let model = viewModel.sections[indexPath.section].settingCells[indexPath.row]
+        
+        switch model.self {
+        case .navigationCell(model: let model):
+            model.handler?()
+        default: break
+        }
     }
 }

@@ -12,6 +12,7 @@ final class SettingViewModel {
     
     var sections = [SettingSection]()
     let updateSetting = PassthroughSubject<Void, Never>()
+    private let setting = UserSettingManager.shared
     
     init() {
         
@@ -23,7 +24,7 @@ extension SettingViewModel {
     func configure() {
         // MARK: - 설정
         sections.append(SettingSection(sectionTitle: "설정", settingCells: [
-            .navigationCell(model: SettingNavigationModel(
+            .navigationCell(model: SettingAccessoryModel(
                 title: "폰트",
                 accessory: UIImage(systemName: "chevron.right")) {
                     print("폰트")
@@ -36,8 +37,8 @@ extension SettingViewModel {
             .switchCell(model: SettingSwitchModel(
                 title: "비밀번호",
                 Accessory: nil,
-                isOn: false) {
-                    print("비밀번호")
+                isOn: false) { isOn in
+                    print("비밀번호", isOn)
                 }
             )
         ]))

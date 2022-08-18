@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 final class SettingSwitchTableViewCell: UITableViewCell {
 
@@ -25,13 +26,17 @@ final class SettingSwitchTableViewCell: UITableViewCell {
         return toggleSwitch
     }()
     
+    // MARK: - Properties
+    private var handler: ((Bool) -> Void)?
+    private var subscriptions = Set<AnyCancellable>()
+    
     // MARK: - LifeCycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureSubViews()
         setConstraintsOfTitleLabel()
         setConstraintsOfToggleSwitch()
-        contentView.backgroundColor = .settingCellBackgroundColor
+        bindingSelf()
     }
     
     required init?(coder: NSCoder) {
@@ -44,6 +49,18 @@ extension SettingSwitchTableViewCell {
     func configureCell(with model: SettingSwitchModel) {
         titleLabel.text = model.title
         toggleSwitch.isOn = model.isOn
+        handler = model.handler
+        contentView.backgroundColor = .settingCellBackgroundColor
+    }
+}
+
+// MARK: - Bidning
+extension SettingSwitchTableViewCell {
+    private func bindingSelf() {
+        toggleSwitch.isOnPublisher
+            .sink { [weak self] isOn in
+                self?.handler?(isOn)
+            }.store(in: &subscriptions)
     }
 }
 

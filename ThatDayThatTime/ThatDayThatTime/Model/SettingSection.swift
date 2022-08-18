@@ -13,11 +13,11 @@ struct SettingSection {
 }
 
 enum SettingCellType {
-    case navigationCell(model: SettingNavigationModel)
+    case navigationCell(model: SettingAccessoryModel)
     case switchCell(model: SettingSwitchModel)
 }
 
-struct SettingNavigationModel {
+struct SettingAccessoryModel {
     let title: String
     let accessory: UIImage?
     let handler: (() -> Void)?
@@ -27,5 +27,5 @@ struct SettingSwitchModel {
     let title: String
     let Accessory: UIImage?
     let isOn: Bool
-    let handler: (() -> Void)?
+    let handler: ((Bool) -> Void)?
 }
