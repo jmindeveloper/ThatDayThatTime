@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Combine
 
 final class SettingViewController: UIViewController {
     
+    // MARK: - ViewProperties
     private lazy var settingTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.dataSource = self
@@ -18,11 +20,29 @@ final class SettingViewController: UIViewController {
         return tableView
     }()
     
+    // MARK: - Properties
+    private let viewModel = SettingViewModel()
+    private var subscriptions = Set<AnyCancellable>()
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor
         configureSubViews()
         setConstraintsOfSettingTableView()
+        
+        bindingViewModel()
+        viewModel.configure()
+    }
+}
+
+// MARK: - Binding
+extension SettingViewController {
+    private func bindingViewModel() {
+        viewModel.updateSetting
+            .sink { [weak self] in
+                self?.settingTableView.reloadData()
+            }.store(in: &subscriptions)
     }
 }
 
@@ -43,25 +63,31 @@ extension SettingViewController {
 // MARK: - UITableViewDataSource
 extension SettingViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        viewModel.sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        let section = viewModel.sections[section]
+        return section.settingCells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.contentView.backgroundColor = .settingCellBackgroundColor
+        let model = viewModel.sections[indexPath.section].settingCells[indexPath.row]
+        
+        switch model.self {
+        case .switchCell(model: let model):
+            cell.contentView.backgroundColor = .red
+        case .navigationCell(model: let model):
+            cell.contentView.backgroundColor = .blue
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0: return "설정"
-        case 1: return "보안"
-        default: return nil
-        }
+        let section = viewModel.sections[section]
+        return section.sectionTitle
     }
 }
 

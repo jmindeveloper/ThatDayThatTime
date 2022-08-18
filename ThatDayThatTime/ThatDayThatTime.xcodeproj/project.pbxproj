@@ -60,6 +60,10 @@
 		0EBD219F28A0D834006F19FE /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219E28A0D834006F19FE /* Diary.swift */; };
 		0EBD21A228A0E6C9006F19FE /* TimeDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD21A128A0E6C9006F19FE /* TimeDiaryViewController.swift */; };
 		0EBD21A528A0E809006F19FE /* DateLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD21A428A0E809006F19FE /* DateLineView.swift */; };
+		0EEAA49C28ADFCF300B20C17 /* SettingNavigationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA49B28ADFCF300B20C17 /* SettingNavigationTableViewCell.swift */; };
+		0EEAA49E28ADFD0900B20C17 /* SettingSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA49D28ADFD0900B20C17 /* SettingSwitchTableViewCell.swift */; };
+		0EEAA4A028ADFD8D00B20C17 /* SettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA49F28ADFD8D00B20C17 /* SettingSection.swift */; };
+		0EEAA4A328ADFE8D00B20C17 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA4A228ADFE8D00B20C17 /* SettingViewModel.swift */; };
 		0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */; };
 		0EFC165228A3C8BB00006AB0 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC165128A3C8BB00006AB0 /* UITextView+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -117,6 +121,10 @@
 		0EBD219E28A0D834006F19FE /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
 		0EBD21A128A0E6C9006F19FE /* TimeDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryViewController.swift; sourceTree = "<group>"; };
 		0EBD21A428A0E809006F19FE /* DateLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateLineView.swift; sourceTree = "<group>"; };
+		0EEAA49B28ADFCF300B20C17 /* SettingNavigationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNavigationTableViewCell.swift; sourceTree = "<group>"; };
+		0EEAA49D28ADFD0900B20C17 /* SettingSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSwitchTableViewCell.swift; sourceTree = "<group>"; };
+		0EEAA49F28ADFD8D00B20C17 /* SettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSection.swift; sourceTree = "<group>"; };
+		0EEAA4A228ADFE8D00B20C17 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingTimeDiaryViewController.swift; sourceTree = "<group>"; };
 		0EFC165128A3C8BB00006AB0 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -204,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				0E60015028AA0C780006A1CF /* SettingViewController.swift */,
+				0EEAA4A228ADFE8D00B20C17 /* SettingViewModel.swift */,
 			);
 			path = SettingViewController;
 			sourceTree = "<group>";
@@ -295,6 +304,7 @@
 			children = (
 				0EBD218F28A0D362006F19FE /* CoreData */,
 				0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */,
+				0EEAA49F28ADFD8D00B20C17 /* SettingSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -342,17 +352,35 @@
 		0EBD21A328A0E766006F19FE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0EEAA49A28ADFCA300B20C17 /* Setting */,
+				0EEAA49828ADFBD300B20C17 /* DiaryCell */,
 				0EAAA42128ACB4B800B0A1EB /* YearCalendar */,
 				0E81DEE528A1116C00A2B7C6 /* DTCalendar */,
 				0EBD21A428A0E809006F19FE /* DateLineView.swift */,
-				0E8AB4D528A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift */,
-				0E8DB29328A8CCAE006647F4 /* MoveDayDiaryView.swift */,
 				0E60014728AA05D70006A1CF /* MenuTableViewCell.swift */,
-				0E35238728AA4CF30039EA19 /* DayDiaryCollectionViewCell.swift */,
-				0E35238928AA5CF90039EA19 /* DiaryCollectionViewHeader.swift */,
 				0E84E79828ABA09200BF968B /* SegmentedCollectionViewCell.swift */,
+				0E8DB29328A8CCAE006647F4 /* MoveDayDiaryView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		0EEAA49828ADFBD300B20C17 /* DiaryCell */ = {
+			isa = PBXGroup;
+			children = (
+				0E35238928AA5CF90039EA19 /* DiaryCollectionViewHeader.swift */,
+				0E8AB4D528A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift */,
+				0E35238728AA4CF30039EA19 /* DayDiaryCollectionViewCell.swift */,
+			);
+			path = DiaryCell;
+			sourceTree = "<group>";
+		};
+		0EEAA49A28ADFCA300B20C17 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				0EEAA49B28ADFCF300B20C17 /* SettingNavigationTableViewCell.swift */,
+				0EEAA49D28ADFD0900B20C17 /* SettingSwitchTableViewCell.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -440,6 +468,7 @@
 				0E84E79B28ABAB4800BF968B /* GatherDiaryViewModel.swift in Sources */,
 				0E8AB4D628A36FD100F5C77A /* TimeDiaryCollectionViewCell.swift in Sources */,
 				0EBD219F28A0D834006F19FE /* Diary.swift in Sources */,
+				0EEAA4A328ADFE8D00B20C17 /* SettingViewModel.swift in Sources */,
 				0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */,
 				0E9BE57628A4EC850096A1F5 /* FullImageViewController.swift in Sources */,
 				0EAAA42828AD0F9900B0A1EB /* UserSettingManager.swift in Sources */,
@@ -451,12 +480,14 @@
 				0E60014F28AA0C690006A1CF /* GatherDiaryViewController.swift in Sources */,
 				0E9BE57828A4F4240096A1F5 /* AlertManager.swift in Sources */,
 				0E60014828AA05D70006A1CF /* MenuTableViewCell.swift in Sources */,
+				0EEAA49E28ADFD0900B20C17 /* SettingSwitchTableViewCell.swift in Sources */,
 				0E20739028A12CBF006FE55D /* DTCalendarManager.swift in Sources */,
 				0E9BE57228A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift in Sources */,
 				0E60014D28AA0C5F0006A1CF /* SearchDiaryViewController.swift in Sources */,
 				0EFC165228A3C8BB00006AB0 /* UITextView+Extension.swift in Sources */,
 				0E60014428A9FC450006A1CF /* DTSideMenuNavigationController.swift in Sources */,
 				0E2DED7828A514DA007F131C /* TimeDiaryViewModel.swift in Sources */,
+				0EEAA4A028ADFD8D00B20C17 /* SettingSection.swift in Sources */,
 				0E60014628A9FCD90006A1CF /* DTSideMenuViewController.swift in Sources */,
 				0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */,
 				0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */,
@@ -482,6 +513,7 @@
 				0E35238A28AA5CF90039EA19 /* DiaryCollectionViewHeader.swift in Sources */,
 				0E60015128AA0C780006A1CF /* SettingViewController.swift in Sources */,
 				0E35238828AA4CF30039EA19 /* DayDiaryCollectionViewCell.swift in Sources */,
+				0EEAA49C28ADFCF300B20C17 /* SettingNavigationTableViewCell.swift in Sources */,
 				0E01AF5A28AB7BB4003B2586 /* UINavigationController+Extension.swift in Sources */,
 				0E8DB29B28A8EF16006647F4 /* WritingDayDiaryViewController.swift in Sources */,
 				0E8DB29728A8DD55006647F4 /* DayDiaryViewController.swift in Sources */,
