@@ -13,6 +13,7 @@ final class SettingViewModel {
     var sections = [SettingSection]()
     let updateSetting = PassthroughSubject<Void, Never>()
     private let setting = UserSettingManager.shared
+    let settingFont = PassthroughSubject<Void, Never>()
     
     init() {
         
@@ -24,10 +25,10 @@ extension SettingViewModel {
     func configure() {
         // MARK: - 설정
         sections.append(SettingSection(sectionTitle: "설정", settingCells: [
-            .navigationCell(model: SettingAccessoryModel(
+            .accessoryCell(model: SettingAccessoryModel(
                 title: "폰트",
                 accessory: UIImage(systemName: "chevron.right")) {
-                    print("폰트")
+                    self.settingFont.send()
                 }
             )
         ]))

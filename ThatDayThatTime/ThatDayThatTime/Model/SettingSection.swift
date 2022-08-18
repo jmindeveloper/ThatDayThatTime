@@ -13,7 +13,7 @@ struct SettingSection {
 }
 
 enum SettingCellType {
-    case navigationCell(model: SettingAccessoryModel)
+    case accessoryCell(model: SettingAccessoryModel)
     case switchCell(model: SettingSwitchModel)
 }
 

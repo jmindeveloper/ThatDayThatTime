@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SettingNavigationTableViewCell: UITableViewCell {
+final class SettingAccessoryTableViewCell: UITableViewCell {
     
     static let identifier = "SettingNavigationTableViewCell"
     
@@ -38,7 +38,7 @@ final class SettingNavigationTableViewCell: UITableViewCell {
 }
 
 // MARK: - Method
-extension SettingNavigationTableViewCell {
+extension SettingAccessoryTableViewCell {
     func configureCell(with model: SettingAccessoryModel) {
         titleLabel.text = model.title
         accessory.image = model.accessory
@@ -47,7 +47,7 @@ extension SettingNavigationTableViewCell {
 }
 
 // MARK: - UI
-extension SettingNavigationTableViewCell {
+extension SettingAccessoryTableViewCell {
     private func configureSubViews() {
         [titleLabel, accessory].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false

@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum Font: Int {
+enum Font: Int, CaseIterable {
     case leaSeoyun, jeonHwaseon, simKyungha
     case yeongdo, misaeng
     
@@ -23,6 +23,21 @@ enum Font: Int {
             return UIFont.yeongdo
         case .misaeng:
             return UIFont.misaeng
+        }
+    }
+    
+    var fontName: String {
+        switch self {
+        case .leaSeoyun:
+            return "이서윤체"
+        case .jeonHwaseon:
+            return "전화선체"
+        case .simKyungha:
+            return "심경화체"
+        case .yeongdo:
+            return "영도체"
+        case .misaeng:
+            return "미생체"
         }
     }
 }

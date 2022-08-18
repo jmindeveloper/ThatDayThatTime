@@ -17,7 +17,7 @@ final class SettingViewController: UIViewController {
         tableView.delegate = self
         tableView.backgroundColor = .viewBackgroundColor
         tableView.register(SettingSwitchTableViewCell.self, forCellReuseIdentifier: SettingSwitchTableViewCell.identifier)
-        tableView.register(SettingNavigationTableViewCell.self, forCellReuseIdentifier: SettingNavigationTableViewCell.identifier)
+        tableView.register(SettingAccessoryTableViewCell.self, forCellReuseIdentifier: SettingAccessoryTableViewCell.identifier)
         
         return tableView
     }()
@@ -29,6 +29,7 @@ final class SettingViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "설정"
         view.backgroundColor = .viewBackgroundColor
         configureSubViews()
         setConstraintsOfSettingTableView()
@@ -38,12 +39,25 @@ final class SettingViewController: UIViewController {
     }
 }
 
+// MARK: - Method
+extension SettingViewController {
+    private func pushSettingFontViewController() {
+        let vc = SettingFontViewController()
+        navigationController?.pushViewController(vc)
+    }
+}
+
 // MARK: - Binding
 extension SettingViewController {
     private func bindingViewModel() {
         viewModel.updateSetting
             .sink { [weak self] in
                 self?.settingTableView.reloadData()
+            }.store(in: &subscriptions)
+        
+        viewModel.settingFont
+            .sink { [weak self] in
+                self?.pushSettingFontViewController()
             }.store(in: &subscriptions)
     }
 }
@@ -82,8 +96,8 @@ extension SettingViewController: UITableViewDataSource {
             cell.configureCell(with: model)
             
             return cell
-        case .navigationCell(model: let model):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingNavigationTableViewCell.identifier, for: indexPath) as? SettingNavigationTableViewCell else { return UITableViewCell() }
+        case .accessoryCell(model: let model):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingAccessoryTableViewCell.identifier, for: indexPath) as? SettingAccessoryTableViewCell else { return UITableViewCell() }
             cell.configureCell(with: model)
             
             return cell
@@ -103,7 +117,7 @@ extension SettingViewController: UITableViewDelegate {
         let model = viewModel.sections[indexPath.section].settingCells[indexPath.row]
         
         switch model.self {
-        case .navigationCell(model: let model):
+        case .accessoryCell(model: let model):
             model.handler?()
         default: break
         }
