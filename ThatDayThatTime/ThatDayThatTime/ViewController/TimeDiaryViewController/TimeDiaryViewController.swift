@@ -179,7 +179,7 @@ extension TimeDiaryViewController {
     }
     
     private func presentDeleteAlert(_ index: Int) {
-        let alert = AlertManager(message: "일기를 정말 삭제하시겠습니까?").createAlert()
+        let alert = AlertManager(message: "기록을 정말 삭제하시겠습니까?").createAlert()
             .addAction(actionTytle: "확인", style: .default) { [weak self] in
                 self?.viewModel.deleteDiary(index: index)
             }

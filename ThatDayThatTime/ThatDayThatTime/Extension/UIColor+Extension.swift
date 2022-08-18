@@ -23,4 +23,8 @@ extension UIColor {
     static var segmentedNonSelectedColor: UIColor {
         return UIColor(named: "SegmentedNonSelectedColor") ?? UIColor.clear
     }
+    
+    static var settingCellBackgroundColor: UIColor {
+        return UIColor(named: "SettingCellBackgroundColor") ?? UIColor.clear
+    }
 }

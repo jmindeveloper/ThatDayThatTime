@@ -49,6 +49,7 @@
 		0EAAA42028ACB4AA00B0A1EB /* YearCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAAA41F28ACB4AA00B0A1EB /* YearCalendar.swift */; };
 		0EAAA42328ACBA0100B0A1EB /* YearCalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAAA42228ACBA0100B0A1EB /* YearCalendarManager.swift */; };
 		0EAAA42628ACBB7B00B0A1EB /* YearCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAAA42528ACBB7B00B0A1EB /* YearCalendarViewModel.swift */; };
+		0EAAA42828AD0F9900B0A1EB /* UserSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAAA42728AD0F9900B0A1EB /* UserSettingManager.swift */; };
 		0EBD218328A0D296006F19FE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218228A0D296006F19FE /* SnapKit */; };
 		0EBD218628A0D2AD006F19FE /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218528A0D2AD006F19FE /* SideMenu */; };
 		0EBD218C28A0D2EF006F19FE /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBD218B28A0D2EF006F19FE /* CombineCocoa */; };
@@ -108,6 +109,7 @@
 		0EAAA41F28ACB4AA00B0A1EB /* YearCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearCalendar.swift; sourceTree = "<group>"; };
 		0EAAA42228ACBA0100B0A1EB /* YearCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearCalendarManager.swift; sourceTree = "<group>"; };
 		0EAAA42528ACBB7B00B0A1EB /* YearCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearCalendarViewModel.swift; sourceTree = "<group>"; };
+		0EAAA42728AD0F9900B0A1EB /* UserSettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingManager.swift; sourceTree = "<group>"; };
 		0EBD219128A0D37D006F19FE /* ThatDayThatTime.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ThatDayThatTime.xcdatamodel; sourceTree = "<group>"; };
 		0EBD219428A0D531006F19FE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		0EBD219728A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeDiary+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 				0EBD219428A0D531006F19FE /* CoreDataManager.swift */,
 				0E9BE57728A4F4240096A1F5 /* AlertManager.swift */,
 				0E2DED7C28A524D7007F131C /* ImageCacheManager.swift */,
+				0EAAA42728AD0F9900B0A1EB /* UserSettingManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				0EBD219F28A0D834006F19FE /* Diary.swift in Sources */,
 				0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */,
 				0E9BE57628A4EC850096A1F5 /* FullImageViewController.swift in Sources */,
+				0EAAA42828AD0F9900B0A1EB /* UserSettingManager.swift in Sources */,
 				0E20739228A13FA5006FE55D /* CalendarCellComponents.swift in Sources */,
 				0E60015328AA1F600006A1CF /* UICollectionView+Extension.swift in Sources */,
 				0E8DB29428A8CCAE006647F4 /* MoveDayDiaryView.swift in Sources */,

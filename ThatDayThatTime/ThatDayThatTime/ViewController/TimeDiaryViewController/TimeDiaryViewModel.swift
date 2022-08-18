@@ -61,7 +61,6 @@ extension TimeDiaryViewModel {
                 filterDiarys(diarys: $0)
             }
             .sink { [weak self] diarys in
-                print("sink: ",Thread.isMainThread)
                 self?.diarys = diarys
             }.store(in: &subscriptions)
         
