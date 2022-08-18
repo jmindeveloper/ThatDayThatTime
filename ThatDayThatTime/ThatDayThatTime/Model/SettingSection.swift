@@ -19,7 +19,7 @@ enum SettingCellType {
 
 struct SettingNavigationModel {
     let title: String
-    let Accessory: UIImage?
+    let accessory: UIImage?
     let handler: (() -> Void)?
 }
 

@@ -90,7 +90,6 @@ extension GatherDiaryViewModel {
         coreDataManager.getFullSizeImage(id: id)
     }
     
-    // MARK: - tttt
     private func getTimeDiary(date: String) {
         coreDataManager.getDiary(type: .time, filterType: .date, query: date)
     }
@@ -196,7 +195,6 @@ extension GatherDiaryViewModel {
         getDayDiary(date: date)
     }
     
-    // MARK: - tt
     func sliceDate(date: String) -> String {
         var sliceDiayrDate = date.components(separatedBy: " ")
         sliceDiayrDate.removeFirst()

@@ -16,6 +16,8 @@ final class SettingViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = .viewBackgroundColor
+        tableView.register(SettingSwitchTableViewCell.self, forCellReuseIdentifier: SettingSwitchTableViewCell.identifier)
+        tableView.register(SettingNavigationTableViewCell.self, forCellReuseIdentifier: SettingNavigationTableViewCell.identifier)
         
         return tableView
     }()
@@ -72,17 +74,20 @@ extension SettingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
         let model = viewModel.sections[indexPath.section].settingCells[indexPath.row]
         
         switch model.self {
         case .switchCell(model: let model):
-            cell.contentView.backgroundColor = .red
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingSwitchTableViewCell.identifier, for: indexPath) as? SettingSwitchTableViewCell else { return UITableViewCell() }
+            cell.configureCell(with: model)
+            
+            return cell
         case .navigationCell(model: let model):
-            cell.contentView.backgroundColor = .blue
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingNavigationTableViewCell.identifier, for: indexPath) as? SettingNavigationTableViewCell else { return UITableViewCell() }
+            cell.configureCell(with: model)
+            
+            return cell
         }
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

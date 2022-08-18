@@ -25,7 +25,7 @@ extension SettingViewModel {
         sections.append(SettingSection(sectionTitle: "설정", settingCells: [
             .navigationCell(model: SettingNavigationModel(
                 title: "폰트",
-                Accessory: UIImage(systemName: "chevron.right")) {
+                accessory: UIImage(systemName: "chevron.right")) {
                     print("폰트")
                 }
             )
