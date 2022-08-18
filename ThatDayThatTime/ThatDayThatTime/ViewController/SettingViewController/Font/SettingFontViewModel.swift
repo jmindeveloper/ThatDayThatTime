@@ -11,16 +11,19 @@ import Combine
 final class SettingFontViewModel {
     private let fonts = Font.allCases
     lazy var fontModels = SettingSection(sectionTitle: "폰트", settingCells: configure())
-    lazy var updateFont = PassthroughSubject<Void, Never>()
+    let updateFont = PassthroughSubject<Void, Never>()
+    private var selectedFontIndex = UserSettingManager.shared.getFont().index
     
     private func configure() -> [SettingCellType] {
         var models = [SettingCellType]()
-        fonts.forEach {
+        fonts.enumerated().forEach { index, font in
             let model = SettingCellType.accessoryCell(
                 model: SettingAccessoryModel(
-                    title: $0.fontName,
-                    accessory: UIImage(systemName: "checkmark")) {
-                        print("폰트")
+                    title: font.fontName,
+                    accessory: index == selectedFontIndex ?
+                    UIImage(systemName: "checkmark") : nil) { [weak self] in
+                        guard let self = self else { return }
+                        self.fontModels.settingCells = self.configure()
                     })
             models.append(model)
         }
@@ -34,6 +37,7 @@ final class SettingFontViewModel {
     func changeFont(fontIndex: Int) {
         let fontModel = fontModels.settingCells[fontIndex]
         if case .accessoryCell(model: let model) = fontModel {
+            selectedFontIndex = fontIndex
             model.handler?()
             UserSettingManager.shared.setFont(fontIndex: fontIndex)
             updateFont.send()

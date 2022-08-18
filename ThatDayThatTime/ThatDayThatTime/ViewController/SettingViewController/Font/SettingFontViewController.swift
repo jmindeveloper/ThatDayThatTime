@@ -22,7 +22,7 @@ final class SettingFontViewController: UIViewController {
     
     private let fontPreviewLabel: UILabel = {
         let label = UILabel()
-        label.font = UserSettingManager.shared.getFont()
+        label.font = UserSettingManager.shared.getFont().font
         label.textColor = .black
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -74,7 +74,7 @@ extension SettingFontViewController {
         viewModel.updateFont
             .sink { [weak self] in
                 self?.fontTableView.reloadData()
-                self?.fontPreviewLabel.font = UserSettingManager.shared.getFont()
+                self?.fontPreviewLabel.font = UserSettingManager.shared.getFont().font
             }.store(in: &subscriptions)
     }
 }

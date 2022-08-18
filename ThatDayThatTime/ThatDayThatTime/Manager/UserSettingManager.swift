@@ -42,8 +42,10 @@ final class UserSettingManager {
         userDefaults.set(fontIndex, forKey: UserDefaultsKey.font.key)
     }
     
-    func getFont() -> UIFont {
+    func getFont() -> (font: UIFont, index: Int) {
         let fontIndex = userDefaults.integer(forKey: UserDefaultsKey.font.key)
-        return Font(rawValue: fontIndex)?.font ?? UIFont.leeSeoyun
+        let font = Font(rawValue: fontIndex)?.font ?? UIFont.leeSeoyun
+        
+        return (font, fontIndex)
     }
 }

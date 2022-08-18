@@ -9,7 +9,7 @@ import UIKit
 
 struct SettingSection {
     let sectionTitle: String
-    let settingCells: [SettingCellType]
+    var settingCells: [SettingCellType]
 }
 
 enum SettingCellType {

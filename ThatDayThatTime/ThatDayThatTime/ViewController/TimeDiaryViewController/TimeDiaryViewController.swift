@@ -95,6 +95,11 @@ final class TimeDiaryViewController: UIViewController {
         configureTimeDiaryCollectionViewGesture()
         configureMoveDayDiaryGesture()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        timeDiaryCollectionView.reloadData()
+    }
 }
 
 // MARK: - Method

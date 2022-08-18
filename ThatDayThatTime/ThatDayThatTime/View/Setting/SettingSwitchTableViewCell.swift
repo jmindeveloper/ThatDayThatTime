@@ -16,6 +16,7 @@ final class SettingSwitchTableViewCell: UITableViewCell {
     // MARK: - ViewProperties
     private let titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .black
         
         return label
     }()

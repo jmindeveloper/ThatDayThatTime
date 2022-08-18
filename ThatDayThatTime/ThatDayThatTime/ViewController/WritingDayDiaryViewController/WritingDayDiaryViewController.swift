@@ -41,7 +41,7 @@ final class WritingDayDiaryViewController: UIViewController {
         textView.backgroundColor = .viewBackgroundColor
         textView.textColor = .black
         textView.configure()
-        textView.font = UserSettingManager.shared.getFont()
+        textView.font = UserSettingManager.shared.getFont().font
         
         return textView
     }()
