@@ -64,6 +64,12 @@
 		0EEAA49E28ADFD0900B20C17 /* SettingSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA49D28ADFD0900B20C17 /* SettingSwitchTableViewCell.swift */; };
 		0EEAA4A028ADFD8D00B20C17 /* SettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA49F28ADFD8D00B20C17 /* SettingSection.swift */; };
 		0EEAA4A328ADFE8D00B20C17 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA4A228ADFE8D00B20C17 /* SettingViewModel.swift */; };
+		0EEAA4A728AE46EE00B20C17 /* LeeSeoyun.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0EEAA4A628AE46EE00B20C17 /* LeeSeoyun.ttf */; };
+		0EEAA4A928AE479000B20C17 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA4A828AE479000B20C17 /* UIFont+Extension.swift */; };
+		0EEAA4AB28AE49E200B20C17 /* JeonHwaseon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0EEAA4AA28AE49E200B20C17 /* JeonHwaseon.ttf */; };
+		0EEAA4AD28AE4AF000B20C17 /* SimKyungha.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0EEAA4AC28AE4AF000B20C17 /* SimKyungha.ttf */; };
+		0EEAA4AF28AE4E3400B20C17 /* Yeongdo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0EEAA4AE28AE4E3400B20C17 /* Yeongdo.ttf */; };
+		0EEAA4B128AE4EFF00B20C17 /* SDMiSaeng.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0EEAA4B028AE4EFF00B20C17 /* SDMiSaeng.ttf */; };
 		0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */; };
 		0EFC165228A3C8BB00006AB0 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC165128A3C8BB00006AB0 /* UITextView+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -125,6 +131,12 @@
 		0EEAA49D28ADFD0900B20C17 /* SettingSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		0EEAA49F28ADFD8D00B20C17 /* SettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSection.swift; sourceTree = "<group>"; };
 		0EEAA4A228ADFE8D00B20C17 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		0EEAA4A628AE46EE00B20C17 /* LeeSeoyun.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeeSeoyun.ttf; sourceTree = "<group>"; };
+		0EEAA4A828AE479000B20C17 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		0EEAA4AA28AE49E200B20C17 /* JeonHwaseon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = JeonHwaseon.ttf; sourceTree = "<group>"; };
+		0EEAA4AC28AE4AF000B20C17 /* SimKyungha.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimKyungha.ttf; sourceTree = "<group>"; };
+		0EEAA4AE28AE4E3400B20C17 /* Yeongdo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Yeongdo.ttf; sourceTree = "<group>"; };
+		0EEAA4B028AE4EFF00B20C17 /* SDMiSaeng.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SDMiSaeng.ttf; sourceTree = "<group>"; };
 		0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingTimeDiaryViewController.swift; sourceTree = "<group>"; };
 		0EFC165128A3C8BB00006AB0 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -227,6 +239,7 @@
 				0E9BE57928A4F4D50096A1F5 /* UIAlertController+Extension.swift */,
 				0E60015228AA1F600006A1CF /* UICollectionView+Extension.swift */,
 				0E01AF5928AB7BB4003B2586 /* UINavigationController+Extension.swift */,
+				0EEAA4A828AE479000B20C17 /* UIFont+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -289,6 +302,7 @@
 		0EBD218D28A0D353006F19FE /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				0EEAA4A528AE46D100B20C17 /* Font */,
 				0E161BFF289FCDA40055B84F /* AppDelegate.swift */,
 				0E2DED7928A52438007F131C /* test.JPG */,
 				0E161C01289FCDA40055B84F /* SceneDelegate.swift */,
@@ -383,6 +397,18 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		0EEAA4A528AE46D100B20C17 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				0EEAA4B028AE4EFF00B20C17 /* SDMiSaeng.ttf */,
+				0EEAA4AE28AE4E3400B20C17 /* Yeongdo.ttf */,
+				0EEAA4AC28AE4AF000B20C17 /* SimKyungha.ttf */,
+				0EEAA4A628AE46EE00B20C17 /* LeeSeoyun.ttf */,
+				0EEAA4AA28AE49E200B20C17 /* JeonHwaseon.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -452,8 +478,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E2DED7A28A52438007F131C /* test.JPG in Resources */,
+				0EEAA4AB28AE49E200B20C17 /* JeonHwaseon.ttf in Resources */,
 				0E161C0C289FCDA60055B84F /* LaunchScreen.storyboard in Resources */,
+				0EEAA4A728AE46EE00B20C17 /* LeeSeoyun.ttf in Resources */,
+				0EEAA4B128AE4EFF00B20C17 /* SDMiSaeng.ttf in Resources */,
+				0EEAA4AD28AE4AF000B20C17 /* SimKyungha.ttf in Resources */,
 				0E161C09289FCDA60055B84F /* Assets.xcassets in Resources */,
+				0EEAA4AF28AE4E3400B20C17 /* Yeongdo.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +501,7 @@
 				0EBD219F28A0D834006F19FE /* Diary.swift in Sources */,
 				0EEAA4A328ADFE8D00B20C17 /* SettingViewModel.swift in Sources */,
 				0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */,
+				0EEAA4A928AE479000B20C17 /* UIFont+Extension.swift in Sources */,
 				0E9BE57628A4EC850096A1F5 /* FullImageViewController.swift in Sources */,
 				0EAAA42828AD0F9900B0A1EB /* UserSettingManager.swift in Sources */,
 				0E20739228A13FA5006FE55D /* CalendarCellComponents.swift in Sources */,

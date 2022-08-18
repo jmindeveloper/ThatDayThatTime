@@ -33,6 +33,7 @@ final class DayDiaryViewController: UIViewController {
         textView.textColor = .black
         textView.configure()
         textView.isEditable = false
+        textView.font = UserSettingManager.shared.getFont()
         
         return textView
     }()

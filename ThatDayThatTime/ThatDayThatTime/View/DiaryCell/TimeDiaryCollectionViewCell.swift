@@ -57,6 +57,7 @@ final class TimeDiaryCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .black
+        label.font = UserSettingManager.shared.getFont()
         
         return label
     }()
