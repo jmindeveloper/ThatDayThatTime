@@ -55,7 +55,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        print(#function)
         if UserSettingManager.shared.getSecurityState() {
             if let view = securityView {
                 view.removeFromSuperview()
@@ -64,7 +63,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        print(#function)
         if UserSettingManager.shared.getSecurityState() {
             guard let window = window else {
                 return

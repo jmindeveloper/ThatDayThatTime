@@ -14,6 +14,7 @@
 		0E161C0C289FCDA60055B84F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C0A289FCDA60055B84F /* LaunchScreen.storyboard */; };
 		0E1EC50828AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1EC50728AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift */; };
 		0E1EC50B28AF7756008FB8A9 /* ApplicationPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1EC50A28AF7756008FB8A9 /* ApplicationPasswordViewModel.swift */; };
+		0E1EC50F28AF9E36008FB8A9 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1EC50E28AF9E36008FB8A9 /* CloudKit.framework */; };
 		0E20739028A12CBF006FE55D /* DTCalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E20738F28A12CBF006FE55D /* DTCalendarManager.swift */; };
 		0E20739228A13FA5006FE55D /* CalendarCellComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */; };
 		0E2DED7828A514DA007F131C /* TimeDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */; };
@@ -88,6 +89,8 @@
 		0E161C0D289FCDA60055B84F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E1EC50728AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationPasswordViewController.swift; sourceTree = "<group>"; };
 		0E1EC50A28AF7756008FB8A9 /* ApplicationPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationPasswordViewModel.swift; sourceTree = "<group>"; };
+		0E1EC50C28AF9E21008FB8A9 /* ThatDayThatTime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ThatDayThatTime.entitlements; sourceTree = "<group>"; };
+		0E1EC50E28AF9E36008FB8A9 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		0E20738F28A12CBF006FE55D /* DTCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendarManager.swift; sourceTree = "<group>"; };
 		0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellComponents.swift; sourceTree = "<group>"; };
 		0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryViewModel.swift; sourceTree = "<group>"; };
@@ -155,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EBD218628A0D2AD006F19FE /* SideMenu in Frameworks */,
+				0E1EC50F28AF9E36008FB8A9 /* CloudKit.framework in Frameworks */,
 				0EBD218C28A0D2EF006F19FE /* CombineCocoa in Frameworks */,
 				0EBD218328A0D296006F19FE /* SnapKit in Frameworks */,
 			);
@@ -168,6 +172,7 @@
 			children = (
 				0E161BFE289FCDA40055B84F /* ThatDayThatTime */,
 				0E161BFD289FCDA40055B84F /* Products */,
+				0E1EC50D28AF9E36008FB8A9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -182,6 +187,7 @@
 		0E161BFE289FCDA40055B84F /* ThatDayThatTime */ = {
 			isa = PBXGroup;
 			children = (
+				0E1EC50C28AF9E21008FB8A9 /* ThatDayThatTime.entitlements */,
 				0E81DEDD28A10E3900A2B7C6 /* Extension */,
 				0EBD219328A0D522006F19FE /* Manager */,
 				0EBD218E28A0D35E006F19FE /* Model */,
@@ -199,6 +205,14 @@
 				0E1EC50A28AF7756008FB8A9 /* ApplicationPasswordViewModel.swift */,
 			);
 			path = Password;
+			sourceTree = "<group>";
+		};
+		0E1EC50D28AF9E36008FB8A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0E1EC50E28AF9E36008FB8A9 /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		0E2DED7628A514BC007F131C /* TimeDiaryViewController */ = {
@@ -717,6 +731,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ThatDayThatTime/ThatDayThatTime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8PRV428ULN;
@@ -747,6 +762,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ThatDayThatTime/ThatDayThatTime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8PRV428ULN;

@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import CloudKit
 import Combine
 import UIKit
 
@@ -25,7 +26,7 @@ final class CoreDataManager {
     
     // MARK: - Properties
     private let containerName = "ThatDayThatTime"
-    private let persistentContainer: NSPersistentContainer
+    private let persistentContainer: NSPersistentCloudKitContainer
     let fetchTimeDiary = PassthroughSubject<[Diary], Never>()
     let fetchDayDiary = PassthroughSubject<[Diary], Never>()
     let fetchFullSizeImage = PassthroughSubject<Data?, Never>()
@@ -33,14 +34,32 @@ final class CoreDataManager {
     
     // MARK: - LifeCycle
     init() {
-        self.persistentContainer = NSPersistentContainer(name: containerName)
+        self.persistentContainer = NSPersistentCloudKitContainer(name: containerName)
         persistentContainer.loadPersistentStores { _, error in
             if let error = error {
                 print(String(describing: error))
             }
         }
+        configureCloud()
         // db를 보기위한 경로추적용 log
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
+    }
+    
+    private func configureCloud() {
+        let localStoreLocation = URL(fileURLWithPath: "path/to/local.store")
+        let localStoreDescription = NSPersistentStoreDescription(url: localStoreLocation)
+        localStoreDescription.configuration = "Local"
+        
+        let cloudStoreLocation = URL(fileURLWithPath: "path/to/cloud.store")
+        let cloudStoreDescription = NSPersistentStoreDescription(url: cloudStoreLocation)
+        cloudStoreDescription.configuration = "Cloud"
+        
+        cloudStoreDescription.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "com.J-Min.ThatDayThatTime")
+        
+        persistentContainer.persistentStoreDescriptions = [
+            cloudStoreDescription,
+            localStoreDescription
+        ]
     }
     
     // MARK: - Method
