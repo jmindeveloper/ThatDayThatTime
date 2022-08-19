@@ -63,8 +63,18 @@ final class ApplicationPasswordViewController: UIViewController {
     
     // MARK: - Properties
     private var subscription = Set<AnyCancellable>()
+    private let viewModel: ApplicationPasswordViewModel
     
     // MARK: - LifeCycle
+    init(viewModel: ApplicationPasswordViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor
@@ -76,6 +86,7 @@ final class ApplicationPasswordViewController: UIViewController {
         setConstraintsOfPasswordTitleLabel()
         
         bindingSelf()
+        bindingViewModel()
     }
 }
 
@@ -88,9 +99,10 @@ extension ApplicationPasswordViewController {
         button.setTitleColor(.black, for: .normal)
         button.frame.size = CGSize(width: 60, height: 60)
         button.tapPublisher
-            .sink {
+            .sink { [weak self] in
                 guard let num = button.titleLabel?.text else { return }
-                print(num)
+                self?.viewModel.appendPassword(num: num)
+                self?.checkInputPassword()
             }.store(in: &subscription)
         
         return button
@@ -126,8 +138,18 @@ extension ApplicationPasswordViewController {
             let view = UIImageView()
             view.image = UIImage(systemName: "circle")
             view.tintColor = .darkGray
-            
             passwordStackView.addArrangedSubview(view)
+        }
+    }
+    
+    private func checkInputPassword() {
+        passwordStackView.arrangedSubviews.enumerated().forEach { index, view in
+            guard let imageView = view as? UIImageView else { return }
+            if index < viewModel.inputPassword.count {
+                imageView.image = UIImage(systemName: "circle.fill")
+            } else {
+                imageView.image = UIImage(systemName: "circle")
+            }
         }
     }
 }
@@ -142,7 +164,26 @@ extension ApplicationPasswordViewController {
         
         deleteButton.tapPublisher
             .sink { [weak self] in
-                print("delete")
+                self?.viewModel.deletePassword()
+                self?.checkInputPassword()
+            }.store(in: &subscription)
+    }
+    
+    private func bindingViewModel() {
+        viewModel.doneInputPassword
+            .sink { [weak self] status, isValid in
+                switch status {
+                case .create:
+                    self?.checkInputPassword()
+                    self?.passwordTitleLabel.text = "비밀번호 확인"
+                case .check:
+                    if isValid {
+                        print("일치")
+                    } else {
+                        print("불일치")
+                    }
+                case .run: break
+                }
             }.store(in: &subscription)
     }
 }

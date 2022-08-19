@@ -47,7 +47,8 @@ extension SettingViewController {
     }
     
     private func presentSettingPasswordViewController() {
-        let vc = ApplicationPasswordViewController()
+        let viewModel = ApplicationPasswordViewModel(passwordEntryStatus: .create)
+        let vc = ApplicationPasswordViewController(viewModel: viewModel)
         vc.modalTransitionStyle = .crossDissolve
         vc.modalPresentationStyle = .fullScreen
         
