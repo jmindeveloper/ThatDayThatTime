@@ -16,6 +16,7 @@ final class ApplicationPasswordViewController: UIViewController {
     private let passwordTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 22)
+        label.textColor = .black
         label.text = "비밀번호 입력"
         
         return label

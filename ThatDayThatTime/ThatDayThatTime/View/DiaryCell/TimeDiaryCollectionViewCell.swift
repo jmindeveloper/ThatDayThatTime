@@ -57,7 +57,7 @@ final class TimeDiaryCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .black
-        label.font = UserSettingManager.shared.getFont().font
+        label.font = UIFont.customFont
         
         return label
     }()
@@ -112,7 +112,7 @@ extension TimeDiaryCollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        contentLabel.font = UserSettingManager.shared.getFont().font
+        contentLabel.font = UIFont.customFont
     }
 }
 
