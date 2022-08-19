@@ -10,21 +10,39 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
+    
+    private func configureNavigation() {
         UINavigationBar.appearance().barTintColor = .viewBackgroundColor
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().tintColor = .darkGray
-        
-        guard let scene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: scene)
+    }
+    
+    private func createTimeDiaryViewController() -> UINavigationController {
         let coreDataManager = CoreDataManager()
         let timeDiaryViewModel = TimeDiaryViewModel(coreDataManager: coreDataManager)
         
-        let rootVC = UINavigationController(rootViewController: TimeDiaryViewController(viewModel: timeDiaryViewModel))
+        return  UINavigationController(rootViewController: TimeDiaryViewController(viewModel: timeDiaryViewModel))
+    }
+    
+    private func createPasswordViewController() -> UIViewController {
+        let viewModel = ApplicationPasswordViewModel(passwordEntryStatus: .run)
+        let vc = ApplicationPasswordViewController(viewModel: viewModel)
         
-        window?.rootViewController = rootVC
+        return vc
+    }
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        configureNavigation()
+        guard let scene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: scene)
+        let securityState = UserSettingManager.shared.getSecurityState()
+        
+        if securityState {
+            window?.rootViewController = createPasswordViewController()
+        } else {
+            window?.rootViewController = createTimeDiaryViewController()
+        }
+        
         window?.makeKeyAndVisible()
     }
 

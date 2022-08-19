@@ -152,6 +152,16 @@ extension ApplicationPasswordViewController {
             }
         }
     }
+    
+    private func presentTimeDiaryViewController() {
+        let coreDataManager = CoreDataManager()
+        let timeDiaryViewModel = TimeDiaryViewModel(coreDataManager: coreDataManager)
+        let vc = UINavigationController(rootViewController: TimeDiaryViewController(viewModel: timeDiaryViewModel))
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .fullScreen
+        
+        present(vc, animated: true)
+    }
 }
 
 // MARK: - Binding
@@ -182,7 +192,8 @@ extension ApplicationPasswordViewController {
                     } else {
                         print("불일치")
                     }
-                case .run: break
+                case .run:
+                    self?.presentTimeDiaryViewController()
                 }
             }.store(in: &subscription)
     }
