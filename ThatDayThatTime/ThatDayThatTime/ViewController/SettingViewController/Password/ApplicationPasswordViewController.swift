@@ -15,6 +15,8 @@ final class ApplicationPasswordViewController: UIViewController {
     // MARK: - ViewProperties
     private let passwordTitleLabel: UILabel = {
         let label = UILabel()
+        label.font = .systemFont(ofSize: 22)
+        label.text = "비밀번호 입력"
         
         return label
     }()
@@ -22,7 +24,8 @@ final class ApplicationPasswordViewController: UIViewController {
     private let passwordStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 9
+        stackView.spacing = 15
+        stackView.distribution = .fillEqually
         
         return stackView
     }()
@@ -66,8 +69,11 @@ final class ApplicationPasswordViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor
         setKeypad()
+        setPasswordStackView()
         configureSubViews()
         setConstraintsOfKeypadVerticalStackView()
+        setConstraintsOfPasswordStackView()
+        setConstraintsOfPasswordTitleLabel()
         
         bindingSelf()
     }
@@ -114,6 +120,16 @@ extension ApplicationPasswordViewController {
         keypadHorizontalStackView.addArrangedSubview(deleteButton)
         keypadVerticalStackView.addArrangedSubview(keypadHorizontalStackView)
     }
+    
+    private func setPasswordStackView() {
+        for _ in 0..<4 {
+            let view = UIImageView()
+            view.image = UIImage(systemName: "circle")
+            view.tintColor = .darkGray
+            
+            passwordStackView.addArrangedSubview(view)
+        }
+    }
 }
 
 // MARK: - Binding
@@ -134,16 +150,33 @@ extension ApplicationPasswordViewController {
 // MARK: - UI
 extension ApplicationPasswordViewController {
     private func configureSubViews() {
-        [keypadVerticalStackView].forEach {
+        [passwordTitleLabel, passwordStackView,
+         keypadVerticalStackView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
     }
     
+    private func setConstraintsOfPasswordTitleLabel() {
+        passwordTitleLabel.snp.makeConstraints {
+            $0.bottom.equalTo(passwordStackView.snp.top).offset(-15)
+            $0.centerX.equalToSuperview()
+        }
+    }
+    
+    private func setConstraintsOfPasswordStackView() {
+        passwordStackView.snp.makeConstraints {
+            $0.bottom.equalTo(keypadVerticalStackView.snp.top).offset(-30)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(20)
+        }
+    }
+    
     private func setConstraintsOfKeypadVerticalStackView() {
         keypadVerticalStackView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.7)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-35)
+            $0.width.equalToSuperview().multipliedBy(0.8)
             $0.height.equalTo(300)
         }
     }
