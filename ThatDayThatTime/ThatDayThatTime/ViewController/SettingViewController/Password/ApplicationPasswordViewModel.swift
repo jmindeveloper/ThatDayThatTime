@@ -26,6 +26,7 @@ final class ApplicationPasswordViewModel {
         }
     }
     private var createPassword = ""
+    private let password = UserSettingManager.shared.getPassword()
     
     init(passwordEntryStatus: PasswordEntryStatus) {
         self.passwordEntryStatus = passwordEntryStatus
@@ -51,7 +52,6 @@ extension ApplicationPasswordViewModel {
     private func bindingSelf() {
         completeInputPassword
             .sink { [weak self] password in
-                print("password: ", password)
                 guard let self = self else { return }
                 switch self.passwordEntryStatus {
                 case .create:
@@ -63,10 +63,17 @@ extension ApplicationPasswordViewModel {
                     let isValid = password == self.createPassword
                     if !isValid {
                         self.inputPassword.removeAll()
+                    } else {
+                        UserSettingManager.shared.setSecurityState(securityState: true)
+                        UserSettingManager.shared.setPassword(password: password)
                     }
                     self.doneInputPassword.send((.check, isValid))
                 case .run:
-                    break
+                    let isValid = self.password == password
+                    if !isValid {
+                        self.inputPassword.removeAll()
+                    }
+                    self.doneInputPassword.send((.run, isValid))
                 }
             }.store(in: &subscriptions)
     }

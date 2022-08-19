@@ -204,7 +204,12 @@ extension ApplicationPasswordViewController {
                         self?.checkInputPassword()
                     }
                 case .run:
-                    self?.passwordWrongAnimation()
+                    if isValid {
+                        self?.presentTimeDiaryViewController()
+                    } else {
+                        self?.passwordWrongAnimation()
+                        self?.checkInputPassword()
+                    }
                 }
             }.store(in: &subscription)
     }

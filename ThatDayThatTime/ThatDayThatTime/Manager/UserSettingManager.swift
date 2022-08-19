@@ -10,7 +10,7 @@ import UIKit
 final class UserSettingManager {
     
     enum UserDefaultsKey {
-        case isFirstPractice, font, security
+        case isFirstPractice, font, security, password
         
         var key: String {
             switch self {
@@ -20,6 +20,8 @@ final class UserSettingManager {
                 return "font"
             case .security:
                 return "security"
+            case .password:
+                return "password"
             }
         }
     }
@@ -60,5 +62,15 @@ final class UserSettingManager {
         let security = userDefaults.bool(forKey: UserDefaultsKey.security.key)
         
         return security
+    }
+    
+    func setPassword(password: String) {
+        userDefaults.set(password, forKey: UserDefaultsKey.password.key)
+    }
+    
+    func getPassword() -> String {
+        let password = userDefaults.string(forKey: UserDefaultsKey.password.key)
+        
+        return password ?? ""
     }
 }
