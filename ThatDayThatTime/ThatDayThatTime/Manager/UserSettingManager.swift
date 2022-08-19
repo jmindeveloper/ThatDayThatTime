@@ -10,7 +10,7 @@ import UIKit
 final class UserSettingManager {
     
     enum UserDefaultsKey {
-        case isFirstPractice, font
+        case isFirstPractice, font, security
         
         var key: String {
             switch self {
@@ -18,6 +18,8 @@ final class UserSettingManager {
                 return "isFirstPractice"
             case .font:
                 return "font"
+            case .security:
+                return "security"
             }
         }
     }
@@ -37,15 +39,26 @@ final class UserSettingManager {
         }
     }
     
-    /// font
+    /// setFont
     func setFont(fontIndex: Int) {
         userDefaults.set(fontIndex, forKey: UserDefaultsKey.font.key)
     }
     
+    /// getFont
     func getFont() -> (font: UIFont, index: Int) {
         let fontIndex = userDefaults.integer(forKey: UserDefaultsKey.font.key)
         let font = Font(rawValue: fontIndex)?.font ?? UIFont.leeSeoyun
         
         return (font, fontIndex)
+    }
+    
+    func setSecurityState(securityState: Bool) {
+        userDefaults.set(securityState, forKey: UserDefaultsKey.security.key)
+    }
+    
+    func getSecurityState() -> Bool {
+        let security = userDefaults.bool(forKey: UserDefaultsKey.security.key)
+        
+        return security
     }
 }

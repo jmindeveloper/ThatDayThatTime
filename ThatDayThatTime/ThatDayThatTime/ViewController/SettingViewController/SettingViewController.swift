@@ -45,6 +45,14 @@ extension SettingViewController {
         let vc = SettingFontViewController()
         navigationController?.pushViewController(vc)
     }
+    
+    private func presentSettingPasswordViewController() {
+        let vc = ApplicationPasswordViewController()
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .fullScreen
+        
+        self.present(vc, animated: true)
+    }
 }
 
 // MARK: - Binding
@@ -58,6 +66,11 @@ extension SettingViewController {
         viewModel.settingFont
             .sink { [weak self] in
                 self?.pushSettingFontViewController()
+            }.store(in: &subscriptions)
+        
+        viewModel.settingPassword
+            .sink { [weak self] isOn in
+                self?.presentSettingPasswordViewController()
             }.store(in: &subscriptions)
     }
 }

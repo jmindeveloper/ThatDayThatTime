@@ -14,6 +14,7 @@ final class SettingViewModel {
     let updateSetting = PassthroughSubject<Void, Never>()
     private let setting = UserSettingManager.shared
     let settingFont = PassthroughSubject<Void, Never>()
+    let settingPassword = PassthroughSubject<Bool, Never>()
     
     init() {
         
@@ -38,8 +39,12 @@ extension SettingViewModel {
             .switchCell(model: SettingSwitchModel(
                 title: "비밀번호",
                 Accessory: nil,
-                isOn: false) { isOn in
-                    print("비밀번호", isOn)
+                isOn: setting.getSecurityState()) { isOn in
+                    if isOn {
+                        self.settingPassword.send(isOn)
+                    } else {
+                        self.setting.setSecurityState(securityState: isOn)
+                    }
                 }
             )
         ]))

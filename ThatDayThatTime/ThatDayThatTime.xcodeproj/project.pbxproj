@@ -12,6 +12,7 @@
 		0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161C01289FCDA40055B84F /* SceneDelegate.swift */; };
 		0E161C09289FCDA60055B84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C08289FCDA60055B84F /* Assets.xcassets */; };
 		0E161C0C289FCDA60055B84F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C0A289FCDA60055B84F /* LaunchScreen.storyboard */; };
+		0E1EC50828AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1EC50728AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift */; };
 		0E20739028A12CBF006FE55D /* DTCalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E20738F28A12CBF006FE55D /* DTCalendarManager.swift */; };
 		0E20739228A13FA5006FE55D /* CalendarCellComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */; };
 		0E2DED7828A514DA007F131C /* TimeDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */; };
@@ -84,6 +85,7 @@
 		0E161C08289FCDA60055B84F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E161C0B289FCDA60055B84F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E161C0D289FCDA60055B84F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E1EC50728AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationPasswordViewController.swift; sourceTree = "<group>"; };
 		0E20738F28A12CBF006FE55D /* DTCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendarManager.swift; sourceTree = "<group>"; };
 		0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellComponents.swift; sourceTree = "<group>"; };
 		0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryViewModel.swift; sourceTree = "<group>"; };
@@ -188,6 +190,14 @@
 			path = ThatDayThatTime;
 			sourceTree = "<group>";
 		};
+		0E1EC50628AF4ED5008FB8A9 /* Password */ = {
+			isa = PBXGroup;
+			children = (
+				0E1EC50728AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift */,
+			);
+			path = Password;
+			sourceTree = "<group>";
+		};
 		0E2DED7628A514BC007F131C /* TimeDiaryViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,6 +237,7 @@
 		0E60014B28AA0C520006A1CF /* SettingViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0E1EC50628AF4ED5008FB8A9 /* Password */,
 				0EEAA4B528AE552300B20C17 /* Font */,
 				0E60015028AA0C780006A1CF /* SettingViewController.swift */,
 				0EEAA4A228ADFE8D00B20C17 /* SettingViewModel.swift */,
@@ -516,6 +527,7 @@
 				0EEAA4A328ADFE8D00B20C17 /* SettingViewModel.swift in Sources */,
 				0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */,
 				0EEAA4A928AE479000B20C17 /* UIFont+Extension.swift in Sources */,
+				0E1EC50828AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift in Sources */,
 				0E9BE57628A4EC850096A1F5 /* FullImageViewController.swift in Sources */,
 				0EAAA42828AD0F9900B0A1EB /* UserSettingManager.swift in Sources */,
 				0E20739228A13FA5006FE55D /* CalendarCellComponents.swift in Sources */,
