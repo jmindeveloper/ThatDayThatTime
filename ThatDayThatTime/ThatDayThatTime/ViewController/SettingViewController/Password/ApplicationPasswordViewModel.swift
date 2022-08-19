@@ -60,7 +60,11 @@ extension ApplicationPasswordViewModel {
                     self.createPassword = self.inputPassword
                     self.inputPassword.removeAll()
                 case .check:
-                    self.doneInputPassword.send((.check, password == self.createPassword))
+                    let isValid = password == self.createPassword
+                    if !isValid {
+                        self.inputPassword.removeAll()
+                    }
+                    self.doneInputPassword.send((.check, isValid))
                 case .run:
                     break
                 }

@@ -162,6 +162,16 @@ extension ApplicationPasswordViewController {
         
         present(vc, animated: true)
     }
+    
+    private func passwordWrongAnimation() {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.03
+        animation.repeatCount = 5
+        animation.autoreverses = true
+        animation.fromValue = CGPoint(x: passwordStackView.center.x - 4.0, y: passwordStackView.center.y)
+        animation.toValue = CGPoint(x: passwordStackView.center.x + 4.0, y: passwordStackView.center.y)
+        passwordStackView.layer.add(animation, forKey: "position")
+    }
 }
 
 // MARK: - Binding
@@ -188,12 +198,13 @@ extension ApplicationPasswordViewController {
                     self?.passwordTitleLabel.text = "비밀번호 확인"
                 case .check:
                     if isValid {
-                        print("일치")
+                        self?.dismiss(animated: true)
                     } else {
-                        print("불일치")
+                        self?.passwordWrongAnimation()
+                        self?.checkInputPassword()
                     }
                 case .run:
-                    self?.presentTimeDiaryViewController()
+                    self?.passwordWrongAnimation()
                 }
             }.store(in: &subscription)
     }
