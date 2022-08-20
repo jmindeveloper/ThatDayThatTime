@@ -36,13 +36,13 @@ final class CoreDataManager {
     
     // MARK: - LifeCycle
     init() {
-        self.persistentContainer = configureCloud()
+        self.persistentContainer = setPersistentCloudKitContainer()
         bindingUserSetting()
         // db를 보기위한 경로추적용 log
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
     }
     
-    private func configureCloud() -> NSPersistentCloudKitContainer {
+    private func setPersistentCloudKitContainer() -> NSPersistentCloudKitContainer {
         let container = NSPersistentCloudKitContainer(name: containerName)
         
         guard let descriptions = container.persistentStoreDescriptions.first else {
@@ -70,7 +70,7 @@ final class CoreDataManager {
         UserSettingManager.shared.changeICloudSync
             .sink { [weak self] in
                 guard let self = self else { return }
-                self.persistentContainer = self.configureCloud()
+                self.persistentContainer = self.setPersistentCloudKitContainer()
                 self.changePersistentContainer.send()
             }.store(in: &subscriptions)
     }
