@@ -122,6 +122,12 @@ extension SettingViewController: UITableViewDataSource {
         let section = viewModel.sections[section]
         return section.sectionTitle
     }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel?.textColor = .black
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate
