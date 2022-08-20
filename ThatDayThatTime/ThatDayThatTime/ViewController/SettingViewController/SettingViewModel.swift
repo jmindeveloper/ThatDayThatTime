@@ -14,7 +14,8 @@ final class SettingViewModel {
     let updateSetting = PassthroughSubject<Void, Never>()
     private let setting = UserSettingManager.shared
     let settingFont = PassthroughSubject<Void, Never>()
-    let settingPassword = PassthroughSubject<Bool, Never>()
+    let settingPassword = PassthroughSubject<Void, Never>()
+    let settingLocalAuth = PassthroughSubject<Void, Never>()
     
     init() {
         
@@ -41,9 +42,20 @@ extension SettingViewModel {
                 Accessory: nil,
                 isOn: setting.getSecurityState()) { isOn in
                     if isOn {
-                        self.settingPassword.send(isOn)
+                        self.settingPassword.send()
                     } else {
                         self.setting.setSecurityState(securityState: isOn)
+                    }
+                }
+            ),
+            .switchCell(model: SettingSwitchModel(
+                title: "생체인증",
+                Accessory: nil,
+                isOn: false) { isOn in
+                    if isOn {
+                        self.settingLocalAuth.send()
+                    } else {
+                        print("off localauth")
                     }
                 }
             )

@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import LocalAuthentication
 
 final class SettingViewController: UIViewController {
     
@@ -25,6 +26,7 @@ final class SettingViewController: UIViewController {
     // MARK: - Properties
     private let viewModel = SettingViewModel()
     private var subscriptions = Set<AnyCancellable>()
+    private let authContext = LAContext()
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -54,6 +56,41 @@ extension SettingViewController {
         
         self.present(vc, animated: true)
     }
+    
+    func localAuth() {
+        var description = ""
+        
+        if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
+            switch authContext.biometryType {
+            case .faceID:
+                description = "로그인을 위해 faceID를 인증해주세요"
+            case .touchID:
+                description = "로그인을 위해 touchID를 인증해주세요"
+            default:
+                break
+            }
+            
+            authContext.localizedFallbackTitle = ""
+            authContext.localizedCancelTitle = "취소"
+            
+            authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { success, error in
+                print(Thread.isMainThread)
+                if success {
+                    print("인증성공")
+                } else {
+                    if let error = error {
+                        print(error._code)
+                    }
+                }
+            }
+        } else {
+            let alert = AlertManager(title:"생체인증을 이용할 수 없습니다", message: "권한설정을 확인해주세요", style: .alert)
+                .createAlert()
+                .addAction(actionTytle: "확인", style: .default)
+            
+            self.present(alert, animated: true)
+        }
+    }
 }
 
 // MARK: - Binding
@@ -70,8 +107,13 @@ extension SettingViewController {
             }.store(in: &subscriptions)
         
         viewModel.settingPassword
-            .sink { [weak self] isOn in
+            .sink { [weak self] in
                 self?.presentSettingPasswordViewController()
+            }.store(in: &subscriptions)
+        
+        viewModel.settingLocalAuth
+            .sink { [weak self] in
+                self?.localAuth()
             }.store(in: &subscriptions)
     }
 }
