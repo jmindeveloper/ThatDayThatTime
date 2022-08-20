@@ -24,6 +24,7 @@
 		0E3142C928A24CD300149E34 /* DTCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3142C828A24CD300149E34 /* DTCalendarViewModel.swift */; };
 		0E35238828AA4CF30039EA19 /* DayDiaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E35238728AA4CF30039EA19 /* DayDiaryCollectionViewCell.swift */; };
 		0E35238A28AA5CF90039EA19 /* DiaryCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E35238928AA5CF90039EA19 /* DiaryCollectionViewHeader.swift */; };
+		0E514DBB28B0E0570064A68A /* LocalAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E514DBA28B0E0570064A68A /* LocalAuth.swift */; };
 		0E60014428A9FC450006A1CF /* DTSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60014328A9FC450006A1CF /* DTSideMenuNavigationController.swift */; };
 		0E60014628A9FCD90006A1CF /* DTSideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60014528A9FCD90006A1CF /* DTSideMenuViewController.swift */; };
 		0E60014828AA05D70006A1CF /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60014728AA05D70006A1CF /* MenuTableViewCell.swift */; };
@@ -100,6 +101,7 @@
 		0E3142C828A24CD300149E34 /* DTCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendarViewModel.swift; sourceTree = "<group>"; };
 		0E35238728AA4CF30039EA19 /* DayDiaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDiaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		0E35238928AA5CF90039EA19 /* DiaryCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCollectionViewHeader.swift; sourceTree = "<group>"; };
+		0E514DBA28B0E0570064A68A /* LocalAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuth.swift; sourceTree = "<group>"; };
 		0E60014328A9FC450006A1CF /* DTSideMenuNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTSideMenuNavigationController.swift; sourceTree = "<group>"; };
 		0E60014528A9FCD90006A1CF /* DTSideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTSideMenuViewController.swift; sourceTree = "<group>"; };
 		0E60014728AA05D70006A1CF /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				0E9BE57728A4F4240096A1F5 /* AlertManager.swift */,
 				0E2DED7C28A524D7007F131C /* ImageCacheManager.swift */,
 				0EAAA42728AD0F9900B0A1EB /* UserSettingManager.swift */,
+				0E514DBA28B0E0570064A68A /* LocalAuth.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 				0E9BE57A28A4F4D50096A1F5 /* UIAlertController+Extension.swift in Sources */,
 				0EBD219528A0D531006F19FE /* CoreDataManager.swift in Sources */,
 				0E81DEE728A1117A00A2B7C6 /* DTCalendarCell.swift in Sources */,
+				0E514DBB28B0E0570064A68A /* LocalAuth.swift in Sources */,
 				0EBD219228A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld in Sources */,
 				0E81DEDF28A10E6E00A2B7C6 /* String+Extension.swift in Sources */,
 				0EBD21A228A0E6C9006F19FE /* TimeDiaryViewController.swift in Sources */,

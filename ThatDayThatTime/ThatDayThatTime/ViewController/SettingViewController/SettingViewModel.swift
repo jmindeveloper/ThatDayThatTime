@@ -51,11 +51,11 @@ extension SettingViewModel {
             .switchCell(model: SettingSwitchModel(
                 title: "생체인증",
                 Accessory: nil,
-                isOn: false) { isOn in
+                isOn: setting.getLocalAuth()) { isOn in
                     if isOn {
                         self.settingLocalAuth.send()
                     } else {
-                        print("off localauth")
+                        self.setLocalAuth(state: false)
                     }
                 }
             )
@@ -73,5 +73,9 @@ extension SettingViewModel {
         ]))
         
         updateSetting.send()
+    }
+    
+    func setLocalAuth(state: Bool) {
+        setting.setLocalAuth(state: state)
     }
 }

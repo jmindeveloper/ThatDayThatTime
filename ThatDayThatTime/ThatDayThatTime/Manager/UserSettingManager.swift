@@ -12,7 +12,7 @@ final class UserSettingManager {
     
     enum UserDefaultsKey {
         case isFirstPractice, font, security, password
-        case icloud
+        case icloud, localAuth
         
         var key: String {
             switch self {
@@ -26,6 +26,8 @@ final class UserSettingManager {
                 return "password"
             case .icloud:
                 return "icloud"
+            case .localAuth:
+                return "localAuth"
             }
         }
     }
@@ -69,6 +71,18 @@ final class UserSettingManager {
         let security = userDefaults.bool(forKey: UserDefaultsKey.security.key)
         
         return security
+    }
+    
+    /// 생체인증 설정
+    func setLocalAuth(state: Bool) {
+        userDefaults.set(state, forKey: UserDefaultsKey.localAuth.key)
+    }
+    
+    /// 생체인증 가져오기
+    func getLocalAuth() -> Bool {
+        let localAuth = userDefaults.bool(forKey: UserDefaultsKey.localAuth.key)
+        
+        return localAuth
     }
     
     /// 비밀번호 설정
