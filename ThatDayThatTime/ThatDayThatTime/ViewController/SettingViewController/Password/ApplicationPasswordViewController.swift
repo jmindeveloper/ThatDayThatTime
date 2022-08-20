@@ -88,6 +88,8 @@ final class ApplicationPasswordViewController: UIViewController {
         
         bindingSelf()
         bindingViewModel()
+        
+        viewModel.localAuth()
     }
 }
 
@@ -212,6 +214,23 @@ extension ApplicationPasswordViewController {
                         self?.checkInputPassword()
                     }
                 }
+            }.store(in: &subscription)
+        
+        viewModel.showLocalAuth
+            .sink { [weak self] in
+                LocalAuth.localAuth {
+                    self?.presentTimeDiaryViewController()
+                } noAuthority: {
+                    let alert = AlertManager(
+                        title: "생체인증이 불가능합니다",
+                        message: "권한설정을 확인해주세요"
+                    )
+                        .createAlert()
+                        .addAction(actionTytle: "확인", style: .default)
+                    
+                    self?.present(alert, animated: true)
+                }
+
             }.store(in: &subscription)
     }
 }

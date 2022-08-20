@@ -18,6 +18,7 @@ final class ApplicationPasswordViewModel {
     private var subscriptions = Set<AnyCancellable>()
     private let completeInputPassword = PassthroughSubject<String, Never>()
     let doneInputPassword = PassthroughSubject<(status: PasswordEntryStatus, isValid: Bool), Never>()
+    let showLocalAuth = PassthroughSubject<Void, Never>()
     var inputPassword = "" {
         didSet {
             if inputPassword.count == 4 {
@@ -43,6 +44,12 @@ extension ApplicationPasswordViewModel {
     func deletePassword() {
         if !inputPassword.isEmpty {
             inputPassword.removeLast()
+        }
+    }
+    
+    func localAuth() {
+        if passwordEntryStatus == .run && UserSettingManager.shared.getLocalAuth() {
+            showLocalAuth.send()
         }
     }
 }
