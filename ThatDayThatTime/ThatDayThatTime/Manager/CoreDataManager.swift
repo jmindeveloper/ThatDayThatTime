@@ -26,7 +26,7 @@ final class CoreDataManager {
     
     // MARK: - Properties
     private let containerName = "ThatDayThatTime"
-    private let persistentContainer: NSPersistentCloudKitContainer
+    private let persistentContainer: NSPersistentContainer
     let fetchTimeDiary = PassthroughSubject<[Diary], Never>()
     let fetchDayDiary = PassthroughSubject<[Diary], Never>()
     let fetchFullSizeImage = PassthroughSubject<Data?, Never>()
@@ -35,31 +35,28 @@ final class CoreDataManager {
     // MARK: - LifeCycle
     init() {
         self.persistentContainer = NSPersistentCloudKitContainer(name: containerName)
+        configureCloud()
+        
         persistentContainer.loadPersistentStores { _, error in
             if let error = error {
                 print(String(describing: error))
             }
         }
-        configureCloud()
         // db를 보기위한 경로추적용 log
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
     }
     
     private func configureCloud() {
-        let localStoreLocation = URL(fileURLWithPath: "path/to/local.store")
-        let localStoreDescription = NSPersistentStoreDescription(url: localStoreLocation)
-        localStoreDescription.configuration = "Local"
+        guard let descriptions = persistentContainer.persistentStoreDescriptions.first else {
+            return
+        }
         
-        let cloudStoreLocation = URL(fileURLWithPath: "path/to/cloud.store")
-        let cloudStoreDescription = NSPersistentStoreDescription(url: cloudStoreLocation)
-        cloudStoreDescription.configuration = "Cloud"
+        descriptions.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        descriptions.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
         
-        cloudStoreDescription.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "com.J-Min.ThatDayThatTime")
-        
-        persistentContainer.persistentStoreDescriptions = [
-            cloudStoreDescription,
-            localStoreDescription
-        ]
+        if !UserSettingManager.shared.getICloud() {
+            descriptions.cloudKitContainerOptions = nil
+        }
     }
     
     // MARK: - Method

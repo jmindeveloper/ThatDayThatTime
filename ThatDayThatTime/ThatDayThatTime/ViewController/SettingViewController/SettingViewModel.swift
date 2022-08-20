@@ -49,6 +49,17 @@ extension SettingViewModel {
             )
         ]))
         
+        // MARK: - 백업
+        sections.append(SettingSection(sectionTitle: "백업", settingCells: [
+            .switchCell(model: SettingSwitchModel(
+                title: "iCloud 백업",
+                Accessory: nil,
+                isOn: setting.getICloud()) { isOn in
+                    self.setting.setICloud(iCloud: isOn)
+                }
+            )
+        ]))
+        
         updateSetting.send()
     }
 }

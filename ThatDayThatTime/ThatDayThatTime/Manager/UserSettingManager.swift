@@ -11,6 +11,7 @@ final class UserSettingManager {
     
     enum UserDefaultsKey {
         case isFirstPractice, font, security, password
+        case icloud
         
         var key: String {
             switch self {
@@ -22,6 +23,8 @@ final class UserSettingManager {
                 return "security"
             case .password:
                 return "password"
+            case .icloud:
+                return "icloud"
             }
         }
     }
@@ -54,23 +57,39 @@ final class UserSettingManager {
         return (font, fontIndex)
     }
     
+    /// 보안모드 설정
     func setSecurityState(securityState: Bool) {
         userDefaults.set(securityState, forKey: UserDefaultsKey.security.key)
     }
     
+    /// 보안모드 가져오기
     func getSecurityState() -> Bool {
         let security = userDefaults.bool(forKey: UserDefaultsKey.security.key)
         
         return security
     }
     
+    /// 비밀번호 설정
     func setPassword(password: String) {
         userDefaults.set(password, forKey: UserDefaultsKey.password.key)
     }
     
+    /// 비밀번호 가져오기
     func getPassword() -> String {
         let password = userDefaults.string(forKey: UserDefaultsKey.password.key)
         
         return password ?? ""
+    }
+    
+    /// icloud 백업 설정
+    func setICloud(iCloud: Bool) {
+        userDefaults.set(iCloud, forKey: UserDefaultsKey.icloud.key)
+    }
+    
+    /// icloud 백업 가져오기
+    func getICloud() -> Bool {
+        let iCloudBackUp = userDefaults.bool(forKey: UserDefaultsKey.icloud.key)
+        
+        return iCloudBackUp
     }
 }
