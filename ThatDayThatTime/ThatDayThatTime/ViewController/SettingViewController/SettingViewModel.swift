@@ -54,8 +54,8 @@ extension SettingViewModel {
             .switchCell(model: SettingSwitchModel(
                 title: "iCloud 백업",
                 Accessory: nil,
-                isOn: setting.getICloud()) { isOn in
-                    self.setting.setICloud(iCloud: isOn)
+                isOn: setting.getICloudSync()) { isOn in
+                    self.setting.setICloudSync(sync: isOn)
                 }
             )
         ]))

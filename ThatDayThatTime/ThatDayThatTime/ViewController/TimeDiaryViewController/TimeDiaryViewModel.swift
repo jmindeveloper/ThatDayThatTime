@@ -71,6 +71,12 @@ extension TimeDiaryViewModel {
             .sink { [weak self] image in
                 self?.updateFullSizeImage.send(image)
             }.store(in: &subscriptions)
+        
+        coreDataManager.changePersistentContainer
+            .sink { [weak self] in
+                guard let self = self else { return }
+                self.changeDate(date: self.date)
+            }.store(in: &subscriptions)
     }
     
     private func filterDiarys(diarys: [Diary]) -> AnyPublisher<[TimeDiary], Never> {

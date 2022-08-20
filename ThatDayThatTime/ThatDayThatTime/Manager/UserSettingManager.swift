@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class UserSettingManager {
     
@@ -31,6 +32,7 @@ final class UserSettingManager {
     
     static let shared = UserSettingManager()
     let userDefaults = UserDefaults.standard
+    let changeICloudSync = PassthroughSubject<Void, Never>()
     
     private init() { }
     
@@ -82,12 +84,13 @@ final class UserSettingManager {
     }
     
     /// icloud 백업 설정
-    func setICloud(iCloud: Bool) {
-        userDefaults.set(iCloud, forKey: UserDefaultsKey.icloud.key)
+    func setICloudSync(sync: Bool) {
+        userDefaults.set(sync, forKey: UserDefaultsKey.icloud.key)
+        changeICloudSync.send()
     }
     
     /// icloud 백업 가져오기
-    func getICloud() -> Bool {
+    func getICloudSync() -> Bool {
         let iCloudBackUp = userDefaults.bool(forKey: UserDefaultsKey.icloud.key)
         
         return iCloudBackUp
