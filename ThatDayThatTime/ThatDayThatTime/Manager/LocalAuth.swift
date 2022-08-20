@@ -10,6 +10,7 @@ import LocalAuthentication
 
 struct LocalAuth {
     static func localAuth(successAuth: @escaping (() -> Void), noAuthority: (() -> Void)) {
+        
         let authContext = LAContext()
         var description = ""
         
@@ -24,7 +25,7 @@ struct LocalAuth {
             }
             
             authContext.localizedFallbackTitle = ""
-            authContext.localizedCancelTitle = "취소"
+            authContext.localizedCancelTitle = "비밀번호 입력"
             
             authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { success, error in
                 if success {

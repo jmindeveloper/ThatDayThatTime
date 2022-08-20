@@ -79,13 +79,23 @@ extension SettingViewController {
             }.store(in: &subscriptions)
         
         viewModel.settingLocalAuth
-            .sink { [weak self] in
-                LocalAuth.localAuth {
-                    self?.viewModel.setLocalAuth(state: true)
-                } noAuthority: {
+            .sink { [weak self] securityState in
+                if securityState {
+                    LocalAuth.localAuth {
+                        self?.viewModel.setLocalAuth(state: true)
+                    } noAuthority: {
+                        let alert = AlertManager(
+                            title: "생체인증이 불가능합니다",
+                            message: "권한설정을 확인해주세요"
+                        )
+                            .createAlert()
+                            .addAction(actionTytle: "확인", style: .default)
+                        
+                        self?.present(alert, animated: true)
+                    }
+                } else {
                     let alert = AlertManager(
-                        title: "생체인증이 불가능합니다",
-                        message: "권한설정을 확인해주세요"
+                        message: "비밀번호 설정을 먼저 해주세요"
                     )
                         .createAlert()
                         .addAction(actionTytle: "확인", style: .default)

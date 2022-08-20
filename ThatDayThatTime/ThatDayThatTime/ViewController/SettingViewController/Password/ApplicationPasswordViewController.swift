@@ -54,7 +54,7 @@ final class ApplicationPasswordViewController: UIViewController {
         if #available(iOS 15, *) {
             button.setImage(UIImage(systemName: "delete.backward"), for: .normal)
         } else {
-            button.setImage(UIImage(systemName: "backward"), for: .normal)
+            button.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         }
         button.setPreferredSymbolConfiguration(.init(pointSize: 30, weight: .regular, scale: .default), forImageIn: .normal)
         button.tintColor = .black
