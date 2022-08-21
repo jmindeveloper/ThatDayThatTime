@@ -9,7 +9,7 @@ import Foundation
 import LocalAuthentication
 
 struct LocalAuth {
-    static func localAuth(successAuth: @escaping (() -> Void), noAuthority: (() -> Void)) {
+    static func localAuth(isSetting: Bool, successAuth: @escaping ((Bool) -> Void), noAuthority: (() -> Void)) {
         
         let authContext = LAContext()
         var description = ""
@@ -25,14 +25,17 @@ struct LocalAuth {
             }
             
             authContext.localizedFallbackTitle = ""
-            authContext.localizedCancelTitle = "비밀번호 입력"
+            authContext.localizedCancelTitle = isSetting ? "취소" : "비밀번호 입력"
             
             authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { success, error in
                 if success {
                     DispatchQueue.main.async {
-                        successAuth()
+                        successAuth(true)
                     }
                 } else {
+                    DispatchQueue.main.async {
+                        successAuth(false)
+                    }
                     if let error = error {
                         print(error._code)
                     }

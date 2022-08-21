@@ -270,6 +270,9 @@ extension TimeDiaryViewController {
                 self.noTimeDiaryLabel.isHidden =
                 self.viewModel.diarys.isEmpty ? false : true
                 self.timeDiaryCollectionView.reloadSections(IndexSet(0...0))
+                if !self.viewModel.diarys.isEmpty {
+                    self.timeDiaryCollectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
             }.store(in: &subscriptions)
         
         viewModel.updateFullSizeImage

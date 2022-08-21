@@ -30,10 +30,6 @@ final class SettingFontViewModel {
         return models
     }
     
-    private func updateSelectedCell(index: Int) {
-        
-    }
-    
     func changeFont(fontIndex: Int) {
         let fontModel = fontModels.settingCells[fontIndex]
         if case .accessoryCell(model: let model) = fontModel {

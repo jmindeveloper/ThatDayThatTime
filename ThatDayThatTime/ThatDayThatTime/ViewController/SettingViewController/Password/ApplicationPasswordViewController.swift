@@ -10,6 +10,10 @@ import Combine
 import CombineCocoa
 import SnapKit
 
+protocol CreateApplicationPasswordCancelDelegate: AnyObject {
+    func switchOff()
+}
+
 final class ApplicationPasswordViewController: UIViewController {
     
     // MARK: - ViewProperties
@@ -65,6 +69,7 @@ final class ApplicationPasswordViewController: UIViewController {
     // MARK: - Properties
     private var subscription = Set<AnyCancellable>()
     private let viewModel: ApplicationPasswordViewModel
+    weak var delegate: CreateApplicationPasswordCancelDelegate?
     
     // MARK: - LifeCycle
     init(viewModel: ApplicationPasswordViewModel) {
@@ -182,6 +187,7 @@ extension ApplicationPasswordViewController {
     private func bindingSelf() {
         dismissButton.tapPublisher
             .sink { [weak self] in
+                self?.delegate?.switchOff()
                 self?.dismiss(animated: true)
             }.store(in: &subscription)
         
@@ -218,8 +224,10 @@ extension ApplicationPasswordViewController {
         
         viewModel.showLocalAuth
             .sink { [weak self] in
-                LocalAuth.localAuth {
-                    self?.presentTimeDiaryViewController()
+                LocalAuth.localAuth(isSetting: false) { success in
+                    if success {
+                        self?.presentTimeDiaryViewController()
+                    }
                 } noAuthority: {
                     let alert = AlertManager(
                         title: "생체인증이 불가능합니다",

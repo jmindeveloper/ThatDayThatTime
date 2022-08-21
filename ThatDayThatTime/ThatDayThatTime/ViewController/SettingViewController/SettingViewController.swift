@@ -27,6 +27,7 @@ final class SettingViewController: UIViewController {
     private let viewModel = SettingViewModel()
     private var subscriptions = Set<AnyCancellable>()
     private let authContext = LAContext()
+    private var lastIndexPath = IndexPath()
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -53,11 +54,14 @@ extension SettingViewController {
         let vc = ApplicationPasswordViewController(viewModel: viewModel)
         vc.modalTransitionStyle = .crossDissolve
         vc.modalPresentationStyle = .fullScreen
+        vc.delegate = self
         
         self.present(vc, animated: true)
     }
     
-    
+    private func switchOff(indexPath: IndexPath) {
+        viewModel.switchOff(section: lastIndexPath.section, item: lastIndexPath.row)
+    }
 }
 
 // MARK: - Binding
@@ -80,29 +84,52 @@ extension SettingViewController {
         
         viewModel.settingLocalAuth
             .sink { [weak self] securityState in
+                guard let self = self else { return }
                 if securityState {
-                    LocalAuth.localAuth {
-                        self?.viewModel.setLocalAuth(state: true)
+                    LocalAuth.localAuth(isSetting: true) { success in
+                        if success {
+                            self.viewModel.setLocalAuth(state: true)
+                        } else {
+                            self.switchOff(indexPath: self.lastIndexPath)
+                        }
                     } noAuthority: {
                         let alert = AlertManager(
                             title: "생체인증이 불가능합니다",
                             message: "권한설정을 확인해주세요"
                         )
                             .createAlert()
-                            .addAction(actionTytle: "확인", style: .default)
+                            .addAction(actionTytle: "확인", style: .default) {
+                                self.switchOff(indexPath: self.lastIndexPath)
+                            }
                         
-                        self?.present(alert, animated: true)
+                        self.present(alert, animated: true)
                     }
                 } else {
                     let alert = AlertManager(
                         message: "비밀번호 설정을 먼저 해주세요"
                     )
                         .createAlert()
-                        .addAction(actionTytle: "확인", style: .default)
+                        .addAction(actionTytle: "확인", style: .default) { [weak self] in
+                            guard let self = self else { return }
+                            self.switchOff(indexPath: self.lastIndexPath)
+                        }
                     
-                    self?.present(alert, animated: true)
+                    self.present(alert, animated: true)
                 }
             }.store(in: &subscriptions)
+    }
+    
+    private func bindinigSwitchCell(
+        cell: SettingSwitchTableViewCell
+    ) {
+        cell.switchPoint = { [weak self] point in
+            guard let self = self else { return }
+            let viewPoint = self.view.convert(point, to: self.settingTableView)
+            guard let indexPath = self.settingTableView.indexPathForRow(at: viewPoint) else {
+                return
+            }
+            self.lastIndexPath = indexPath
+        }
     }
 }
 
@@ -117,6 +144,13 @@ extension SettingViewController {
         settingTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+}
+
+// MARK: - CreateApplicationPasswordCancelDelegate
+extension SettingViewController: CreateApplicationPasswordCancelDelegate {
+    func switchOff() {
+        switchOff(indexPath: lastIndexPath)
     }
 }
 
@@ -138,6 +172,7 @@ extension SettingViewController: UITableViewDataSource {
         case .switchCell(model: let model):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingSwitchTableViewCell.identifier, for: indexPath) as? SettingSwitchTableViewCell else { return UITableViewCell() }
             cell.configureCell(with: model)
+            bindinigSwitchCell(cell: cell)
             
             return cell
         case .accessoryCell(model: let model):

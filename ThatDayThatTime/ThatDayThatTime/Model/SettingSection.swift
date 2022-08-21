@@ -26,6 +26,6 @@ struct SettingAccessoryModel {
 struct SettingSwitchModel {
     let title: String
     let Accessory: UIImage?
-    let isOn: Bool
+    var isOn: Bool
     let handler: ((Bool) -> Void)?
 }

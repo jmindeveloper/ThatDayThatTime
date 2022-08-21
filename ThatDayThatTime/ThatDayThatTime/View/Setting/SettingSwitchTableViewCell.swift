@@ -29,6 +29,7 @@ final class SettingSwitchTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     private var handler: ((Bool) -> Void)?
+    var switchPoint: ((CGPoint) -> Void)?
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
@@ -53,6 +54,11 @@ extension SettingSwitchTableViewCell {
         handler = model.handler
         contentView.backgroundColor = .settingCellBackgroundColor
     }
+    
+    func switchTouchPoint() -> CGPoint {
+        let origin =  UITouch().location(in: toggleSwitch)
+        return CGPoint(x: abs(origin.x), y: abs(origin.y))
+    }
 }
 
 // MARK: - Bidning
@@ -60,7 +66,12 @@ extension SettingSwitchTableViewCell {
     private func bindingSelf() {
         toggleSwitch.isOnPublisher
             .sink { [weak self] isOn in
-                self?.handler?(isOn)
+                guard let self = self else {
+                    return
+                    
+                }
+                self.handler?(isOn)
+                self.switchPoint?(self.switchTouchPoint())
             }.store(in: &subscriptions)
     }
 }

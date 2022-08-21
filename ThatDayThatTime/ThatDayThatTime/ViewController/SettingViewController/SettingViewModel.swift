@@ -46,8 +46,8 @@ extension SettingViewModel {
                     } else {
                         self.setting.setSecurityState(securityState: isOn)
                         self.setting.setLocalAuth(state: isOn)
+                        self.switchOff(section: 1, item: 0)
                     }
-//                    self.updateSetting.send()
                 }
             ),
             .switchCell(model: SettingSwitchModel(
@@ -60,7 +60,6 @@ extension SettingViewModel {
                     } else {
                         self.setLocalAuth(state: false)
                     }
-                    self.updateSetting.send()
                 }
             )
         ]))
@@ -81,5 +80,25 @@ extension SettingViewModel {
     
     func setLocalAuth(state: Bool) {
         setting.setLocalAuth(state: state)
+    }
+    
+    func switchOff(section: Int, item: Int) {
+        let model = sections[section].settingCells[item]
+        if case .switchCell(model: var model) = model {
+            model.isOn = false
+            if model.title == "비밀번호" {
+                switchOff(section: section, item: item + 1)
+            }
+            let cell = SettingCellType.switchCell(
+                model: SettingSwitchModel(
+                    title: model.title,
+                    Accessory: model.Accessory,
+                    isOn: model.isOn,
+                    handler: model.handler
+                )
+            )
+            sections[section].settingCells[item] = cell
+            updateSetting.send()
+        }
     }
 }
