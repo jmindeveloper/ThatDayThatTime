@@ -64,6 +64,7 @@
 		0EBD219F28A0D834006F19FE /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219E28A0D834006F19FE /* Diary.swift */; };
 		0EBD21A228A0E6C9006F19FE /* TimeDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD21A128A0E6C9006F19FE /* TimeDiaryViewController.swift */; };
 		0EBD21A528A0E809006F19FE /* DateLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD21A428A0E809006F19FE /* DateLineView.swift */; };
+		0EE8DF3D28B212C4002F60F3 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 0EE8DF3C28B212C4002F60F3 /* Toast */; };
 		0EEAA49C28ADFCF300B20C17 /* SettingAccessoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA49B28ADFCF300B20C17 /* SettingAccessoryTableViewCell.swift */; };
 		0EEAA49E28ADFD0900B20C17 /* SettingSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA49D28ADFD0900B20C17 /* SettingSwitchTableViewCell.swift */; };
 		0EEAA4A028ADFD8D00B20C17 /* SettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA49F28ADFD8D00B20C17 /* SettingSection.swift */; };
@@ -162,6 +163,7 @@
 				0EBD218628A0D2AD006F19FE /* SideMenu in Frameworks */,
 				0E1EC50F28AF9E36008FB8A9 /* CloudKit.framework in Frameworks */,
 				0EBD218C28A0D2EF006F19FE /* CombineCocoa in Frameworks */,
+				0EE8DF3D28B212C4002F60F3 /* Toast in Frameworks */,
 				0EBD218328A0D296006F19FE /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -474,6 +476,7 @@
 				0EBD218228A0D296006F19FE /* SnapKit */,
 				0EBD218528A0D2AD006F19FE /* SideMenu */,
 				0EBD218B28A0D2EF006F19FE /* CombineCocoa */,
+				0EE8DF3C28B212C4002F60F3 /* Toast */,
 			);
 			productName = ThatDayThatTime;
 			productReference = 0E161BFC289FCDA40055B84F /* ThatDayThatTime.app */;
@@ -507,6 +510,7 @@
 				0EBD218128A0D296006F19FE /* XCRemoteSwiftPackageReference "SnapKit" */,
 				0EBD218428A0D2AD006F19FE /* XCRemoteSwiftPackageReference "SideMenu" */,
 				0EBD218A28A0D2EF006F19FE /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+				0EE8DF3B28B212C4002F60F3 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 0E161BFD289FCDA40055B84F /* Products */;
 			projectDirPath = "";
@@ -842,6 +846,14 @@
 				minimumVersion = 0.4.0;
 			};
 		};
+		0EE8DF3B28B212C4002F60F3 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -859,6 +871,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0EBD218A28A0D2EF006F19FE /* XCRemoteSwiftPackageReference "CombineCocoa" */;
 			productName = CombineCocoa;
+		};
+		0EE8DF3C28B212C4002F60F3 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0EE8DF3B28B212C4002F60F3 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 
