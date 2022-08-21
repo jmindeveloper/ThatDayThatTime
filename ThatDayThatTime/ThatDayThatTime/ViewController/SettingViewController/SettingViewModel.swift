@@ -70,6 +70,11 @@ extension SettingViewModel {
                 title: "iCloud 백업",
                 Accessory: nil,
                 isOn: setting.getICloudSync()) { isOn in
+                    if isOn {
+                        self.switchOn(section: 2, item: 0)
+                    } else {
+                        self.switchOff(section: 2, item: 0)
+                    }
                     self.setting.setICloudSync(sync: isOn)
                 }
             )
@@ -80,6 +85,22 @@ extension SettingViewModel {
     
     func setLocalAuth(state: Bool) {
         setting.setLocalAuth(state: state)
+    }
+    
+    func switchOn(section: Int, item: Int) {
+        let model = sections[section].settingCells[item]
+        if case .switchCell(model: var model) = model {
+            model.isOn = true
+            let cell = SettingCellType.switchCell(
+                model: SettingSwitchModel(
+                    title: model.title,
+                    Accessory: model.Accessory,
+                    isOn: model.isOn,
+                    handler: model.handler
+                )
+            )
+            sections[section].settingCells[item] = cell
+        }
     }
     
     func switchOff(section: Int, item: Int) {

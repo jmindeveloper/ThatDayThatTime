@@ -60,7 +60,12 @@ extension SettingViewController {
     }
     
     private func switchOff(indexPath: IndexPath) {
+        print(indexPath)
         viewModel.switchOff(section: lastIndexPath.section, item: lastIndexPath.row)
+    }
+    
+    private func switchOn(indexPath: IndexPath) {
+        viewModel.switchOn(section: indexPath.section, item: indexPath.item)
     }
 }
 
@@ -89,6 +94,7 @@ extension SettingViewController {
                     LocalAuth.localAuth(isSetting: true) { success in
                         if success {
                             self.viewModel.setLocalAuth(state: true)
+                            self.switchOn(indexPath: self.lastIndexPath)
                         } else {
                             self.switchOff(indexPath: self.lastIndexPath)
                         }
@@ -151,6 +157,10 @@ extension SettingViewController {
 extension SettingViewController: CreateApplicationPasswordCancelDelegate {
     func switchOff() {
         switchOff(indexPath: lastIndexPath)
+    }
+    
+    func switchOn() {
+        switchOn(indexPath: lastIndexPath)
     }
 }
 

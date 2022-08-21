@@ -12,6 +12,7 @@ import SnapKit
 
 protocol CreateApplicationPasswordCancelDelegate: AnyObject {
     func switchOff()
+    func switchOn()
 }
 
 final class ApplicationPasswordViewController: UIViewController {
@@ -207,6 +208,7 @@ extension ApplicationPasswordViewController {
                     self?.passwordTitleLabel.text = "비밀번호 확인"
                 case .check:
                     if isValid {
+                        self?.delegate?.switchOn()
                         self?.dismiss(animated: true)
                     } else {
                         self?.passwordWrongAnimation()
