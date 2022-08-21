@@ -250,7 +250,7 @@ extension WritingTimeDiaryViewController {
             .sink { [weak self] diary in
                 self?.viewModel.diary = diary ?? ""
                 let diaryStringCount = self?.viewModel.getDiaryStringCount() ?? 0
-                self?.diaryStringCountLabel.text = "\(diaryStringCount)/300"
+                self?.diaryStringCountLabel.text = "\(diaryStringCount)"
             }.store(in: &subscriptions)
     }
 }
