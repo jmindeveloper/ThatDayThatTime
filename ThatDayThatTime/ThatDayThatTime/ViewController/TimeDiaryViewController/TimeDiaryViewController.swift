@@ -94,6 +94,8 @@ final class TimeDiaryViewController: UIViewController {
         configureDateLineViewGesture()
         configureTimeDiaryCollectionViewGesture()
         configureMoveDayDiaryGesture()
+        
+        subscriptions.insert(respondsToast())
     }
     
     override func viewWillAppear(_ animated: Bool) {

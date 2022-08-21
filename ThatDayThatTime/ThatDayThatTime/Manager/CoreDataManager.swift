@@ -128,6 +128,7 @@ final class CoreDataManager {
         
         saveFullSizeImage(id: diary.id, image: diary.image)
         saveContext(type: type)
+        ToastMessageManager.requestToast(message: "기록이 저장됐습니다")
     }
     
     /// diary 삭제하기
@@ -138,6 +139,7 @@ final class CoreDataManager {
         deleteFullSizeImage(id: diary.id)
         
         saveContext(type: type)
+        ToastMessageManager.requestToast(message: "기록이 삭제됐습니다")
     }
     
     /// diary 수정하기
@@ -158,6 +160,7 @@ final class CoreDataManager {
         updateFullSizeImage(id: diary.id, image: diary.image)
         
         saveContext(type: type)
+        ToastMessageManager.requestToast(message: "기록이 수정됐습니다")
     }
 }
 

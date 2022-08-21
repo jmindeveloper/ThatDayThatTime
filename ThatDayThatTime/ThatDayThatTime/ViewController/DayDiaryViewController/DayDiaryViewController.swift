@@ -66,6 +66,7 @@ final class DayDiaryViewController: UIViewController {
         
         bindingViewModel()
         viewModel.getDiary()
+        subscriptions.insert(respondsToast())
         
         configureImageViewGesture()
     }

@@ -7,7 +7,6 @@
 
 import UIKit
 import Combine
-import LocalAuthentication
 
 final class SettingViewController: UIViewController {
     
@@ -26,7 +25,6 @@ final class SettingViewController: UIViewController {
     // MARK: - Properties
     private let viewModel = SettingViewModel()
     private var subscriptions = Set<AnyCancellable>()
-    private let authContext = LAContext()
     private var lastIndexPath = IndexPath()
     
     // MARK: - LifeCycle
