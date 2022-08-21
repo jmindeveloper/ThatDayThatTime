@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import CloudKit
 import Combine
 import UIKit
 
@@ -25,22 +26,53 @@ final class CoreDataManager {
     
     // MARK: - Properties
     private let containerName = "ThatDayThatTime"
-    private let persistentContainer: NSPersistentContainer
+    private lazy var persistentContainer = NSPersistentCloudKitContainer(name: containerName)
     let fetchTimeDiary = PassthroughSubject<[Diary], Never>()
     let fetchDayDiary = PassthroughSubject<[Diary], Never>()
     let fetchFullSizeImage = PassthroughSubject<Data?, Never>()
+    let changePersistentContainer = PassthroughSubject<Void, Never>()
     private var fetchDate = String.getDate()
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
     init() {
-        self.persistentContainer = NSPersistentContainer(name: containerName)
-        persistentContainer.loadPersistentStores { _, error in
+        self.persistentContainer = setPersistentCloudKitContainer()
+        bindingUserSetting()
+        // db를 보기위한 경로추적용 log
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
+    }
+    
+    private func setPersistentCloudKitContainer() -> NSPersistentCloudKitContainer {
+        let container = NSPersistentCloudKitContainer(name: containerName)
+        
+        guard let descriptions = container.persistentStoreDescriptions.first else {
+            return container
+        }
+        
+        descriptions.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.com.J-Min.ThatDayThatTime")
+        descriptions.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        descriptions.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        
+        if !UserSettingManager.shared.getICloudSync() {
+            descriptions.cloudKitContainerOptions = nil
+        }
+        
+        container.loadPersistentStores { _, error in
             if let error = error {
                 print(String(describing: error))
             }
         }
-        // db를 보기위한 경로추적용 log
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
+        
+        return container
+    }
+    
+    private func bindingUserSetting() {
+        UserSettingManager.shared.changeICloudSync
+            .sink { [weak self] in
+                guard let self = self else { return }
+                self.persistentContainer = self.setPersistentCloudKitContainer()
+                self.changePersistentContainer.send()
+            }.store(in: &subscriptions)
     }
     
     // MARK: - Method

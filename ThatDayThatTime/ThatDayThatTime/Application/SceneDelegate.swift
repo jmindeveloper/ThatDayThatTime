@@ -10,21 +10,40 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
+    private var securityView: UIView?
+    
+    private func configureNavigation() {
         UINavigationBar.appearance().barTintColor = .viewBackgroundColor
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().tintColor = .darkGray
-        
-        guard let scene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: scene)
+    }
+    
+    private func createTimeDiaryViewController() -> UINavigationController {
         let coreDataManager = CoreDataManager()
         let timeDiaryViewModel = TimeDiaryViewModel(coreDataManager: coreDataManager)
         
-        let rootVC = UINavigationController(rootViewController: TimeDiaryViewController(viewModel: timeDiaryViewModel))
+        return  UINavigationController(rootViewController: TimeDiaryViewController(viewModel: timeDiaryViewModel))
+    }
+    
+    private func createPasswordViewController() -> UIViewController {
+        let viewModel = ApplicationPasswordViewModel(passwordEntryStatus: .run)
+        let vc = ApplicationPasswordViewController(viewModel: viewModel)
         
-        window?.rootViewController = rootVC
+        return vc
+    }
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        configureNavigation()
+        guard let scene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: scene)
+        let securityState = UserSettingManager.shared.getSecurityState()
+        
+        if securityState {
+            window?.rootViewController = createPasswordViewController()
+        } else {
+            window?.rootViewController = createTimeDiaryViewController()
+        }
+        
         window?.makeKeyAndVisible()
     }
 
@@ -36,13 +55,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        if UserSettingManager.shared.getSecurityState() {
+            if let view = securityView {
+                view.removeFromSuperview()
+            }
+        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
+        if UserSettingManager.shared.getSecurityState() {
+            guard let window = window else {
+                return
+            }
+            securityView = UIView()
+            securityView?.frame = window.frame
+            securityView?.backgroundColor = .viewBackgroundColor
+            window.addSubview(securityView!)
+        }
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {

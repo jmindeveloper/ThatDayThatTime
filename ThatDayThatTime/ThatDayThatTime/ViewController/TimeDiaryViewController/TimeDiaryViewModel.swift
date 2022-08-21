@@ -61,7 +61,6 @@ extension TimeDiaryViewModel {
                 filterDiarys(diarys: $0)
             }
             .sink { [weak self] diarys in
-                print("sink: ",Thread.isMainThread)
                 self?.diarys = diarys
             }.store(in: &subscriptions)
         
@@ -71,6 +70,12 @@ extension TimeDiaryViewModel {
             }
             .sink { [weak self] image in
                 self?.updateFullSizeImage.send(image)
+            }.store(in: &subscriptions)
+        
+        coreDataManager.changePersistentContainer
+            .sink { [weak self] in
+                guard let self = self else { return }
+                self.changeDate(date: self.date)
             }.store(in: &subscriptions)
     }
     

@@ -95,6 +95,11 @@ final class TimeDiaryViewController: UIViewController {
         configureTimeDiaryCollectionViewGesture()
         configureMoveDayDiaryGesture()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        timeDiaryCollectionView.reloadData()
+    }
 }
 
 // MARK: - Method
@@ -179,7 +184,7 @@ extension TimeDiaryViewController {
     }
     
     private func presentDeleteAlert(_ index: Int) {
-        let alert = AlertManager(message: "일기를 정말 삭제하시겠습니까?").createAlert()
+        let alert = AlertManager(message: "기록을 정말 삭제하시겠습니까?").createAlert()
             .addAction(actionTytle: "확인", style: .default) { [weak self] in
                 self?.viewModel.deleteDiary(index: index)
             }
@@ -265,6 +270,9 @@ extension TimeDiaryViewController {
                 self.noTimeDiaryLabel.isHidden =
                 self.viewModel.diarys.isEmpty ? false : true
                 self.timeDiaryCollectionView.reloadSections(IndexSet(0...0))
+                if !self.viewModel.diarys.isEmpty {
+                    self.timeDiaryCollectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
             }.store(in: &subscriptions)
         
         viewModel.updateFullSizeImage
