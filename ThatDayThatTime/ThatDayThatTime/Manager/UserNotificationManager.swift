@@ -15,7 +15,6 @@ final class UserNotificationManager: NSObject {
     
     override init() {
         super.init()
-        center.delegate = self
     }
     
     static func authorization(completion: @escaping (Bool) -> Void) {
@@ -53,7 +52,7 @@ final class UserNotificationManager: NSObject {
     
     func addDefaultNotification() {
         var dateComponents = DateComponents()
-        dateComponents = Calendar.current.dateComponents([.hour, .minute], from: Date())
+        dateComponents = Calendar.current.dateComponents([.hour], from: Date())
         let subTitles = [
             "하루가 시작됐습니다",
             "벌써 하루의 반이 지났네요",
@@ -81,8 +80,7 @@ final class UserNotificationManager: NSObject {
             case 0:
                 dateComponents.hour = 9
             case 1:
-                dateComponents.hour = 17
-                dateComponents.minute = 9
+                dateComponents.hour = 13
             case 2:
                 dateComponents.hour = 20
             default: break
@@ -96,40 +94,5 @@ final class UserNotificationManager: NSObject {
     
     func removeDefaultNotification() {
         center.removePendingNotificationRequests(withIdentifiers: defaultIdentifiers)
-    }
-}
-
-// MARK: - UNUserNotificationCenterDelegate
-extension UserNotificationManager: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        if #available(iOS 14.0, *) {
-            completionHandler([.banner, .list, .sound])
-        } else {
-            completionHandler([.alert, .sound])
-        }
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        guard let textInput = response as? UNTextInputNotificationResponse else {
-            return
-        }
-        let coreDataManager = CoreDataManager()
-        
-        let diary = textInput.userText
-        switch response.actionIdentifier {
-        case UNAction.textInput.identifier:
-            let diaryEntity = DiaryEntity(
-                content: diary,
-                date: String.getDate(),
-                id: UUID().uuidString,
-                image: nil,
-                time: String.getTime()
-            )
-            coreDataManager.saveDiary(type: .time, diary: diaryEntity)
-        default:
-            break
-        }
-        
-        completionHandler()
     }
 }
