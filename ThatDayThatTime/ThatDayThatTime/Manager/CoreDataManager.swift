@@ -53,7 +53,7 @@ final class CoreDataManager {
         descriptions.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         descriptions.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
         
-        if !UserSettingManager.shared.getICloudSync() {
+        if !UserSettingManager.shared.getICloudSyncSetting() {
             descriptions.cloudKitContainerOptions = nil
         }
         

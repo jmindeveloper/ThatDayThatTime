@@ -78,6 +78,7 @@
 		0EEAA4B128AE4EFF00B20C17 /* SDMiSaeng.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0EEAA4B028AE4EFF00B20C17 /* SDMiSaeng.ttf */; };
 		0EEAA4B428AE54D400B20C17 /* SettingFontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA4B328AE54D400B20C17 /* SettingFontViewController.swift */; };
 		0EEAA4B728AE5B3F00B20C17 /* SettingFontViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA4B628AE5B3F00B20C17 /* SettingFontViewModel.swift */; };
+		0EF56A0E28B24D4300D664F4 /* UserNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF56A0D28B24D4300D664F4 /* UserNotificationManager.swift */; };
 		0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */; };
 		0EFC165228A3C8BB00006AB0 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC165128A3C8BB00006AB0 /* UITextView+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -97,7 +98,6 @@
 		0E20738F28A12CBF006FE55D /* DTCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendarManager.swift; sourceTree = "<group>"; };
 		0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellComponents.swift; sourceTree = "<group>"; };
 		0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryViewModel.swift; sourceTree = "<group>"; };
-		0E2DED7928A52438007F131C /* test.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.JPG; sourceTree = "<group>"; };
 		0E2DED7C28A524D7007F131C /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		0E3142C528A218CF00149E34 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		0E3142C828A24CD300149E34 /* DTCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendarViewModel.swift; sourceTree = "<group>"; };
@@ -154,6 +154,7 @@
 		0EEAA4B028AE4EFF00B20C17 /* SDMiSaeng.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SDMiSaeng.ttf; sourceTree = "<group>"; };
 		0EEAA4B328AE54D400B20C17 /* SettingFontViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFontViewController.swift; sourceTree = "<group>"; };
 		0EEAA4B628AE5B3F00B20C17 /* SettingFontViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFontViewModel.swift; sourceTree = "<group>"; };
+		0EF56A0D28B24D4300D664F4 /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
 		0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingTimeDiaryViewController.swift; sourceTree = "<group>"; };
 		0EFC165128A3C8BB00006AB0 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -345,7 +346,6 @@
 			children = (
 				0EEAA4A528AE46D100B20C17 /* Font */,
 				0E161BFF289FCDA40055B84F /* AppDelegate.swift */,
-				0E2DED7928A52438007F131C /* test.JPG */,
 				0E161C01289FCDA40055B84F /* SceneDelegate.swift */,
 				0E161C08289FCDA60055B84F /* Assets.xcassets */,
 				0E161C0A289FCDA60055B84F /* LaunchScreen.storyboard */,
@@ -386,6 +386,7 @@
 				0EAAA42728AD0F9900B0A1EB /* UserSettingManager.swift */,
 				0E514DBA28B0E0570064A68A /* LocalAuth.swift */,
 				0EE8DF4028B228E1002F60F3 /* ToastMessageManager.swift */,
+				0EF56A0D28B24D4300D664F4 /* UserNotificationManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -557,6 +558,7 @@
 				0EEAA4A328ADFE8D00B20C17 /* SettingViewModel.swift in Sources */,
 				0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */,
 				0EEAA4A928AE479000B20C17 /* UIFont+Extension.swift in Sources */,
+				0EF56A0E28B24D4300D664F4 /* UserNotificationManager.swift in Sources */,
 				0E1EC50828AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift in Sources */,
 				0E9BE57628A4EC850096A1F5 /* FullImageViewController.swift in Sources */,
 				0EAAA42828AD0F9900B0A1EB /* UserSettingManager.swift in Sources */,

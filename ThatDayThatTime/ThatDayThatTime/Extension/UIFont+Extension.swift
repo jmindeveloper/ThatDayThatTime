@@ -60,7 +60,7 @@ enum Font: Int, CaseIterable {
 
 extension UIFont {
     static var customFont: UIFont {
-        let font = UserSettingManager.shared.getFont()
+        let font = UserSettingManager.shared.getFontSetting()
         
         return font.font
     }
