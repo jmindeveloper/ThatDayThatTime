@@ -52,6 +52,15 @@ final class GatherDiaryViewController: UIViewController {
         return collectionView
     }()
     
+    private let noTimeDiaryLabel: UILabel = {
+        let label = UILabel()
+        label.text = "작성된 기록이 없습니다."
+        label.textColor = .darkGray
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
     // MARK: - Properties
     private let viewModel: GatherDiaryViewModel
     private var calendarHidden = true
@@ -75,6 +84,7 @@ final class GatherDiaryViewController: UIViewController {
         setConstraintsOfSegmentedCollectionView()
         setConstraintsOfDiaryCollectionView()
         setConstraintsOfYearCalendar()
+        setConstraintsOfNoTimeDiaryLabel()
         
         configureDiaryCollectionViewGesture()
         configureDateLineViewGesture()
@@ -146,6 +156,7 @@ extension GatherDiaryViewController {
         viewModel.updateDiary
             .sink { [weak self] in
                 guard let self = self else { return }
+                self.noTimeDiaryLabel.isHidden = !self.viewModel.diarys.isEmpty
                 self.diaryCollectionView.reloadData()
                 self.segmentCollectionView.reloadData()
                 let date = self.viewModel.selectedDate()
@@ -187,7 +198,7 @@ extension GatherDiaryViewController {
 extension GatherDiaryViewController {
     private func configureSubViews() {
         [dateLineView, diaryCollectionView,
-         segmentCollectionView, yearCalendar].forEach {
+         segmentCollectionView, yearCalendar, noTimeDiaryLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -224,6 +235,14 @@ extension GatherDiaryViewController {
             $0.top.equalTo(dateLineView.snp.bottom)
             $0.leading.equalToSuperview()
             $0.height.equalTo(0)
+        }
+    }
+    
+    private func setConstraintsOfNoTimeDiaryLabel() {
+        noTimeDiaryLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(yearCalendar.snp.bottom).offset(15)
+            $0.width.equalToSuperview()
         }
     }
 }

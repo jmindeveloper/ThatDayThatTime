@@ -41,6 +41,15 @@ final class SearchDiaryViewController: UIViewController {
         return collectionView
     }()
     
+    private let noSearchDiaryLabel: UILabel = {
+        let label = UILabel()
+        label.text = "검색된 기록이 기록이 없습니다."
+        label.textColor = .darkGray
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
     // MARK: - Properties
     private var subscriptions = Set<AnyCancellable>()
     private let viewModel: SearchDiaryViewModel
@@ -61,6 +70,7 @@ final class SearchDiaryViewController: UIViewController {
         configureNavigation()
         configureSubViews()
         setConstraintsOfSearchResultCollectionView()
+        setConstraintsOfNoTimeDiaryLabel()
         
         bindingSelf()
         bindingViewModel()
@@ -93,7 +103,9 @@ extension SearchDiaryViewController {
     private func bindingViewModel() {
         viewModel.updateDiary
             .sink { [weak self] in
-                self?.searchResultCollectionView.reloadData()
+                guard let self = self else { return }
+                self.noSearchDiaryLabel.isHidden =  !(self.viewModel.timeDiary.isEmpty)
+                self.searchResultCollectionView.reloadData()
             }.store(in: &subscriptions)
         
         viewModel.updateFullSizeImage
@@ -120,13 +132,24 @@ extension SearchDiaryViewController {
 // MARK: - UI
 extension SearchDiaryViewController {
     private func configureSubViews() {
-        searchResultCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(searchResultCollectionView)
+        [searchResultCollectionView, noSearchDiaryLabel].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
+        
     }
     
     private func setConstraintsOfSearchResultCollectionView() {
         searchResultCollectionView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    private func setConstraintsOfNoTimeDiaryLabel() {
+        noSearchDiaryLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(15)
+            $0.width.equalToSuperview()
         }
     }
 }

@@ -40,7 +40,6 @@ extension SettingViewModel {
                 Accessory:  nil,
                 isOn: setting.getUSerNotificationSetting()) { isOn in
                     if isOn {
-                        
                         UserNotificationManager.authorization() { success in
                             if success {
                                 self.switchOn(section: 0, item: 1)
