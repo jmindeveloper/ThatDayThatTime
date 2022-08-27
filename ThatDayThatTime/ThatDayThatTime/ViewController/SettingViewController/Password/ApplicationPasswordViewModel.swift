@@ -27,7 +27,7 @@ final class ApplicationPasswordViewModel {
         }
     }
     private var createPassword = ""
-    private let password = UserSettingManager.shared.getPassword()
+    private let password = UserSettingManager.shared.getPasswordSetting()
     
     init(passwordEntryStatus: PasswordEntryStatus) {
         self.passwordEntryStatus = passwordEntryStatus
@@ -48,7 +48,7 @@ extension ApplicationPasswordViewModel {
     }
     
     func localAuth() {
-        if passwordEntryStatus == .run && UserSettingManager.shared.getLocalAuth() {
+        if passwordEntryStatus == .run && UserSettingManager.shared.getLocalAuthSetting() {
             showLocalAuth.send()
         }
     }
@@ -71,8 +71,8 @@ extension ApplicationPasswordViewModel {
                     if !isValid {
                         self.inputPassword.removeAll()
                     } else {
-                        UserSettingManager.shared.setSecurityState(securityState: true)
-                        UserSettingManager.shared.setPassword(password: password)
+                        UserSettingManager.shared.setSecurityStateSetting(securityState: true)
+                        UserSettingManager.shared.setPasswordSetting(password: password)
                     }
                     self.doneInputPassword.send((.check, isValid))
                 case .run:

@@ -36,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         configureNavigation()
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        let securityState = UserSettingManager.shared.getSecurityState()
+        let securityState = UserSettingManager.shared.getSecurityStateSetting()
         
         if securityState {
             window?.rootViewController = createPasswordViewController()
@@ -55,7 +55,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        if UserSettingManager.shared.getSecurityState() {
+        if UserSettingManager.shared.getSecurityStateSetting() {
             if let view = securityView {
                 view.removeFromSuperview()
             }
@@ -63,7 +63,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        if UserSettingManager.shared.getSecurityState() {
+        if UserSettingManager.shared.getSecurityStateSetting() {
             guard let window = window else {
                 return
             }

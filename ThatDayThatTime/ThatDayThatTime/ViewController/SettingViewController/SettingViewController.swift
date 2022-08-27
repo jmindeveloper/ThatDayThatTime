@@ -121,6 +121,20 @@ extension SettingViewController {
                     self.present(alert, animated: true)
                 }
             }.store(in: &subscriptions)
+        
+        viewModel.failUserNotificationAuthorization
+            .sink { [weak self] in
+                guard let self = self else { return }
+                let alert = AlertManager(
+                    title: "알림권한이 꺼져있습니다",
+                    message: "권한설정을 확인해주세요"
+                ).createAlert()
+                    .addAction(actionTytle: "확인", style: .default) {
+                        self.switchOff(indexPath: self.lastIndexPath)
+                    }
+                
+                self.present(alert, animated: true)
+            }.store(in: &subscriptions)
     }
     
     private func bindinigSwitchCell(

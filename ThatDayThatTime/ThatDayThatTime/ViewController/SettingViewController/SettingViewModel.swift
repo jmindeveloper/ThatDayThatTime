@@ -16,6 +16,8 @@ final class SettingViewModel {
     let settingFont = PassthroughSubject<Void, Never>()
     let settingPassword = PassthroughSubject<Void, Never>()
     let settingLocalAuth = PassthroughSubject<Bool, Never>()
+    let failUserNotificationAuthorization = PassthroughSubject<Void, Never>()
+    private let userNotiManager = UserNotificationManager()
     
     init() {
         
@@ -32,6 +34,28 @@ extension SettingViewModel {
                 accessory: UIImage(systemName: "chevron.right")) {
                     self.settingFont.send()
                 }
+            ),
+            .switchCell(model: SettingSwitchModel(
+                title: "알림",
+                Accessory:  nil,
+                isOn: setting.getUSerNotificationSetting()) { isOn in
+                    if isOn {
+                        
+                        UserNotificationManager.authorization() { success in
+                            if success {
+                                self.switchOn(section: 0, item: 1)
+                                self.setting.setUserNotificationSetting(state: true)
+                                self.userNotiManager.addDefaultNotification()
+                            } else {
+                                self.failUserNotificationAuthorization.send()
+                            }
+                        }
+                    } else {
+                        self.switchOff(section: 0, item: 1)
+                        self.setting.setUserNotificationSetting(state: false)
+                        self.userNotiManager.removeDefaultNotification()
+                    }
+                }
             )
         ]))
         
@@ -40,12 +64,12 @@ extension SettingViewModel {
             .switchCell(model: SettingSwitchModel(
                 title: "비밀번호",
                 Accessory: nil,
-                isOn: setting.getSecurityState()) { isOn in
+                isOn: setting.getSecurityStateSetting()) { isOn in
                     if isOn {
                         self.settingPassword.send()
                     } else {
-                        self.setting.setSecurityState(securityState: isOn)
-                        self.setting.setLocalAuth(state: isOn)
+                        self.setting.setSecurityStateSetting(securityState: isOn)
+                        self.setting.setLocalAuthSetting(state: isOn)
                         self.switchOff(section: 1, item: 0)
                     }
                 }
@@ -53,9 +77,9 @@ extension SettingViewModel {
             .switchCell(model: SettingSwitchModel(
                 title: "생체인증",
                 Accessory: nil,
-                isOn: setting.getLocalAuth()) { isOn in
+                isOn: setting.getLocalAuthSetting()) { isOn in
                     if isOn {
-                        let securityState = self.setting.getSecurityState()
+                        let securityState = self.setting.getSecurityStateSetting()
                         self.settingLocalAuth.send(securityState)
                     } else {
                         self.setLocalAuth(state: false)
@@ -69,13 +93,13 @@ extension SettingViewModel {
             .switchCell(model: SettingSwitchModel(
                 title: "iCloud 백업",
                 Accessory: nil,
-                isOn: setting.getICloudSync()) { isOn in
+                isOn: setting.getICloudSyncSetting()) { isOn in
                     if isOn {
                         self.switchOn(section: 2, item: 0)
                     } else {
                         self.switchOff(section: 2, item: 0)
                     }
-                    self.setting.setICloudSync(sync: isOn)
+                    self.setting.setICloudSyncSetting(sync: isOn)
                 }
             )
         ]))
@@ -84,7 +108,7 @@ extension SettingViewModel {
     }
     
     func setLocalAuth(state: Bool) {
-        setting.setLocalAuth(state: state)
+        setting.setLocalAuthSetting(state: state)
     }
     
     func switchOn(section: Int, item: Int) {
