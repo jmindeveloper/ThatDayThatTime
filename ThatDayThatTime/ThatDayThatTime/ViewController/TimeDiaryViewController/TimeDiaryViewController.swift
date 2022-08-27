@@ -243,6 +243,7 @@ extension TimeDiaryViewController {
                     guard let indexPath = self.timeDiaryCollectionView.indexPathForItem(
                         at: pressPoint
                     ) else { return }
+                    self.generator(.soft)
                     self.presentDeleteAlert(indexPath.row)
                 }
             }.store(in: &subscriptions)
@@ -271,10 +272,7 @@ extension TimeDiaryViewController {
                 guard let self = self else { return }
                 self.noTimeDiaryLabel.isHidden =
                 self.viewModel.diarys.isEmpty ? false : true
-                self.timeDiaryCollectionView.reloadSections(IndexSet(0...0))
-                if !self.viewModel.diarys.isEmpty {
-                    self.timeDiaryCollectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-                }
+                self.timeDiaryCollectionView.reloadData()
             }.store(in: &subscriptions)
         
         viewModel.updateFullSizeImage

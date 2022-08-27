@@ -31,6 +31,9 @@ final class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "설정"
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.black
+        ]
         view.backgroundColor = .viewBackgroundColor
         configureSubViews()
         setConstraintsOfSettingTableView()

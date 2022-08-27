@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 import Toast
+import AVFoundation
 
 extension UIViewController {
     func respondsToast() -> AnyCancellable {
@@ -18,5 +19,10 @@ extension UIViewController {
                     self.view.makeToast(message)
                 }
             }
+    }
+    
+    func generator(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
+        let generator = UIImpactFeedbackGenerator(style: style)
+        generator.impactOccurred()
     }
 }

@@ -211,6 +211,7 @@ extension ApplicationPasswordViewController {
                         self?.delegate?.switchOn()
                         self?.dismiss(animated: true)
                     } else {
+                        self?.generator(.heavy)
                         self?.passwordWrongAnimation()
                         self?.checkInputPassword()
                     }
@@ -218,6 +219,7 @@ extension ApplicationPasswordViewController {
                     if isValid {
                         self?.presentTimeDiaryViewController()
                     } else {
+                        self?.generator(.heavy)
                         self?.passwordWrongAnimation()
                         self?.checkInputPassword()
                     }
