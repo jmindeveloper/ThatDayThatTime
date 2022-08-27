@@ -209,4 +209,8 @@ extension SearchDiaryViewController: UICollectionViewDelegate {
             pushDayDiaryViewController(diary: diary)
         }
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchBar.endEditing(true)
+    }
 }
