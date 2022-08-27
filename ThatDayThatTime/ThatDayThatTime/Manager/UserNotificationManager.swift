@@ -30,6 +30,27 @@ final class UserNotificationManager: NSObject {
         }
     }
     
+    private func setTextInputAction() -> UNTextInputNotificationAction {
+        UNTextInputNotificationAction(
+            identifier: UNAction.textInput.identifier,
+            title: "title",
+            options: [],
+            textInputButtonTitle: "작성",
+            textInputPlaceholder: "기록"
+        )
+    }
+    
+    private func setDefaultCategory() {
+        let category = UNNotificationCategory(
+            identifier: UNCategory.defaultNoti.identifier,
+            actions: [setTextInputAction()],
+            intentIdentifiers: [],
+            hiddenPreviewsBodyPlaceholder: "",
+            options: .customDismissAction
+        )
+        center.setNotificationCategories([category])
+    }
+    
     func addDefaultNotification() {
         var dateComponents = DateComponents()
         dateComponents = Calendar.current.dateComponents([.hour], from: Date())
@@ -51,18 +72,23 @@ final class UserNotificationManager: NSObject {
             content.subtitle = subTitles[index]
             content.body = bodys[index]
             content.sound = .default
+            content.userInfo = [UNAction.textInput.identifier: ""]
+            content.categoryIdentifier = UNCategory.defaultNoti.identifier
+            
+            setDefaultCategory()
             
             switch index {
             case 0:
-                dateComponents.hour = 13
+                dateComponents.hour = 9
             case 1:
                 dateComponents.hour = 13
             case 2:
-                dateComponents.hour = 13
+                dateComponents.hour = 20
             default: break
             }
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+            
             center.add(request)
         }
     }
@@ -72,6 +98,7 @@ final class UserNotificationManager: NSObject {
     }
 }
 
+// MARK: - UNUserNotificationCenterDelegate
 extension UserNotificationManager: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         if #available(iOS 14.0, *) {
@@ -82,6 +109,17 @@ extension UserNotificationManager: UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        guard let textInput = response as? UNTextInputNotificationResponse else {
+            return
+        }
+        let diary = textInput.userText
+        switch response.actionIdentifier {
+        case UNAction.textInput.identifier:
+            print(diary)
+        default:
+            break
+        }
+        
         completionHandler()
     }
 }

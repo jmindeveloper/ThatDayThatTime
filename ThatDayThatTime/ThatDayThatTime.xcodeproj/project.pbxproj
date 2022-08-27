@@ -12,6 +12,7 @@
 		0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161C01289FCDA40055B84F /* SceneDelegate.swift */; };
 		0E161C09289FCDA60055B84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C08289FCDA60055B84F /* Assets.xcassets */; };
 		0E161C0C289FCDA60055B84F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C0A289FCDA60055B84F /* LaunchScreen.storyboard */; };
+		0E167BDE28B9E61D0042728B /* UserNotificationManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E167BDD28B9E61D0042728B /* UserNotificationManager+Extension.swift */; };
 		0E1EC50828AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1EC50728AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift */; };
 		0E1EC50B28AF7756008FB8A9 /* ApplicationPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1EC50A28AF7756008FB8A9 /* ApplicationPasswordViewModel.swift */; };
 		0E1EC50F28AF9E36008FB8A9 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1EC50E28AF9E36008FB8A9 /* CloudKit.framework */; };
@@ -91,6 +92,7 @@
 		0E161C08289FCDA60055B84F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E161C0B289FCDA60055B84F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E161C0D289FCDA60055B84F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E167BDD28B9E61D0042728B /* UserNotificationManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserNotificationManager+Extension.swift"; sourceTree = "<group>"; };
 		0E1EC50728AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationPasswordViewController.swift; sourceTree = "<group>"; };
 		0E1EC50A28AF7756008FB8A9 /* ApplicationPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationPasswordViewModel.swift; sourceTree = "<group>"; };
 		0E1EC50C28AF9E21008FB8A9 /* ThatDayThatTime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ThatDayThatTime.entitlements; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				0E01AF5928AB7BB4003B2586 /* UINavigationController+Extension.swift */,
 				0EEAA4A828AE479000B20C17 /* UIFont+Extension.swift */,
 				0EE8DF3E28B227C1002F60F3 /* UIViewController+Extension.swift */,
+				0E167BDD28B9E61D0042728B /* UserNotificationManager+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 				0EEAA4A328ADFE8D00B20C17 /* SettingViewModel.swift in Sources */,
 				0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */,
 				0EEAA4A928AE479000B20C17 /* UIFont+Extension.swift in Sources */,
+				0E167BDE28B9E61D0042728B /* UserNotificationManager+Extension.swift in Sources */,
 				0EF56A0E28B24D4300D664F4 /* UserNotificationManager.swift in Sources */,
 				0E1EC50828AF4EE8008FB8A9 /* ApplicationPasswordViewController.swift in Sources */,
 				0E9BE57628A4EC850096A1F5 /* FullImageViewController.swift in Sources */,
