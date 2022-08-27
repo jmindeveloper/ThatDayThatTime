@@ -53,7 +53,7 @@ final class UserNotificationManager: NSObject {
     
     func addDefaultNotification() {
         var dateComponents = DateComponents()
-        dateComponents = Calendar.current.dateComponents([.hour], from: Date())
+        dateComponents = Calendar.current.dateComponents([.hour, .minute], from: Date())
         let subTitles = [
             "하루가 시작됐습니다",
             "벌써 하루의 반이 지났네요",
@@ -81,7 +81,8 @@ final class UserNotificationManager: NSObject {
             case 0:
                 dateComponents.hour = 9
             case 1:
-                dateComponents.hour = 13
+                dateComponents.hour = 17
+                dateComponents.minute = 9
             case 2:
                 dateComponents.hour = 20
             default: break
@@ -112,10 +113,19 @@ extension UserNotificationManager: UNUserNotificationCenterDelegate {
         guard let textInput = response as? UNTextInputNotificationResponse else {
             return
         }
+        let coreDataManager = CoreDataManager()
+        
         let diary = textInput.userText
         switch response.actionIdentifier {
         case UNAction.textInput.identifier:
-            print(diary)
+            let diaryEntity = DiaryEntity(
+                content: diary,
+                date: String.getDate(),
+                id: UUID().uuidString,
+                image: nil,
+                time: String.getTime()
+            )
+            coreDataManager.saveDiary(type: .time, diary: diaryEntity)
         default:
             break
         }

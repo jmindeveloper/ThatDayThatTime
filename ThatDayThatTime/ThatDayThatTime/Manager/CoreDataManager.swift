@@ -77,15 +77,12 @@ final class CoreDataManager {
     
     // MARK: - Method
     private func saveContext(type: DiaryType) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            do {
-                try self.persistentContainer.viewContext.save()
-            } catch {
-                self.persistentContainer.viewContext.rollback()
-            }
-            self.getDiary(type: type, filterType: .date, query: self.fetchDate)
+        do {
+            try self.persistentContainer.viewContext.save()
+        } catch {
+            self.persistentContainer.viewContext.rollback()
         }
+        self.getDiary(type: type, filterType: .date, query: self.fetchDate)
     }
     
     /// diary 목록 가져오기
