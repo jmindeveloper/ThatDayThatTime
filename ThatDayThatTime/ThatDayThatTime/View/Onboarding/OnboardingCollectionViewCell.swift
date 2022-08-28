@@ -13,7 +13,7 @@ final class OnboardingCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = [.red, .blue, .green].randomElement()!
+        contentView.backgroundColor = [.red, .blue, .green, .orange, .cyan, .darkGray, .purple, .systemPink].randomElement()!
     }
     
     required init?(coder: NSCoder) {

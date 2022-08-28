@@ -40,7 +40,7 @@ extension UICollectionView {
         return layout
     }
     
-    static func onboardingLayout() -> UICollectionViewCompositionalLayout {
+    static func onboardingLayout(changeIndex: @escaping (Int) -> Void) -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -49,6 +49,11 @@ extension UICollectionView {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
+        
+        section.visibleItemsInvalidationHandler = { item, offset, env in
+            let index = Int(offset.x / env.container.contentSize.width)
+            changeIndex(index)
+        }
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         

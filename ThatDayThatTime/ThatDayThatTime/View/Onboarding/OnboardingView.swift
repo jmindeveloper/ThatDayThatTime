@@ -21,7 +21,11 @@ final class OnboardingView: UIView {
     }()
     
     private lazy var onboardingCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionView.onboardingLayout())
+        let layout = UICollectionView.onboardingLayout { [weak self] index in
+            self?.pageContol.currentPage = index
+        }
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.register(OnboardingCollectionViewCell.self, forCellWithReuseIdentifier: OnboardingCollectionViewCell.identifier)
         
