@@ -171,8 +171,8 @@ extension GatherDiaryViewController {
         viewModel.updateFullSizeImage
             .sink { [weak self] image in
                 let vc = FullPhotoViewController(image: image)
-                vc.modalPresentationStyle = .fullScreen
-                self?.present(vc, animated: true)
+                vc.modalPresentationStyle = .overCurrentContext
+                self?.present(vc, animated: false)
             }.store(in: &subscriptions)
         
         viewModel.updateCalendarYear

@@ -222,8 +222,8 @@ extension WritingDayDiaryViewController {
         tapGesture.tapPublisher
             .sink { [weak self] _ in
                 let vc = FullPhotoViewController(image: self?.imageView.image)
-                vc.modalPresentationStyle = .fullScreen
-                self?.present(vc, animated: true)
+                vc.modalPresentationStyle = .overCurrentContext
+                self?.present(vc, animated: false)
             }.store(in: &subscriptions)
         
         imageView.isUserInteractionEnabled = true
