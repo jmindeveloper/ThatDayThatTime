@@ -38,6 +38,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             onboardingView.frame = window?.frame ?? .zero
             window?.addSubview(onboardingView)
         }
+        
+//        let onboardingView = OnboardingView()
+//        onboardingView.frame = window?.frame ?? .zero
+//        window?.addSubview(onboardingView)
     }
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
