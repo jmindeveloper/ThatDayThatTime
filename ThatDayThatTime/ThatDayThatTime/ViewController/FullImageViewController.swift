@@ -66,6 +66,10 @@ final class FullPhotoViewController: UIViewController {
         super.viewDidAppear(animated)
         presentContainerAnimation()
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 }
 
 // MARK: - ConfigureGesture
