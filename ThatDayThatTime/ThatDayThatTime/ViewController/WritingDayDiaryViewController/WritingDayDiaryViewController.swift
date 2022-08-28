@@ -140,6 +140,7 @@ extension WritingDayDiaryViewController {
     private func openCamera() {
         let picker = UIImagePickerController()
         picker.sourceType = .camera
+        picker.delegate = viewModel
         present(picker, animated: true)
     }
     
