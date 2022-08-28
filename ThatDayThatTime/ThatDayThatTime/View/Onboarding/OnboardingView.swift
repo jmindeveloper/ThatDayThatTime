@@ -20,8 +20,10 @@ final class OnboardingView: UIView {
         return control
     }()
     
-    private let onboardingCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private lazy var onboardingCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionView.onboardingLayout())
+        collectionView.dataSource = self
+        collectionView.register(OnboardingCollectionViewCell.self, forCellWithReuseIdentifier: OnboardingCollectionViewCell.identifier)
         
         return collectionView
     }()
@@ -89,7 +91,7 @@ extension OnboardingView {
             $0.top.equalTo(safeAreaLayoutGuide).offset(30)
             $0.width.equalToSuperview().multipliedBy(0.85)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(500)
+            $0.height.equalTo(onboardingCollectionView.snp.width).multipliedBy(1.3)
         }
     }
     
@@ -107,5 +109,19 @@ extension OnboardingView {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(safeAreaLayoutGuide).offset(-20)
         }
+    }
+}
+
+extension OnboardingView: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnboardingCollectionViewCell.identifier, for: indexPath) as? OnboardingCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        return cell
     }
 }
