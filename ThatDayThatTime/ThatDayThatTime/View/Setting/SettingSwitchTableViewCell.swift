@@ -21,6 +21,23 @@ final class SettingSwitchTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .darkGray
+        label.font = .systemFont(ofSize: 11)
+        
+        return label
+    }()
+    
+    private let labelStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.distribution = .fillEqually
+        
+        return stackView
+    }()
+    
     private let toggleSwitch: UISwitch = {
         let toggleSwitch = UISwitch()
         
@@ -36,7 +53,7 @@ final class SettingSwitchTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureSubViews()
-        setConstraintsOfTitleLabel()
+        setConstraintsOfLabelStackView()
         setConstraintsOfToggleSwitch()
         bindingSelf()
     }
@@ -49,6 +66,12 @@ final class SettingSwitchTableViewCell: UITableViewCell {
 // MARK: - Method
 extension SettingSwitchTableViewCell {
     func configureCell(with model: SettingSwitchModel) {
+        if model.description == nil {
+            descriptionLabel.isHidden = true
+        } else {
+            descriptionLabel.text = model.description
+        }
+        
         titleLabel.text = model.title
         toggleSwitch.isOn = model.isOn
         handler = model.handler
@@ -79,17 +102,22 @@ extension SettingSwitchTableViewCell {
 // MARK: - UI
 extension SettingSwitchTableViewCell {
     private func configureSubViews() {
-        [titleLabel, toggleSwitch].forEach {
+        [labelStackView, toggleSwitch].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
+        [titleLabel, descriptionLabel].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            labelStackView.addArrangedSubview($0)
+        }
     }
     
-    private func setConstraintsOfTitleLabel() {
-        titleLabel.snp.makeConstraints {
+    private func setConstraintsOfLabelStackView() {
+        labelStackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(9)
             $0.trailing.equalTo(toggleSwitch.snp.leading).offset(-9)
+            $0.verticalEdges.equalToSuperview().inset(7)
         }
     }
     

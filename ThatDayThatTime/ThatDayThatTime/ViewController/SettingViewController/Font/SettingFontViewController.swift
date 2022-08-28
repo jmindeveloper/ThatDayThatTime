@@ -46,6 +46,7 @@ final class SettingFontViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(SettingAccessoryTableViewCell.self, forCellReuseIdentifier: SettingAccessoryTableViewCell.identifier)
+        tableView.rowHeight = 40
         
         return tableView
     }()

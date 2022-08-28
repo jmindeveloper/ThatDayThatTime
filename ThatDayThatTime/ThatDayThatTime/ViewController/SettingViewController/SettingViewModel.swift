@@ -31,13 +31,15 @@ extension SettingViewModel {
         sections.append(SettingSection(sectionTitle: "설정", settingCells: [
             .accessoryCell(model: SettingAccessoryModel(
                 title: "폰트",
+                description: "폰트를 변경할 수 있습니다",
                 accessory: UIImage(systemName: "chevron.right")) {
                     self.settingFont.send()
                 }
             ),
             .switchCell(model: SettingSwitchModel(
                 title: "알림",
-                Accessory:  nil,
+                description: "기록을 까먹지 않게 하루 3번 알림이 옵니다",
+                accessory:  nil,
                 isOn: setting.getUSerNotificationSetting()) { isOn in
                     if isOn {
                         UserNotificationManager.authorization() { success in
@@ -62,7 +64,8 @@ extension SettingViewModel {
         sections.append(SettingSection(sectionTitle: "보안", settingCells: [
             .switchCell(model: SettingSwitchModel(
                 title: "비밀번호",
-                Accessory: nil,
+                description: "비밀번호 분실시 복구가 불가능합니다",
+                accessory: nil,
                 isOn: setting.getSecurityStateSetting()) { isOn in
                     if isOn {
                         self.settingPassword.send()
@@ -75,7 +78,8 @@ extension SettingViewModel {
             ),
             .switchCell(model: SettingSwitchModel(
                 title: "생체인증",
-                Accessory: nil,
+                description: "비밀번호가 설정돼 있어야 사용이 가능합니다",
+                accessory: nil,
                 isOn: setting.getLocalAuthSetting()) { isOn in
                     if isOn {
                         let securityState = self.setting.getSecurityStateSetting()
@@ -91,7 +95,8 @@ extension SettingViewModel {
         sections.append(SettingSection(sectionTitle: "백업", settingCells: [
             .switchCell(model: SettingSwitchModel(
                 title: "iCloud 백업",
-                Accessory: nil,
+                description: "첫 설정시 오래걸릴 수 있습니다",
+                accessory: nil,
                 isOn: setting.getICloudSyncSetting()) { isOn in
                     if isOn {
                         self.switchOn(section: 2, item: 0)
@@ -117,7 +122,8 @@ extension SettingViewModel {
             let cell = SettingCellType.switchCell(
                 model: SettingSwitchModel(
                     title: model.title,
-                    Accessory: model.Accessory,
+                    description: model.description,
+                    accessory: model.accessory,
                     isOn: model.isOn,
                     handler: model.handler
                 )
@@ -136,7 +142,8 @@ extension SettingViewModel {
             let cell = SettingCellType.switchCell(
                 model: SettingSwitchModel(
                     title: model.title,
-                    Accessory: model.Accessory,
+                    description: model.description,
+                    accessory: model.accessory,
                     isOn: model.isOn,
                     handler: model.handler
                 )

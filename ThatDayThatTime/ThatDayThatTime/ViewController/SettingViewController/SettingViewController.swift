@@ -18,6 +18,7 @@ final class SettingViewController: UIViewController {
         tableView.backgroundColor = .viewBackgroundColor
         tableView.register(SettingSwitchTableViewCell.self, forCellReuseIdentifier: SettingSwitchTableViewCell.identifier)
         tableView.register(SettingAccessoryTableViewCell.self, forCellReuseIdentifier: SettingAccessoryTableViewCell.identifier)
+        tableView.rowHeight = 55
         
         return tableView
     }()
