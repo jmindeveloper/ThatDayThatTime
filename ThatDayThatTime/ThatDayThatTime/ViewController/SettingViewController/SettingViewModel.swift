@@ -17,6 +17,7 @@ final class SettingViewModel {
     let settingPassword = PassthroughSubject<Void, Never>()
     let settingLocalAuth = PassthroughSubject<Bool, Never>()
     let failUserNotificationAuthorization = PassthroughSubject<Void, Never>()
+    let onboarding = PassthroughSubject<Void, Never>()
     private let userNotiManager = UserNotificationManager()
     
     init() {
@@ -57,7 +58,13 @@ extension SettingViewModel {
                         self.userNotiManager.removeDefaultNotification()
                     }
                 }
-            )
+            ),
+            .accessoryCell(model: SettingAccessoryModel(
+                title: "그날 그시간 사용법",
+                accessory: UIImage(systemName: "chevron.right"),
+                handler: {
+                    self.onboarding.send()
+                }))
         ]))
         
         // MARK: - 보안

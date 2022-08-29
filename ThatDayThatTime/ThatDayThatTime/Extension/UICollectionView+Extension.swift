@@ -50,7 +50,7 @@ extension UICollectionView {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         
-        section.visibleItemsInvalidationHandler = { item, offset, env in
+        section.visibleItemsInvalidationHandler = { _, offset, env in
             let index = Int(offset.x / env.container.contentSize.width)
             changeIndex(index)
         }
