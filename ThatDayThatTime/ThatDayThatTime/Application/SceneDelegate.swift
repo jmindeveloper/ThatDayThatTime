@@ -77,7 +77,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let window = window else {
                 return
             }
-            securityView = UIView()
+            let lauchView = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateViewController(withIdentifier: "launch").view
+            
+            securityView = lauchView
             securityView?.frame = window.frame
             securityView?.backgroundColor = .viewBackgroundColor
             window.addSubview(securityView!)
