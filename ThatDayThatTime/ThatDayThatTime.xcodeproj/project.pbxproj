@@ -82,6 +82,8 @@
 		0EF56A0E28B24D4300D664F4 /* UserNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF56A0D28B24D4300D664F4 /* UserNotificationManager.swift */; };
 		0EFC165028A3B9D600006AB0 /* WritingTimeDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */; };
 		0EFC165228A3C8BB00006AB0 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC165128A3C8BB00006AB0 /* UITextView+Extension.swift */; };
+		0EFDAA3D28BB6A63001FDE8A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDAA3C28BB6A63001FDE8A /* OnboardingView.swift */; };
+		0EFDAA3F28BB82C9001FDE8A /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDAA3E28BB82C9001FDE8A /* OnboardingCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -159,6 +161,8 @@
 		0EF56A0D28B24D4300D664F4 /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
 		0EFC164F28A3B9D600006AB0 /* WritingTimeDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingTimeDiaryViewController.swift; sourceTree = "<group>"; };
 		0EFC165128A3C8BB00006AB0 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
+		0EFDAA3C28BB6A63001FDE8A /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		0EFDAA3E28BB82C9001FDE8A /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +421,7 @@
 				0EEAA49828ADFBD300B20C17 /* DiaryCell */,
 				0EAAA42128ACB4B800B0A1EB /* YearCalendar */,
 				0E81DEE528A1116C00A2B7C6 /* DTCalendar */,
+				0EFDAA4028BB8435001FDE8A /* Onboarding */,
 				0EBD21A428A0E809006F19FE /* DateLineView.swift */,
 				0E60014728AA05D70006A1CF /* MenuTableViewCell.swift */,
 				0E84E79828ABA09200BF968B /* SegmentedCollectionViewCell.swift */,
@@ -463,6 +468,15 @@
 				0EEAA4B628AE5B3F00B20C17 /* SettingFontViewModel.swift */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		0EFDAA4028BB8435001FDE8A /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				0EFDAA3C28BB6A63001FDE8A /* OnboardingView.swift */,
+				0EFDAA3E28BB82C9001FDE8A /* OnboardingCollectionViewCell.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -604,6 +618,7 @@
 				0E514DBB28B0E0570064A68A /* LocalAuth.swift in Sources */,
 				0EBD219228A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld in Sources */,
 				0EE8DF3F28B227C1002F60F3 /* UIViewController+Extension.swift in Sources */,
+				0EFDAA3F28BB82C9001FDE8A /* OnboardingCollectionViewCell.swift in Sources */,
 				0E81DEDF28A10E6E00A2B7C6 /* String+Extension.swift in Sources */,
 				0EBD21A228A0E6C9006F19FE /* TimeDiaryViewController.swift in Sources */,
 				0E8079CC28A7B1D90050B9EB /* Image+CoreDataProperties.swift in Sources */,
@@ -611,6 +626,7 @@
 				0E60015128AA0C780006A1CF /* SettingViewController.swift in Sources */,
 				0E35238828AA4CF30039EA19 /* DayDiaryCollectionViewCell.swift in Sources */,
 				0EEAA4B428AE54D400B20C17 /* SettingFontViewController.swift in Sources */,
+				0EFDAA3D28BB6A63001FDE8A /* OnboardingView.swift in Sources */,
 				0EEAA49C28ADFCF300B20C17 /* SettingAccessoryTableViewCell.swift in Sources */,
 				0E01AF5A28AB7BB4003B2586 /* UINavigationController+Extension.swift in Sources */,
 				0E8DB29B28A8EF16006647F4 /* WritingDayDiaryViewController.swift in Sources */,

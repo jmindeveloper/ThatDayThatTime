@@ -139,6 +139,16 @@ extension SettingViewController {
                 
                 self.present(alert, animated: true)
             }.store(in: &subscriptions)
+        
+        viewModel.onboarding
+            .sink {
+                let window = UIApplication.shared.connectedScenes
+                    .compactMap { $0 as? UIWindowScene }
+                    .first?.windows.first
+                let onboardingView = OnboardingView()
+                onboardingView.frame = window?.frame ?? .zero
+                window?.addSubview(onboardingView)
+            }.store(in: &subscriptions)
     }
     
     private func bindinigSwitchCell(

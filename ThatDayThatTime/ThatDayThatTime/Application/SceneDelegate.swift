@@ -8,7 +8,7 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
     private var securityView: UIView?
     
@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let coreDataManager = CoreDataManager()
         let timeDiaryViewModel = TimeDiaryViewModel(coreDataManager: coreDataManager)
         
-        return  UINavigationController(rootViewController: TimeDiaryViewController(viewModel: timeDiaryViewModel))
+        return UINavigationController(rootViewController: TimeDiaryViewController(viewModel: timeDiaryViewModel))
     }
     
     private func createPasswordViewController() -> UIViewController {
@@ -31,7 +31,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         return vc
     }
-
+    
+    private func onboarding() {
+        if UserSettingManager.shared.isFirstPractice() {
+            let onboardingView = OnboardingView()
+            onboardingView.frame = window?.frame ?? .zero
+            window?.addSubview(onboardingView)
+        }
+    }
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         configureNavigation()
         guard let scene = (scene as? UIWindowScene) else { return }
@@ -45,6 +53,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         window?.makeKeyAndVisible()
+        
+        onboarding()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
