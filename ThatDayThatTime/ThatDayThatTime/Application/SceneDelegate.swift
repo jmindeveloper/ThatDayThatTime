@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let coreDataManager = CoreDataManager()
         let timeDiaryViewModel = TimeDiaryViewModel(coreDataManager: coreDataManager)
         
-        return  UINavigationController(rootViewController: TimeDiaryViewController(viewModel: timeDiaryViewModel))
+        return UINavigationController(rootViewController: TimeDiaryViewController(viewModel: timeDiaryViewModel))
     }
     
     private func createPasswordViewController() -> UIViewController {
@@ -38,10 +38,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             onboardingView.frame = window?.frame ?? .zero
             window?.addSubview(onboardingView)
         }
-        
-        let onboardingView = OnboardingView()
-        onboardingView.frame = window?.frame ?? .zero
-        window?.addSubview(onboardingView)
     }
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

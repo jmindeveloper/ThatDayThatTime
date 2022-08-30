@@ -6,14 +6,20 @@
 //
 
 import UIKit
+import SnapKit
 
 final class OnboardingCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "OnboardingCollectionViewCell"
     
+    let imageView = UIImageView()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = [.red, .blue, .green, .orange, .cyan, .darkGray, .purple, .systemPink].randomElement()!
+        contentView.addSubview(imageView)
+        imageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     required init?(coder: NSCoder) {

@@ -13,9 +13,10 @@ import CombineCocoa
 final class OnboardingView: UIView {
     
     // MARK: - ViewProperties
-    private let pageContol: UIPageControl = {
+    private lazy var pageContol: UIPageControl = {
         let control = UIPageControl()
-        control.numberOfPages = 10
+        control.pageIndicatorTintColor = .lightGray
+        control.currentPageIndicatorTintColor = .darkGray
         
         return control
     }()
@@ -45,6 +46,15 @@ final class OnboardingView: UIView {
         button.layer.shadowOffset = CGSize(width: 1, height: 1)
         
         return button
+    }()
+    
+    private lazy var onboardingImages: [UIImage?] = {
+        var arr = [UIImage?]()
+        for i in 1...5 {
+            arr.append(UIImage(named: "TDTT_onboarding_Image_\(i)"))
+        }
+        pageContol.numberOfPages = arr.count
+        return arr
     }()
     
     // MARK: - Properteis
@@ -118,14 +128,14 @@ extension OnboardingView {
 
 extension OnboardingView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return onboardingImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnboardingCollectionViewCell.identifier, for: indexPath) as? OnboardingCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
+        cell.imageView.image = onboardingImages[indexPath.row]
         return cell
     }
 }
