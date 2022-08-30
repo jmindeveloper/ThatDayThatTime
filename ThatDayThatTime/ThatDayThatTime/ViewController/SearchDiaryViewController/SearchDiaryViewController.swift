@@ -104,7 +104,7 @@ extension SearchDiaryViewController {
         viewModel.updateDiary
             .sink { [weak self] in
                 guard let self = self else { return }
-                self.noSearchDiaryLabel.isHidden =  !(self.viewModel.timeDiary.isEmpty)
+                self.noSearchDiaryLabel.isHidden = (!(self.viewModel.timeDiary.isEmpty) || !(self.viewModel.dayDiary.isEmpty))
                 self.searchResultCollectionView.reloadData()
             }.store(in: &subscriptions)
         
