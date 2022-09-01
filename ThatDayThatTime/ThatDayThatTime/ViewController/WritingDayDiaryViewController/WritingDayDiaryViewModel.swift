@@ -62,7 +62,7 @@ extension WritingDayDiaryViewModel {
     }
 }
 
-// MARK: - UII magePickerControllerDelegate
+// MARK: - UIImagePickerControllerDelegate
 extension WritingDayDiaryViewModel: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
