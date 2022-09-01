@@ -48,7 +48,7 @@
 
 | <center> 작성 </center> | <center> 검색 </center> | <center> 모아보기 </center> |
 | -- | -- | -- |
-| <p float="none"> <img src= "./docs/gif/write.gif"/> </p> | <p float="none"> <img src= "./docs/gif/search.gif"/> </p> | <p float="none"> <img src= "./docs/gif/write.gif"/> </p> | 
+| <p float="none"> <img src= "./docs/gif/write.gif"/> </p> | <p float="none"> <img src= "./docs/gif/search.gif"/> </p> | <p float="none"> <img src= "./docs/gif/gather.gif"/> </p> | 
 
 <br>
 
