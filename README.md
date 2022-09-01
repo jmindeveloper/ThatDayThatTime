@@ -35,7 +35,7 @@
 <br>
 
 ## 사용 기술
-- `UIKit`, `NoStoryboard`, `MVVM`, `Combine`, `CoreData`, `CloudKit`, `LocalAuthentication`, `UICollectionViewCompositionalLayout`, `UserNotifications`
+- `UIKit`, `NoStoryboard`, `MVVM`, `Combine`, `CoreData`, `CloudKit`, `UserDefaults`, `LocalAuthentication`, `UICollectionViewCompositionalLayout`, `UserNotifications`
 
 <br>
 
