@@ -1,4 +1,5 @@
 # 그날 그시간 - 시간의 기록
+[appstore](https://apps.apple.com/kr/app/%EA%B7%B8%EB%82%A0-%EA%B7%B8%EC%8B%9C%EA%B0%84-%EC%8B%9C%EA%B0%84%EC%9D%98-%EA%B8%B0%EB%A1%9D/id1642464955)
 
 ## 팀원소개
 | JMin | 
