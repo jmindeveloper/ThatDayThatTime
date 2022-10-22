@@ -59,6 +59,14 @@ extension SettingViewModel {
                     }
                 }
             ),
+            .switchCell(model: SettingSwitchModel(
+                title: "미리알림",
+                description: "이후의 시간에 작성된 시간일기의 알림을 보내드립니다",
+                accessory: nil,
+                isOn: false) { isOn in
+                    
+                }
+            ),
             .accessoryCell(model: SettingAccessoryModel(
                 title: "그날 그시간 사용법",
                 accessory: UIImage(systemName: "chevron.right"),
