@@ -95,4 +95,25 @@ final class UserNotificationManager: NSObject {
     func removeDefaultNotification() {
         center.removePendingNotificationRequests(withIdentifiers: defaultIdentifiers)
     }
+    
+    static func addReminder(date: Date, message: String) {
+        
+        var dateComponents = DateComponents()
+        dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        
+        let content = UNMutableNotificationContent()
+        content.title = "그날 그시간"
+        content.subtitle = "미리알림"
+        content.body = message
+        content.sound = .default
+        content.userInfo = [UNAction.textInput.identifier : ""]
+        content.categoryIdentifier = UNCategory.defaultNoti.identifier
+        
+        let identifier = "그날_그시간_\(date)_미리알림_\(message)"
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request)
+    }
 }

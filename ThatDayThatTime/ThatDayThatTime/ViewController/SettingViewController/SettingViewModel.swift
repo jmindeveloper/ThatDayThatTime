@@ -65,8 +65,14 @@ extension SettingViewModel {
                 accessory: nil,
                 isOn: setting.getReminder()) { isOn in
                     if isOn {
-                        self.switchOn(section: 0, item: 2)
-                        self.setting.setReminder(state: true)
+                        UserNotificationManager.authorization { success in
+                            if success {
+                                self.switchOn(section: 0, item: 2)
+                                self.setting.setReminder(state: true)
+                            } else {
+                                self.failUserNotificationAuthorization.send()
+                            }
+                        }
                     } else {
                         self.setting.setReminder(state: false)
                         self.switchOff(section: 0, item: 2)

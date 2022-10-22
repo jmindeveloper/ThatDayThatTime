@@ -50,6 +50,11 @@ extension WritingTimeDiaryViewModel {
             time: time.value
         )
         
+        if UserSettingManager.shared.getReminder() {
+            let diaryDate = dateStringToDate(date: newDiary.date!, time: newDiary.time!)
+            UserNotificationManager.addReminder(date: diaryDate ?? Date(), message: newDiary.content ?? "")
+        }
+        
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             if let originalDiary = self.originalDiary {
@@ -58,6 +63,16 @@ extension WritingTimeDiaryViewModel {
                 self.coreDataManager.saveDiary(type: .time, diary: newDiary)
             }
         }
+    }
+    
+    private func dateStringToDate(date: String, time: String) -> Date? {
+        let date = "\(date)/\(time)"
+        print("date ---> ", date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 M월 d일 EEEE/HH:mm"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        
+        return dateFormatter.date(from: date)
     }
     
     func getDiaryStringCount() -> Int {
