@@ -63,8 +63,14 @@ extension SettingViewModel {
                 title: "미리알림",
                 description: "이후의 시간에 작성된 시간일기의 알림을 보내드립니다",
                 accessory: nil,
-                isOn: false) { isOn in
-                    
+                isOn: setting.getReminder()) { isOn in
+                    if isOn {
+                        self.switchOn(section: 0, item: 2)
+                        self.setting.setReminder(state: true)
+                    } else {
+                        self.setting.setReminder(state: false)
+                        self.switchOff(section: 0, item: 2)
+                    }
                 }
             ),
             .accessoryCell(model: SettingAccessoryModel(

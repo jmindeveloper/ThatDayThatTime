@@ -12,7 +12,7 @@ final class UserSettingManager {
     
     enum UserDefaultsKey {
         case isFirstPractice, font, security, password
-        case icloud, localAuth, userNotification
+        case icloud, localAuth, userNotification, reminder
         
         var key: String {
             switch self {
@@ -30,6 +30,8 @@ final class UserSettingManager {
                 return "localAuth"
             case .userNotification:
                 return "userNotification"
+            case .reminder:
+                return "reminder"
             }
         }
     }
@@ -112,13 +114,25 @@ final class UserSettingManager {
         return iCloudBackUp
     }
     
+    /// 알림설정
     func setUserNotificationSetting(state: Bool) {
         userDefaults.set(state, forKey: UserDefaultsKey.userNotification.key)
     }
     
+    /// 알림설정 가져오기
     func getUSerNotificationSetting() -> Bool {
         let userNoti = userDefaults.bool(forKey: UserDefaultsKey.userNotification.key)
         
         return userNoti
+    }
+    
+    func setReminder(state: Bool) {
+        userDefaults.set(state, forKey: UserDefaultsKey.reminder.key)
+    }
+    
+    func getReminder() -> Bool {
+        let reminder = userDefaults.bool(forKey: UserDefaultsKey.reminder.key)
+        
+        return reminder
     }
 }
