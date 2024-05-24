@@ -25,7 +25,7 @@ enum Font: Int, CaseIterable {
     }
     
     case leaSeoyun, jeonHwaseon, simKyungha
-    case yeongdo, misaeng
+    case yeongdo, misaeng, `default`
     
     var font: UIFont {
         switch self {
@@ -39,6 +39,8 @@ enum Font: Int, CaseIterable {
             return UIFont(name: "Yeongdo", size: FontSize.medium.size) ?? UIFont()
         case .misaeng:
             return UIFont(name: "SDMiSaeng", size: FontSize.large.size) ?? UIFont()
+        case .default:
+            return UIFont.systemFont(ofSize: FontSize.medium.size)
         }
     }
     
@@ -54,6 +56,8 @@ enum Font: Int, CaseIterable {
             return "영도체"
         case .misaeng:
             return "미생체"
+        case .default:
+            return "기본"
         }
     }
 }
