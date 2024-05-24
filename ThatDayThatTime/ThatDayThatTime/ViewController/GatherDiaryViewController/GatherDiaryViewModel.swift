@@ -112,12 +112,21 @@ extension GatherDiaryViewModel {
             .eraseToAnyPublisher()
     }
     
+    private func stringToDate(_ str: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 M월d일 E요일"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        
+        return dateFormatter.date(from: str) ?? Date()
+    }
+    
     private func sliceTimeDiaryToDate(diary: [TimeDiary]) -> [TimeDiary] {
         guard diary.count > 0 else {
             return []
         }
+        
         let diary = diary.sorted {
-            $0.date ?? "" < $1.date ?? ""
+            stringToDate($0.date ?? "") < stringToDate($1.date ?? "")
         }
         var diarys = [TimeDiary]()
         var filterDiary = [TimeDiary]()
@@ -146,7 +155,7 @@ extension GatherDiaryViewModel {
     private func joinDiayrsToDate(timeDiary: [Diary], dayDiary: [Diary]) -> [[Diary]] {
         let diarys = timeDiary + dayDiary
         let diary = diarys.sorted {
-            $0.date ?? "" < $1.date ?? ""
+            stringToDate($0.date ?? "") < stringToDate($1.date ?? "")
         }
         
         var joinDiary = [[Diary]]()
@@ -184,7 +193,7 @@ extension GatherDiaryViewModel {
             .collect()
             .map {
                 $0.sorted {
-                    $0.date ?? "" < $1.date ?? ""
+                    stringToDate($0.date ?? "") < stringToDate($1.date ?? "")
                 }
             }
             .eraseToAnyPublisher()

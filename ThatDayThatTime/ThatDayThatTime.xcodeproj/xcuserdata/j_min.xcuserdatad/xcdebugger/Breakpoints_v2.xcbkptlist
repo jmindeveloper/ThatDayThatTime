@@ -3,4 +3,54 @@
    uuid = "832CFA67-448F-4B16-A97F-6840E82616CA"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "626590FB-9FB6-4C91-B563-F3D3E0E9D2C2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ThatDayThatTime/ViewController/GatherDiaryViewController/GatherDiaryViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "joinDiayrsToDate(timeDiary:dayDiary:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "626590FB-9FB6-4C91-B563-F3D3E0E9D2C2 - b964698cb3dfd345"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ThatDayThatTime.GatherDiaryViewModel.joinDiayrsToDate(timeDiary: Swift.Array&lt;ThatDayThatTime.Diary&gt;, dayDiary: Swift.Array&lt;ThatDayThatTime.Diary&gt;) -&gt; Swift.Array&lt;Swift.Array&lt;ThatDayThatTime.Diary&gt;&gt;"
+                  moduleName = "ThatDayThatTime"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/j_min/Desktop/%E1%84%80%E1%85%A2%E1%84%87%E1%85%A1%E1%86%AF/sideProject/ThatDayThatTime/ThatDayThatTime/ThatDayThatTime/ViewController/GatherDiaryViewController/GatherDiaryViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "176"
+                  endingLineNumber = "176"
+                  offsetFromSymbolStart = "1716">
+               </Location>
+               <Location
+                  uuid = "626590FB-9FB6-4C91-B563-F3D3E0E9D2C2 - b964698cb3dfd345"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ThatDayThatTime.GatherDiaryViewModel.joinDiayrsToDate(timeDiary: Swift.Array&lt;ThatDayThatTime.Diary&gt;, dayDiary: Swift.Array&lt;ThatDayThatTime.Diary&gt;) -&gt; Swift.Array&lt;Swift.Array&lt;ThatDayThatTime.Diary&gt;&gt;"
+                  moduleName = "ThatDayThatTime"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/j_min/Desktop/%E1%84%80%E1%85%A2%E1%84%87%E1%85%A1%E1%86%AF/sideProject/ThatDayThatTime/ThatDayThatTime/ThatDayThatTime/ViewController/GatherDiaryViewController/GatherDiaryViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "176"
+                  endingLineNumber = "176"
+                  offsetFromSymbolStart = "1832">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
