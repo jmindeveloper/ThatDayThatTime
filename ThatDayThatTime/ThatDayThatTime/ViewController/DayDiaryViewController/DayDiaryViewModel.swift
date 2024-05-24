@@ -18,6 +18,7 @@ final class DayDiaryViewModel {
     let notExistDayDiary = PassthroughSubject<Void, Never>()
     let existDayDiary = PassthroughSubject<DayDiary, Never>()
     let updateFullSizeImage = PassthroughSubject<UIImage?, Never>()
+    let deleteDayDiary = PassthroughSubject<Void, Never>()
     
     // MARK: - LifeCycle
     init(coreDataManager: CoreDataManager, date: String) {
@@ -36,6 +37,19 @@ final class DayDiaryViewModel {
 extension DayDiaryViewModel {
     func getDiary() {
         coreDataManager.getDiary(type: .day, filterType: .date, query: date)
+    }
+    
+    func deleteDiary() {
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            if let diary = self.dayDiary {
+                self.subscriptions.forEach {
+                    $0.cancel()
+                }
+                self.coreDataManager.deleteDiary(diary: diary, type: .day)
+                self.deleteDayDiary.send()
+            }
+        }
     }
     
     func getFullSizeImage(id: String) {

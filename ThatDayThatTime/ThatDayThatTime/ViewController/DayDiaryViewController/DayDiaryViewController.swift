@@ -90,7 +90,7 @@ extension DayDiaryViewController {
                 }
             }.store(in: &subscriptions)
         
-        navigationItem.rightBarButtonItem = editDayDiaryButton
+        navigationItem.rightBarButtonItems = [editDayDiaryButton]
     }
     
     private func presentWritingDayDiaryViewController() {
@@ -155,6 +155,29 @@ extension DayDiaryViewController {
                     $0.height.equalTo(self.imageView.image == nil ? 0 : 60)
                 }
                 self.dateLineView.configureDateLabel(date: self.viewModel.date)
+                
+                let deleteDayDiaryButton = UIBarButtonItem(
+                    image: UIImage(systemName: "trash"),
+                    style: .plain,
+                    target: self,
+                    action: nil
+                )
+                
+                deleteDayDiaryButton.tapPublisher
+                    .sink { [weak self] in
+                        if let diary = self?.viewModel.dayDiary {
+                            self?.viewModel.deleteDiary()
+                        }
+                    }.store(in: &subscriptions)
+                
+                self.navigationItem.rightBarButtonItems?.append(deleteDayDiaryButton)
+            }.store(in: &subscriptions)
+        
+        viewModel.deleteDayDiary
+            .sink { _ in
+                DispatchQueue.main.async { [weak self] in
+                    self?.navigationController?.popToRootViewController(animated: true)
+                }
             }.store(in: &subscriptions)
         
         viewModel.updateFullSizeImage
