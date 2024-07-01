@@ -23,6 +23,7 @@
 		0E15AE0D2C32F413007AA5C9 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3142C528A218CF00149E34 /* UIColor+Extension.swift */; };
 		0E15AE102C32F525007AA5C9 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E15AE0E2C32F501007AA5C9 /* Provider.swift */; };
 		0E15AE132C32F608007AA5C9 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E15AE112C32F5A8007AA5C9 /* Entry.swift */; };
+		0E15AE152C32FF5D007AA5C9 /* ThatDayThatTime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219028A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld */; };
 		0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161BFF289FCDA40055B84F /* AppDelegate.swift */; };
 		0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161C01289FCDA40055B84F /* SceneDelegate.swift */; };
 		0E161C09289FCDA60055B84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C08289FCDA60055B84F /* Assets.xcassets */; };
@@ -134,6 +135,7 @@
 		0E01AF5928AB7BB4003B2586 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		0E15AE0E2C32F501007AA5C9 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		0E15AE112C32F5A8007AA5C9 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
+		0E15AE162C330097007AA5C9 /* TimeDiaryWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeDiaryWidgetExtension.entitlements; sourceTree = "<group>"; };
 		0E161BFC289FCDA40055B84F /* ThatDayThatTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThatDayThatTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E161BFF289FCDA40055B84F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E161C01289FCDA40055B84F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 		0E161BF3289FCDA40055B84F = {
 			isa = PBXGroup;
 			children = (
+				0E15AE162C330097007AA5C9 /* TimeDiaryWidgetExtension.entitlements */,
 				0E161BFE289FCDA40055B84F /* ThatDayThatTime */,
 				0E513CC62C32D91000677DF6 /* TimeDiaryWidget */,
 				0E161BFD289FCDA40055B84F /* Products */,
@@ -756,6 +759,7 @@
 				0E15AE022C32EE0E007AA5C9 /* TimeDiary+CoreDataProperties.swift in Sources */,
 				0E513CC82C32D91000677DF6 /* TimeDiaryWidgetBundle.swift in Sources */,
 				0E15AE0D2C32F413007AA5C9 /* UIColor+Extension.swift in Sources */,
+				0E15AE152C32FF5D007AA5C9 /* ThatDayThatTime.xcdatamodeld in Sources */,
 				0E15AE132C32F608007AA5C9 /* Entry.swift in Sources */,
 				0E15AE032C32EE17007AA5C9 /* DayDiary+CoreDataProperties.swift in Sources */,
 				0E513CCC2C32D91000677DF6 /* TimeDiaryWidget.swift in Sources */,
@@ -978,6 +982,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = TimeDiaryWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8PRV428ULN;
@@ -1012,6 +1017,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = TimeDiaryWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8PRV428ULN;

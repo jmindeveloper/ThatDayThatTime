@@ -46,7 +46,13 @@ final class CoreDataManager {
     }
     
     private func setPersistentCloudKitContainer() -> NSPersistentCloudKitContainer {
+        guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.JMin.ThatDayThatTimeAppGroup") else {
+            fatalError()
+        }
+        let storeURL = url.appendingPathComponent("ThatDayThatTimeAppGroup.sqlite")
+        let storeDescription = NSPersistentStoreDescription(url: storeURL)
         let container = NSPersistentCloudKitContainer(name: containerName)
+        container.persistentStoreDescriptions = [storeDescription]
         
         guard let descriptions = container.persistentStoreDescriptions.first else {
             return container
@@ -112,6 +118,22 @@ final class CoreDataManager {
                 }
             }
         }
+    }
+    
+    func fetchLatestTimeDiary() -> TimeDiary? {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: DiaryType.time.entityName)
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "date", ascending: false),
+            NSSortDescriptor(key: "time", ascending: false)
+        ]
+        fetchRequest.fetchLimit = 1
+        
+        guard let diarys = try? self.persistentContainer.viewContext.fetch(fetchRequest) as? [TimeDiary],
+              let diary = diarys.first else {
+            return nil
+        }
+        
+        return diary
     }
     
     /// diary 저장하기
