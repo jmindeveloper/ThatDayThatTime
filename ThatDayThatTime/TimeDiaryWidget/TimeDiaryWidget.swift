@@ -8,21 +8,21 @@
 import WidgetKit
 import SwiftUI
 
+let dummyDiary = DiaryEntity(content: "dummy", date: "", id: "dummy_diary", image: nil, time: "")
+
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), str: "placeholder")
+        SimpleEntry(date: Date(), diary: dummyDiary)
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
-        let date = Date()
         var entrys: [SimpleEntry] = []
-        
-        let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 1, to: date)!
         
         let currentDate = Date()
         for minOffset in 0..<24 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: minOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, str: ["ksdlafjl;ksfj", "21", "4563"].randomElement()!)
+            
+            let entry = SimpleEntry(date: entryDate, diary: dummyDiary)
             entrys.append(entry)
         }
         
@@ -31,15 +31,13 @@ struct Provider: TimelineProvider {
     }
     
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        completion(SimpleEntry(date: Date(), str: "placeholder"))
+        completion(SimpleEntry(date: Date(), diary: dummyDiary))
     }
-    
-    
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let str: String
+    let diary: DiaryEntity
 }
 
 struct TimeDiaryWidgetEntryView : View {
@@ -53,7 +51,7 @@ struct TimeDiaryWidgetEntryView : View {
                 Text(entry.date, style: .time)
                 
                 Text("Favorite Emoji:")
-                Text(entry.str)
+                Text(entry.diary.content ?? "")
             }
         }
     }
@@ -82,6 +80,5 @@ struct TimeDiaryWidget: Widget {
 #Preview(as: .systemSmall) {
     TimeDiaryWidget()
 } timeline: {
-    SimpleEntry(date: .now, str: "sdafasd")
-    SimpleEntry(date: .now, str: "s2dasdgc")
+    SimpleEntry(date: .now, diary: dummyDiary)
 }

@@ -8,6 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		0E01AF5A28AB7BB4003B2586 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E01AF5928AB7BB4003B2586 /* UINavigationController+Extension.swift */; };
+		0E15AE012C32EE02007AA5C9 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219E28A0D834006F19FE /* Diary.swift */; };
+		0E15AE022C32EE0E007AA5C9 /* TimeDiary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219728A0D7CC006F19FE /* TimeDiary+CoreDataProperties.swift */; };
+		0E15AE032C32EE17007AA5C9 /* DayDiary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219928A0D7CC006F19FE /* DayDiary+CoreDataProperties.swift */; };
+		0E15AE042C32F061007AA5C9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD219428A0D531006F19FE /* CoreDataManager.swift */; };
+		0E15AE052C32F070007AA5C9 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81DEDE28A10E6E00A2B7C6 /* String+Extension.swift */; };
+		0E15AE062C32F091007AA5C9 /* CalendarCellComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E20739128A13FA5006FE55D /* CalendarCellComponents.swift */; };
+		0E15AE072C32F0A1007AA5C9 /* UserSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAAA42728AD0F9900B0A1EB /* UserSettingManager.swift */; };
+		0E15AE082C32F0A9007AA5C9 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57328A4CBBB0096A1F5 /* UIImage+Extension.swift */; };
+		0E15AE092C32F0A9007AA5C9 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57328A4CBBB0096A1F5 /* UIImage+Extension.swift */; };
+		0E15AE0A2C32F0B1007AA5C9 /* ToastMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE8DF4028B228E1002F60F3 /* ToastMessageManager.swift */; };
+		0E15AE0B2C32F0BC007AA5C9 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8079CA28A7B1D90050B9EB /* Image+CoreDataProperties.swift */; };
+		0E15AE0C2C32F0C7007AA5C9 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA4A828AE479000B20C17 /* UIFont+Extension.swift */; };
 		0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161BFF289FCDA40055B84F /* AppDelegate.swift */; };
 		0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161C01289FCDA40055B84F /* SceneDelegate.swift */; };
 		0E161C09289FCDA60055B84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C08289FCDA60055B84F /* Assets.xcassets */; };
@@ -52,7 +64,6 @@
 		0E8DB29B28A8EF16006647F4 /* WritingDayDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8DB29A28A8EF16006647F4 /* WritingDayDiaryViewController.swift */; };
 		0E8DB29E28A8F2B7006647F4 /* WritingDayDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8DB29D28A8F2B7006647F4 /* WritingDayDiaryViewModel.swift */; };
 		0E9BE57228A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57128A4C9B10096A1F5 /* WiritngTimeDiaryViewModel.swift */; };
-		0E9BE57428A4CBBB0096A1F5 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57328A4CBBB0096A1F5 /* UIImage+Extension.swift */; };
 		0E9BE57628A4EC850096A1F5 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57528A4EC850096A1F5 /* FullImageViewController.swift */; };
 		0E9BE57828A4F4240096A1F5 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57728A4F4240096A1F5 /* AlertManager.swift */; };
 		0E9BE57A28A4F4D50096A1F5 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57928A4F4D50096A1F5 /* UIAlertController+Extension.swift */; };
@@ -700,7 +711,6 @@
 				0EBD21A528A0E809006F19FE /* DateLineView.swift in Sources */,
 				0EAAA42628ACBB7B00B0A1EB /* YearCalendarViewModel.swift in Sources */,
 				0E2DED7D28A524D7007F131C /* ImageCacheManager.swift in Sources */,
-				0E9BE57428A4CBBB0096A1F5 /* UIImage+Extension.swift in Sources */,
 				0EAAA42028ACB4AA00B0A1EB /* YearCalendar.swift in Sources */,
 				0E84E79928ABA09200BF968B /* SegmentedCollectionViewCell.swift in Sources */,
 				0E8DB29928A8E0DB006647F4 /* DayDiaryViewModel.swift in Sources */,
@@ -711,6 +721,7 @@
 				0EBD219228A0D37D006F19FE /* ThatDayThatTime.xcdatamodeld in Sources */,
 				0EE8DF3F28B227C1002F60F3 /* UIViewController+Extension.swift in Sources */,
 				0EFDAA3F28BB82C9001FDE8A /* OnboardingCollectionViewCell.swift in Sources */,
+				0E15AE082C32F0A9007AA5C9 /* UIImage+Extension.swift in Sources */,
 				0E81DEDF28A10E6E00A2B7C6 /* String+Extension.swift in Sources */,
 				0EBD21A228A0E6C9006F19FE /* TimeDiaryViewController.swift in Sources */,
 				0E8079CC28A7B1D90050B9EB /* Image+CoreDataProperties.swift in Sources */,
@@ -730,8 +741,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E15AE0A2C32F0B1007AA5C9 /* ToastMessageManager.swift in Sources */,
+				0E15AE042C32F061007AA5C9 /* CoreDataManager.swift in Sources */,
+				0E15AE052C32F070007AA5C9 /* String+Extension.swift in Sources */,
+				0E15AE0B2C32F0BC007AA5C9 /* Image+CoreDataProperties.swift in Sources */,
+				0E15AE072C32F0A1007AA5C9 /* UserSettingManager.swift in Sources */,
+				0E15AE022C32EE0E007AA5C9 /* TimeDiary+CoreDataProperties.swift in Sources */,
 				0E513CC82C32D91000677DF6 /* TimeDiaryWidgetBundle.swift in Sources */,
+				0E15AE032C32EE17007AA5C9 /* DayDiary+CoreDataProperties.swift in Sources */,
 				0E513CCC2C32D91000677DF6 /* TimeDiaryWidget.swift in Sources */,
+				0E15AE092C32F0A9007AA5C9 /* UIImage+Extension.swift in Sources */,
+				0E15AE0C2C32F0C7007AA5C9 /* UIFont+Extension.swift in Sources */,
+				0E15AE012C32EE02007AA5C9 /* Diary.swift in Sources */,
+				0E15AE062C32F091007AA5C9 /* CalendarCellComponents.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
