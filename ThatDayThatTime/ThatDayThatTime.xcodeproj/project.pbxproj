@@ -24,6 +24,14 @@
 		0E3142C928A24CD300149E34 /* DTCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3142C828A24CD300149E34 /* DTCalendarViewModel.swift */; };
 		0E35238828AA4CF30039EA19 /* DayDiaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E35238728AA4CF30039EA19 /* DayDiaryCollectionViewCell.swift */; };
 		0E35238A28AA5CF90039EA19 /* DiaryCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E35238928AA5CF90039EA19 /* DiaryCollectionViewHeader.swift */; };
+		0E513CC32C32D91000677DF6 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E513CC22C32D91000677DF6 /* WidgetKit.framework */; };
+		0E513CC52C32D91000677DF6 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E513CC42C32D91000677DF6 /* SwiftUI.framework */; };
+		0E513CC82C32D91000677DF6 /* TimeDiaryWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E513CC72C32D91000677DF6 /* TimeDiaryWidgetBundle.swift */; };
+		0E513CCA2C32D91000677DF6 /* TimeDiaryWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E513CC92C32D91000677DF6 /* TimeDiaryWidgetLiveActivity.swift */; };
+		0E513CCC2C32D91000677DF6 /* TimeDiaryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E513CCB2C32D91000677DF6 /* TimeDiaryWidget.swift */; };
+		0E513CCE2C32D91000677DF6 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E513CCD2C32D91000677DF6 /* AppIntent.swift */; };
+		0E513CD02C32D91100677DF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E513CCF2C32D91100677DF6 /* Assets.xcassets */; };
+		0E513CD42C32D91100677DF6 /* TimeDiaryWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0E513CC12C32D91000677DF6 /* TimeDiaryWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0E514DBB28B0E0570064A68A /* LocalAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E514DBA28B0E0570064A68A /* LocalAuth.swift */; };
 		0E60014428A9FC450006A1CF /* DTSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60014328A9FC450006A1CF /* DTSideMenuNavigationController.swift */; };
 		0E60014628A9FCD90006A1CF /* DTSideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60014528A9FCD90006A1CF /* DTSideMenuViewController.swift */; };
@@ -86,6 +94,30 @@
 		0EFDAA3F28BB82C9001FDE8A /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDAA3E28BB82C9001FDE8A /* OnboardingCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0E513CD22C32D91100677DF6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E161BF4289FCDA40055B84F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E513CC02C32D91000677DF6;
+			remoteInfo = TimeDiaryWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0E513CD52C32D91100677DF6 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0E513CD42C32D91100677DF6 /* TimeDiaryWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0E01AF5928AB7BB4003B2586 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		0E161BFC289FCDA40055B84F /* ThatDayThatTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThatDayThatTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +139,15 @@
 		0E3142C828A24CD300149E34 /* DTCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendarViewModel.swift; sourceTree = "<group>"; };
 		0E35238728AA4CF30039EA19 /* DayDiaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDiaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		0E35238928AA5CF90039EA19 /* DiaryCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCollectionViewHeader.swift; sourceTree = "<group>"; };
+		0E513CC12C32D91000677DF6 /* TimeDiaryWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeDiaryWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E513CC22C32D91000677DF6 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		0E513CC42C32D91000677DF6 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		0E513CC72C32D91000677DF6 /* TimeDiaryWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryWidgetBundle.swift; sourceTree = "<group>"; };
+		0E513CC92C32D91000677DF6 /* TimeDiaryWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		0E513CCB2C32D91000677DF6 /* TimeDiaryWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryWidget.swift; sourceTree = "<group>"; };
+		0E513CCD2C32D91000677DF6 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		0E513CCF2C32D91100677DF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0E513CD12C32D91100677DF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E514DBA28B0E0570064A68A /* LocalAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuth.swift; sourceTree = "<group>"; };
 		0E60014328A9FC450006A1CF /* DTSideMenuNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTSideMenuNavigationController.swift; sourceTree = "<group>"; };
 		0E60014528A9FCD90006A1CF /* DTSideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTSideMenuViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +219,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0E513CBE2C32D91000677DF6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E513CC52C32D91000677DF6 /* SwiftUI.framework in Frameworks */,
+				0E513CC32C32D91000677DF6 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -185,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				0E161BFE289FCDA40055B84F /* ThatDayThatTime */,
+				0E513CC62C32D91000677DF6 /* TimeDiaryWidget */,
 				0E161BFD289FCDA40055B84F /* Products */,
 				0E1EC50D28AF9E36008FB8A9 /* Frameworks */,
 			);
@@ -194,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				0E161BFC289FCDA40055B84F /* ThatDayThatTime.app */,
+				0E513CC12C32D91000677DF6 /* TimeDiaryWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -225,6 +277,8 @@
 			isa = PBXGroup;
 			children = (
 				0E1EC50E28AF9E36008FB8A9 /* CloudKit.framework */,
+				0E513CC22C32D91000677DF6 /* WidgetKit.framework */,
+				0E513CC42C32D91000677DF6 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -236,6 +290,19 @@
 				0E2DED7728A514DA007F131C /* TimeDiaryViewModel.swift */,
 			);
 			path = TimeDiaryViewController;
+			sourceTree = "<group>";
+		};
+		0E513CC62C32D91000677DF6 /* TimeDiaryWidget */ = {
+			isa = PBXGroup;
+			children = (
+				0E513CC72C32D91000677DF6 /* TimeDiaryWidgetBundle.swift */,
+				0E513CC92C32D91000677DF6 /* TimeDiaryWidgetLiveActivity.swift */,
+				0E513CCB2C32D91000677DF6 /* TimeDiaryWidget.swift */,
+				0E513CCD2C32D91000677DF6 /* AppIntent.swift */,
+				0E513CCF2C32D91100677DF6 /* Assets.xcassets */,
+				0E513CD12C32D91100677DF6 /* Info.plist */,
+			);
+			path = TimeDiaryWidget;
 			sourceTree = "<group>";
 		};
 		0E60014228A9FC370006A1CF /* SideMenu */ = {
@@ -489,10 +556,12 @@
 				0E161BF8289FCDA40055B84F /* Sources */,
 				0E161BF9289FCDA40055B84F /* Frameworks */,
 				0E161BFA289FCDA40055B84F /* Resources */,
+				0E513CD52C32D91100677DF6 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0E513CD32C32D91100677DF6 /* PBXTargetDependency */,
 			);
 			name = ThatDayThatTime;
 			packageProductDependencies = (
@@ -505,6 +574,23 @@
 			productReference = 0E161BFC289FCDA40055B84F /* ThatDayThatTime.app */;
 			productType = "com.apple.product-type.application";
 		};
+		0E513CC02C32D91000677DF6 /* TimeDiaryWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E513CD82C32D91100677DF6 /* Build configuration list for PBXNativeTarget "TimeDiaryWidgetExtension" */;
+			buildPhases = (
+				0E513CBD2C32D91000677DF6 /* Sources */,
+				0E513CBE2C32D91000677DF6 /* Frameworks */,
+				0E513CBF2C32D91000677DF6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TimeDiaryWidgetExtension;
+			productName = TimeDiaryWidgetExtension;
+			productReference = 0E513CC12C32D91000677DF6 /* TimeDiaryWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -512,11 +598,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					0E161BFB289FCDA40055B84F = {
 						CreatedOnToolsVersion = 13.4.1;
+					};
+					0E513CC02C32D91000677DF6 = {
+						CreatedOnToolsVersion = 15.2;
 					};
 				};
 			};
@@ -540,6 +629,7 @@
 			projectRoot = "";
 			targets = (
 				0E161BFB289FCDA40055B84F /* ThatDayThatTime */,
+				0E513CC02C32D91000677DF6 /* TimeDiaryWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -556,6 +646,14 @@
 				0EEAA4AD28AE4AF000B20C17 /* SimKyungha.ttf in Resources */,
 				0E161C09289FCDA60055B84F /* Assets.xcassets in Resources */,
 				0EEAA4AF28AE4E3400B20C17 /* Yeongdo.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E513CBF2C32D91000677DF6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E513CD02C32D91100677DF6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -634,7 +732,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0E513CBD2C32D91000677DF6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E513CC82C32D91000677DF6 /* TimeDiaryWidgetBundle.swift in Sources */,
+				0E513CCE2C32D91000677DF6 /* AppIntent.swift in Sources */,
+				0E513CCA2C32D91000677DF6 /* TimeDiaryWidgetLiveActivity.swift in Sources */,
+				0E513CCC2C32D91000677DF6 /* TimeDiaryWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0E513CD32C32D91100677DF6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0E513CC02C32D91000677DF6 /* TimeDiaryWidgetExtension */;
+			targetProxy = 0E513CD22C32D91100677DF6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		0E161C0A289FCDA60055B84F /* LaunchScreen.storyboard */ = {
@@ -765,6 +882,7 @@
 		0E161C11289FCDA60055B84F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ThatDayThatTime/ThatDayThatTime.entitlements;
@@ -798,6 +916,7 @@
 		0E161C12289FCDA60055B84F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ThatDayThatTime/ThatDayThatTime.entitlements;
@@ -828,6 +947,73 @@
 			};
 			name = Release;
 		};
+		0E513CD62C32D91100677DF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8PRV428ULN;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TimeDiaryWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TimeDiaryWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.J-Min.ThatDayThatTime.TimeDiaryWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0E513CD72C32D91100677DF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8PRV428ULN;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TimeDiaryWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TimeDiaryWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.J-Min.ThatDayThatTime.TimeDiaryWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -845,6 +1031,15 @@
 			buildConfigurations = (
 				0E161C11289FCDA60055B84F /* Debug */,
 				0E161C12289FCDA60055B84F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0E513CD82C32D91100677DF6 /* Build configuration list for PBXNativeTarget "TimeDiaryWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E513CD62C32D91100677DF6 /* Debug */,
+				0E513CD72C32D91100677DF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
