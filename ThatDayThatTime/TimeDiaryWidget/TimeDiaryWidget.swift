@@ -45,13 +45,17 @@ struct TimeDiaryWidgetEntryView : View {
 
     var body: some View {
         ZStack {
-            Color.red
+            Color(uiColor: .viewBackgroundColor)
             VStack {
                 Text("Time:")
+                    .foregroundColor(.black)
                 Text(entry.date, style: .time)
+                    .foregroundColor(.black)
                 
                 Text("Favorite Emoji:")
+                    .foregroundColor(.black)
                 Text(entry.diary.content ?? "")
+                    .foregroundColor(.black)
             }
         }
     }

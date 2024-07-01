@@ -20,6 +20,7 @@
 		0E15AE0A2C32F0B1007AA5C9 /* ToastMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE8DF4028B228E1002F60F3 /* ToastMessageManager.swift */; };
 		0E15AE0B2C32F0BC007AA5C9 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8079CA28A7B1D90050B9EB /* Image+CoreDataProperties.swift */; };
 		0E15AE0C2C32F0C7007AA5C9 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA4A828AE479000B20C17 /* UIFont+Extension.swift */; };
+		0E15AE0D2C32F413007AA5C9 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3142C528A218CF00149E34 /* UIColor+Extension.swift */; };
 		0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161BFF289FCDA40055B84F /* AppDelegate.swift */; };
 		0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161C01289FCDA40055B84F /* SceneDelegate.swift */; };
 		0E161C09289FCDA60055B84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C08289FCDA60055B84F /* Assets.xcassets */; };
@@ -748,6 +749,7 @@
 				0E15AE072C32F0A1007AA5C9 /* UserSettingManager.swift in Sources */,
 				0E15AE022C32EE0E007AA5C9 /* TimeDiary+CoreDataProperties.swift in Sources */,
 				0E513CC82C32D91000677DF6 /* TimeDiaryWidgetBundle.swift in Sources */,
+				0E15AE0D2C32F413007AA5C9 /* UIColor+Extension.swift in Sources */,
 				0E15AE032C32EE17007AA5C9 /* DayDiary+CoreDataProperties.swift in Sources */,
 				0E513CCC2C32D91000677DF6 /* TimeDiaryWidget.swift in Sources */,
 				0E15AE092C32F0A9007AA5C9 /* UIImage+Extension.swift in Sources */,
