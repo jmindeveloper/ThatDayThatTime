@@ -8,38 +8,6 @@
 import WidgetKit
 import SwiftUI
 
-let dummyDiary = DiaryEntity(content: "dummy", date: "", id: "dummy_diary", image: nil, time: "")
-
-struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), diary: dummyDiary)
-    }
-    
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
-        var entrys: [SimpleEntry] = []
-        
-        let currentDate = Date()
-        for minOffset in 0..<24 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: minOffset, to: currentDate)!
-            
-            let entry = SimpleEntry(date: entryDate, diary: dummyDiary)
-            entrys.append(entry)
-        }
-        
-        let timeLine = Timeline(entries: entrys, policy: .atEnd)
-        completion(timeLine)
-    }
-    
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        completion(SimpleEntry(date: Date(), diary: dummyDiary))
-    }
-}
-
-struct SimpleEntry: TimelineEntry {
-    let date: Date
-    let diary: DiaryEntity
-}
-
 struct TimeDiaryWidgetEntryView : View {
     var entry: Provider.Entry
 
@@ -84,5 +52,5 @@ struct TimeDiaryWidget: Widget {
 #Preview(as: .systemSmall) {
     TimeDiaryWidget()
 } timeline: {
-    SimpleEntry(date: .now, diary: dummyDiary)
+    DiaryEntry(date: .now, diary: dummyDiary)
 }

@@ -10,6 +10,9 @@ import CoreData
 import CloudKit
 import Combine
 import UIKit
+import WidgetKit
+
+let dummyDiary = DiaryEntity(content: "dummy", date: "", id: "dummy_diary", image: nil, time: "")
 
 final class CoreDataManager {
     
@@ -83,6 +86,10 @@ final class CoreDataManager {
             self.persistentContainer.viewContext.rollback()
         }
         self.getDiary(type: type, filterType: .date, query: self.fetchDate)
+        
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.reloadAllTimelines()
+        }
     }
     
     /// diary 목록 가져오기

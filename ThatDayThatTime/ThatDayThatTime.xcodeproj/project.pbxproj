@@ -21,6 +21,8 @@
 		0E15AE0B2C32F0BC007AA5C9 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8079CA28A7B1D90050B9EB /* Image+CoreDataProperties.swift */; };
 		0E15AE0C2C32F0C7007AA5C9 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA4A828AE479000B20C17 /* UIFont+Extension.swift */; };
 		0E15AE0D2C32F413007AA5C9 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3142C528A218CF00149E34 /* UIColor+Extension.swift */; };
+		0E15AE102C32F525007AA5C9 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E15AE0E2C32F501007AA5C9 /* Provider.swift */; };
+		0E15AE132C32F608007AA5C9 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E15AE112C32F5A8007AA5C9 /* Entry.swift */; };
 		0E161C00289FCDA40055B84F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161BFF289FCDA40055B84F /* AppDelegate.swift */; };
 		0E161C02289FCDA40055B84F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E161C01289FCDA40055B84F /* SceneDelegate.swift */; };
 		0E161C09289FCDA60055B84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E161C08289FCDA60055B84F /* Assets.xcassets */; };
@@ -130,6 +132,8 @@
 
 /* Begin PBXFileReference section */
 		0E01AF5928AB7BB4003B2586 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
+		0E15AE0E2C32F501007AA5C9 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
+		0E15AE112C32F5A8007AA5C9 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		0E161BFC289FCDA40055B84F /* ThatDayThatTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThatDayThatTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E161BFF289FCDA40055B84F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E161C01289FCDA40055B84F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 				0E513CCB2C32D91000677DF6 /* TimeDiaryWidget.swift */,
 				0E513CCF2C32D91100677DF6 /* Assets.xcassets */,
 				0E513CD12C32D91100677DF6 /* Info.plist */,
+				0E15AE0E2C32F501007AA5C9 /* Provider.swift */,
+				0E15AE112C32F5A8007AA5C9 /* Entry.swift */,
 			);
 			path = TimeDiaryWidget;
 			sourceTree = "<group>";
@@ -750,11 +756,13 @@
 				0E15AE022C32EE0E007AA5C9 /* TimeDiary+CoreDataProperties.swift in Sources */,
 				0E513CC82C32D91000677DF6 /* TimeDiaryWidgetBundle.swift in Sources */,
 				0E15AE0D2C32F413007AA5C9 /* UIColor+Extension.swift in Sources */,
+				0E15AE132C32F608007AA5C9 /* Entry.swift in Sources */,
 				0E15AE032C32EE17007AA5C9 /* DayDiary+CoreDataProperties.swift in Sources */,
 				0E513CCC2C32D91000677DF6 /* TimeDiaryWidget.swift in Sources */,
 				0E15AE092C32F0A9007AA5C9 /* UIImage+Extension.swift in Sources */,
 				0E15AE0C2C32F0C7007AA5C9 /* UIFont+Extension.swift in Sources */,
 				0E15AE012C32EE02007AA5C9 /* Diary.swift in Sources */,
+				0E15AE102C32F525007AA5C9 /* Provider.swift in Sources */,
 				0E15AE062C32F091007AA5C9 /* CalendarCellComponents.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
