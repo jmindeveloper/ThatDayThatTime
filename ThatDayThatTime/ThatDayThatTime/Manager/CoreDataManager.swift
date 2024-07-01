@@ -10,6 +10,9 @@ import CoreData
 import CloudKit
 import Combine
 import UIKit
+import WidgetKit
+
+let dummyDiary = DiaryEntity(content: "dummy", date: "", id: "dummy_diary", image: nil, time: "")
 
 final class CoreDataManager {
     
@@ -39,16 +42,16 @@ final class CoreDataManager {
         self.persistentContainer = setPersistentCloudKitContainer()
         bindingUserSetting()
         // db를 보기위한 경로추적용 log
+        migrateStoreIfNeeded()
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
     }
     
     private func setPersistentCloudKitContainer() -> NSPersistentCloudKitContainer {
-        let container = NSPersistentCloudKitContainer(name: containerName)
-        
-        guard let descriptions = container.persistentStoreDescriptions.first else {
-            return container
+        guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.JMin.ThatDayThatTimeAppGroup") else {
+            fatalError()
         }
-        
+        let storeURL = url.appendingPathComponent("ThatDayThatTimeAppGroup.sqlite")
+        let descriptions = NSPersistentStoreDescription(url: storeURL)
         descriptions.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.com.J-Min.ThatDayThatTime")
         descriptions.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         descriptions.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
@@ -56,7 +59,9 @@ final class CoreDataManager {
         if !UserSettingManager.shared.getICloudSyncSetting() {
             descriptions.cloudKitContainerOptions = nil
         }
-        
+
+        let container = NSPersistentCloudKitContainer(name: containerName)
+        container.persistentStoreDescriptions = [descriptions]
         container.loadPersistentStores { _, error in
             if let error = error {
                 print(String(describing: error))
@@ -83,6 +88,10 @@ final class CoreDataManager {
             self.persistentContainer.viewContext.rollback()
         }
         self.getDiary(type: type, filterType: .date, query: self.fetchDate)
+        
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.reloadAllTimelines()
+        }
     }
     
     /// diary 목록 가져오기
@@ -105,6 +114,22 @@ final class CoreDataManager {
                 }
             }
         }
+    }
+    
+    func fetchLatestTimeDiary() -> TimeDiary? {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: DiaryType.time.entityName)
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "date", ascending: false),
+            NSSortDescriptor(key: "time", ascending: false)
+        ]
+        fetchRequest.fetchLimit = 1
+        
+        guard let diarys = try? self.persistentContainer.viewContext.fetch(fetchRequest) as? [TimeDiary],
+              let diary = diarys.first else {
+            return nil
+        }
+        
+        return diary
     }
     
     /// diary 저장하기
@@ -203,5 +228,34 @@ extension CoreDataManager {
         guard let imageObject = getImageObject(id: id) else { return }
         
         persistentContainer.viewContext.delete(imageObject)
+    }
+    
+    func migrateStoreIfNeeded() {
+        let fileManager = FileManager.default
+        
+        let existingStoreURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("ThatDayThatTime.sqlite")
+        
+        guard let appGroupURL = fileManager.containerURL(forSecurityApplicationGroupIdentifier: "group.com.JMin.ThatDayThatTimeAppGroup") else {
+            fatalError("App Group URL could not be created.")
+        }
+        
+        let appGroupStoreURL = appGroupURL.appendingPathComponent("ThatDayThatTimeAppGroup.sqlite")
+        
+        // If the App Group store already exists, no need to migrate
+        if fileManager.fileExists(atPath: appGroupStoreURL.path) {
+            return
+        }
+        
+        // If the existing store does not exist, just setup the new App Group store
+        guard fileManager.fileExists(atPath: existingStoreURL.path) else {
+            return
+        }
+        
+        // Perform migration
+        do {
+            try fileManager.moveItem(at: existingStoreURL, to: appGroupStoreURL)
+        } catch {
+            fatalError("Failed to migrate store: \(error.localizedDescription)")
+        }
     }
 }
