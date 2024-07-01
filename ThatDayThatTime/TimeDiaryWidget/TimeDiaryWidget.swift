@@ -15,11 +15,18 @@ struct Provider: TimelineProvider {
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
         let date = Date()
-        let entry = SimpleEntry(date: Date(), str: "ksdlafjl;ksfj")
+        var entrys: [SimpleEntry] = []
         
-        let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 15, to: date)!
+        let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 1, to: date)!
         
-        let timeLine = Timeline(entries: [entry], policy: .after(nextUpdateDate))
+        let currentDate = Date()
+        for minOffset in 0..<24 {
+            let entryDate = Calendar.current.date(byAdding: .hour, value: minOffset, to: currentDate)!
+            let entry = SimpleEntry(date: entryDate, str: ["ksdlafjl;ksfj", "21", "4563"].randomElement()!)
+            entrys.append(entry)
+        }
+        
+        let timeLine = Timeline(entries: entrys, policy: .atEnd)
         completion(timeLine)
     }
     
