@@ -8,45 +8,46 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: AppIntentTimelineProvider {
+struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
-    }
-
-    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration)
+        SimpleEntry(date: Date(), str: "placeholder")
     }
     
-    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
-        }
-
-        return Timeline(entries: entries, policy: .atEnd)
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
+        let date = Date()
+        let entry = SimpleEntry(date: Date(), str: "ksdlafjl;ksfj")
+        
+        let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 15, to: date)!
+        
+        let timeLine = Timeline(entries: [entry], policy: .after(nextUpdateDate))
+        completion(timeLine)
     }
+    
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+        completion(SimpleEntry(date: Date(), str: "placeholder"))
+    }
+    
+    
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationAppIntent
+    let str: String
 }
 
 struct TimeDiaryWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Favorite Emoji:")
-            Text(entry.configuration.favoriteEmoji)
+        ZStack {
+            Color.red
+            VStack {
+                Text("Time:")
+                Text(entry.date, style: .time)
+                
+                Text("Favorite Emoji:")
+                Text(entry.str)
+            }
         }
     }
 }
@@ -55,30 +56,25 @@ struct TimeDiaryWidget: Widget {
     let kind: String = "TimeDiaryWidget"
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
-            TimeDiaryWidgetEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+            if #available(iOSApplicationExtension 17.0, *) {
+                TimeDiaryWidgetEntryView(entry: entry)
+                    .containerBackground(.background, for: .widget)
+            } else {
+                TimeDiaryWidgetEntryView(entry: entry)
+            }
         }
-    }
-}
-
-extension ConfigurationAppIntent {
-    fileprivate static var smiley: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "😀"
-        return intent
-    }
-    
-    fileprivate static var starEyes: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "🤩"
-        return intent
+        .configurationDisplayName("그날 그시간")
+        .description("최근 시간의 기록을 확인하고 작성해 보세요")
+        .supportedFamilies([.systemSmall, .systemMedium])
+        .contentMarginsDisabled()
+        .containerBackgroundRemovable(false)
     }
 }
 
 #Preview(as: .systemSmall) {
     TimeDiaryWidget()
 } timeline: {
-    SimpleEntry(date: .now, configuration: .smiley)
-    SimpleEntry(date: .now, configuration: .starEyes)
+    SimpleEntry(date: .now, str: "sdafasd")
+    SimpleEntry(date: .now, str: "s2dasdgc")
 }

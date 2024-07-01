@@ -27,9 +27,7 @@
 		0E513CC32C32D91000677DF6 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E513CC22C32D91000677DF6 /* WidgetKit.framework */; };
 		0E513CC52C32D91000677DF6 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E513CC42C32D91000677DF6 /* SwiftUI.framework */; };
 		0E513CC82C32D91000677DF6 /* TimeDiaryWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E513CC72C32D91000677DF6 /* TimeDiaryWidgetBundle.swift */; };
-		0E513CCA2C32D91000677DF6 /* TimeDiaryWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E513CC92C32D91000677DF6 /* TimeDiaryWidgetLiveActivity.swift */; };
 		0E513CCC2C32D91000677DF6 /* TimeDiaryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E513CCB2C32D91000677DF6 /* TimeDiaryWidget.swift */; };
-		0E513CCE2C32D91000677DF6 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E513CCD2C32D91000677DF6 /* AppIntent.swift */; };
 		0E513CD02C32D91100677DF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E513CCF2C32D91100677DF6 /* Assets.xcassets */; };
 		0E513CD42C32D91100677DF6 /* TimeDiaryWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0E513CC12C32D91000677DF6 /* TimeDiaryWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0E514DBB28B0E0570064A68A /* LocalAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E514DBA28B0E0570064A68A /* LocalAuth.swift */; };
@@ -143,9 +141,7 @@
 		0E513CC22C32D91000677DF6 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		0E513CC42C32D91000677DF6 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		0E513CC72C32D91000677DF6 /* TimeDiaryWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryWidgetBundle.swift; sourceTree = "<group>"; };
-		0E513CC92C32D91000677DF6 /* TimeDiaryWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryWidgetLiveActivity.swift; sourceTree = "<group>"; };
 		0E513CCB2C32D91000677DF6 /* TimeDiaryWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryWidget.swift; sourceTree = "<group>"; };
-		0E513CCD2C32D91000677DF6 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		0E513CCF2C32D91100677DF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E513CD12C32D91100677DF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E514DBA28B0E0570064A68A /* LocalAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuth.swift; sourceTree = "<group>"; };
@@ -296,9 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				0E513CC72C32D91000677DF6 /* TimeDiaryWidgetBundle.swift */,
-				0E513CC92C32D91000677DF6 /* TimeDiaryWidgetLiveActivity.swift */,
 				0E513CCB2C32D91000677DF6 /* TimeDiaryWidget.swift */,
-				0E513CCD2C32D91000677DF6 /* AppIntent.swift */,
 				0E513CCF2C32D91100677DF6 /* Assets.xcassets */,
 				0E513CD12C32D91100677DF6 /* Info.plist */,
 			);
@@ -737,8 +731,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E513CC82C32D91000677DF6 /* TimeDiaryWidgetBundle.swift in Sources */,
-				0E513CCE2C32D91000677DF6 /* AppIntent.swift in Sources */,
-				0E513CCA2C32D91000677DF6 /* TimeDiaryWidgetLiveActivity.swift in Sources */,
 				0E513CCC2C32D91000677DF6 /* TimeDiaryWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
