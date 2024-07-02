@@ -249,8 +249,6 @@ extension CoreDataManager {
         if !fileManager.fileExists(atPath: existingStoreURL.path) {
             existingStoreURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!.appendingPathComponent("ThatDayThatTime.sqlite")
             
-            print(existingStoreURL.path)
-            
             if !fileManager.fileExists(atPath: existingStoreURL.path) {
                 return
             }
@@ -268,7 +266,7 @@ extension CoreDataManager {
 //            try fileManager.copyItem(at: existingStoreURL, to: appGroupStoreURL)
             
             try coordinator.replacePersistentStore(at: appGroupStoreURL, withPersistentStoreFrom: existingStoreURL, type: .sqlite)
-            try coordinator.destroyPersistentStore(at: appGroupStoreURL, type: .sqlite, options: nil)
+            try fileManager.removeItem(at: existingStoreURL)
         } catch {
             fatalError("Failed to migrate store: \(error.localizedDescription)")
         }
