@@ -8,23 +8,14 @@
 import WidgetKit
 import SwiftUI
 
-struct TimeDiaryWidgetEntryView : View {
+struct TimeDiaryWidgetEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {
         ZStack {
             Color(uiColor: .viewBackgroundColor)
-            VStack {
-                Text("Time:")
-                    .foregroundColor(.black)
-                Text(entry.date, style: .time)
-                    .foregroundColor(.black)
-                
-                Text("Favorite Emoji:")
-                    .foregroundColor(.black)
-                Text(entry.diary.content ?? "")
-                    .foregroundColor(.black)
-            }
+            
+            TimeDiaryMediumWidgetView(diary: entry.diary)
         }
     }
 }
@@ -49,7 +40,8 @@ struct TimeDiaryWidget: Widget {
     }
 }
 
-#Preview(as: .systemSmall) {
+@available(iOS 17.0, *)
+#Preview(as: .systemMedium) {
     TimeDiaryWidget()
 } timeline: {
     DiaryEntry(date: .now, diary: dummyDiary)
