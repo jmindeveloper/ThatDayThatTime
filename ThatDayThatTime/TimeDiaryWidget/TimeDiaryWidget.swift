@@ -20,20 +20,6 @@ struct TimeDiaryWidgetEntryView: View {
     }
 }
 
-struct TimeDiaryMediumWidgetView: View {
-    @State var diary: DiaryEntity
-    
-    var body: some View {
-        HStack {
-            if let image = diary.image {
-                Image(systemName: "person.fill")
-            }
-            Text("asdf")
-        }
-    }
-}
-
-
 struct TimeDiaryWidget: Widget {
     let kind: String = "TimeDiaryWidget"
 

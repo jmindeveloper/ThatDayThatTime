@@ -18,7 +18,6 @@
 		0E15AE082C32F0A9007AA5C9 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57328A4CBBB0096A1F5 /* UIImage+Extension.swift */; };
 		0E15AE092C32F0A9007AA5C9 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9BE57328A4CBBB0096A1F5 /* UIImage+Extension.swift */; };
 		0E15AE0A2C32F0B1007AA5C9 /* ToastMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE8DF4028B228E1002F60F3 /* ToastMessageManager.swift */; };
-		0E15AE0B2C32F0BC007AA5C9 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8079CA28A7B1D90050B9EB /* Image+CoreDataProperties.swift */; };
 		0E15AE0C2C32F0C7007AA5C9 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAA4A828AE479000B20C17 /* UIFont+Extension.swift */; };
 		0E15AE0D2C32F413007AA5C9 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3142C528A218CF00149E34 /* UIColor+Extension.swift */; };
 		0E15AE102C32F525007AA5C9 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E15AE0E2C32F501007AA5C9 /* Provider.swift */; };
@@ -55,6 +54,9 @@
 		0E60015128AA0C780006A1CF /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60015028AA0C780006A1CF /* SettingViewController.swift */; };
 		0E60015328AA1F600006A1CF /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60015228AA1F600006A1CF /* UICollectionView+Extension.swift */; };
 		0E60015628AA23120006A1CF /* SearchDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60015528AA23120006A1CF /* SearchDiaryViewModel.swift */; };
+		0E6728D92C3456A9001E573D /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 0E6728D82C3456A9001E573D /* Toast */; };
+		0E6728DB2C345810001E573D /* TimeDiaryMediumWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6728DA2C345810001E573D /* TimeDiaryMediumWidgetView.swift */; };
+		0E6728DC2C345860001E573D /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8079CA28A7B1D90050B9EB /* Image+CoreDataProperties.swift */; };
 		0E8079CC28A7B1D90050B9EB /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8079CA28A7B1D90050B9EB /* Image+CoreDataProperties.swift */; };
 		0E81DEDF28A10E6E00A2B7C6 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81DEDE28A10E6E00A2B7C6 /* String+Extension.swift */; };
 		0E81DEE328A10F3300A2B7C6 /* DTCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81DEE228A10F3300A2B7C6 /* DTCalendar.swift */; };
@@ -171,6 +173,7 @@
 		0E60015028AA0C780006A1CF /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		0E60015228AA1F600006A1CF /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		0E60015528AA23120006A1CF /* SearchDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDiaryViewModel.swift; sourceTree = "<group>"; };
+		0E6728DA2C345810001E573D /* TimeDiaryMediumWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiaryMediumWidgetView.swift; sourceTree = "<group>"; };
 		0E8079CA28A7B1D90050B9EB /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0E81DEDE28A10E6E00A2B7C6 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		0E81DEE228A10F3300A2B7C6 /* DTCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCalendar.swift; sourceTree = "<group>"; };
@@ -237,6 +240,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E6728D92C3456A9001E573D /* Toast in Frameworks */,
 				0E513CC52C32D91000677DF6 /* SwiftUI.framework in Frameworks */,
 				0E513CC32C32D91000677DF6 /* WidgetKit.framework in Frameworks */,
 			);
@@ -312,6 +316,7 @@
 			children = (
 				0E513CC72C32D91000677DF6 /* TimeDiaryWidgetBundle.swift */,
 				0E513CCB2C32D91000677DF6 /* TimeDiaryWidget.swift */,
+				0E6728DA2C345810001E573D /* TimeDiaryMediumWidgetView.swift */,
 				0E513CCF2C32D91100677DF6 /* Assets.xcassets */,
 				0E513CD12C32D91100677DF6 /* Info.plist */,
 				0E15AE0E2C32F501007AA5C9 /* Provider.swift */,
@@ -602,6 +607,9 @@
 			dependencies = (
 			);
 			name = TimeDiaryWidgetExtension;
+			packageProductDependencies = (
+				0E6728D82C3456A9001E573D /* Toast */,
+			);
 			productName = TimeDiaryWidgetExtension;
 			productReference = 0E513CC12C32D91000677DF6 /* TimeDiaryWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -753,13 +761,14 @@
 			files = (
 				0E15AE0A2C32F0B1007AA5C9 /* ToastMessageManager.swift in Sources */,
 				0E15AE042C32F061007AA5C9 /* CoreDataManager.swift in Sources */,
+				0E6728DB2C345810001E573D /* TimeDiaryMediumWidgetView.swift in Sources */,
 				0E15AE052C32F070007AA5C9 /* String+Extension.swift in Sources */,
-				0E15AE0B2C32F0BC007AA5C9 /* Image+CoreDataProperties.swift in Sources */,
 				0E15AE072C32F0A1007AA5C9 /* UserSettingManager.swift in Sources */,
 				0E15AE022C32EE0E007AA5C9 /* TimeDiary+CoreDataProperties.swift in Sources */,
 				0E513CC82C32D91000677DF6 /* TimeDiaryWidgetBundle.swift in Sources */,
 				0E15AE0D2C32F413007AA5C9 /* UIColor+Extension.swift in Sources */,
 				0E15AE152C32FF5D007AA5C9 /* ThatDayThatTime.xcdatamodeld in Sources */,
+				0E6728DC2C345860001E573D /* Image+CoreDataProperties.swift in Sources */,
 				0E15AE132C32F608007AA5C9 /* Entry.swift in Sources */,
 				0E15AE032C32EE17007AA5C9 /* DayDiary+CoreDataProperties.swift in Sources */,
 				0E513CCC2C32D91000677DF6 /* TimeDiaryWidget.swift in Sources */,
@@ -1114,6 +1123,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0E6728D82C3456A9001E573D /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0EE8DF3B28B212C4002F60F3 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
 		0EBD218228A0D296006F19FE /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0EBD218128A0D296006F19FE /* XCRemoteSwiftPackageReference "SnapKit" */;
