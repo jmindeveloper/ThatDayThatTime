@@ -6,6 +6,7 @@
 //
 
 import WidgetKit
+import UIKit
 
 struct Provider: TimelineProvider {
     let coreDataManager = CoreDataManager()
@@ -25,11 +26,16 @@ struct Provider: TimelineProvider {
         }
         
         let entryDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+        var image: UIImage? = nil
+        if let imageData = diary.image {
+            image = UIImage(data: imageData)
+        }
+        
         let entry = DiaryEntry(date: entryDate, diary: DiaryEntity(
             content: diary.content,
             date: diary.date,
             id: diary.id,
-            image: nil,
+            image: image,
             time: diary.time
         ))
         let timeLine = Timeline(entries: [entry], policy: .atEnd)
