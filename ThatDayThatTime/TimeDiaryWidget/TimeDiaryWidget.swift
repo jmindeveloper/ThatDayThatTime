@@ -49,6 +49,7 @@ struct TimeDiaryWidget: Widget {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview(as: .systemSmall) {
     TimeDiaryWidget()
 } timeline: {
