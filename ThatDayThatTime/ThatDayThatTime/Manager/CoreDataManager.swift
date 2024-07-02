@@ -39,10 +39,10 @@ final class CoreDataManager {
     
     // MARK: - LifeCycle
     init() {
+        migrateStoreIfNeeded()
         self.persistentContainer = setPersistentCloudKitContainer()
         bindingUserSetting()
         // db를 보기위한 경로추적용 log
-        migrateStoreIfNeeded()
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
     }
     
@@ -62,7 +62,8 @@ final class CoreDataManager {
 
         let container = NSPersistentCloudKitContainer(name: containerName)
         container.persistentStoreDescriptions = [descriptions]
-        container.loadPersistentStores { _, error in
+        container.loadPersistentStores { description, error in
+            print(description)
             if let error = error {
                 print(String(describing: error))
             }
@@ -233,27 +234,41 @@ extension CoreDataManager {
     func migrateStoreIfNeeded() {
         let fileManager = FileManager.default
         
-        let existingStoreURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("ThatDayThatTime.sqlite")
+        /// CoreData URL
+        var existingStoreURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("ThatDayThatTime.sqlite")
         
+        /// appGroup URL
         guard let appGroupURL = fileManager.containerURL(forSecurityApplicationGroupIdentifier: "group.com.JMin.ThatDayThatTimeAppGroup") else {
             fatalError("App Group URL could not be created.")
         }
         
         let appGroupStoreURL = appGroupURL.appendingPathComponent("ThatDayThatTimeAppGroup.sqlite")
+        print("appGroupStoreURL - ", appGroupStoreURL.path)
+        
+        // If the existing store does not exist, just setup the new App Group store
+        if !fileManager.fileExists(atPath: existingStoreURL.path) {
+            existingStoreURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!.appendingPathComponent("ThatDayThatTime.sqlite")
+            
+            print(existingStoreURL.path)
+            
+            if !fileManager.fileExists(atPath: existingStoreURL.path) {
+                return
+            }
+        }
         
         // If the App Group store already exists, no need to migrate
         if fileManager.fileExists(atPath: appGroupStoreURL.path) {
-            return
-        }
-        
-        // If the existing store does not exist, just setup the new App Group store
-        guard fileManager.fileExists(atPath: existingStoreURL.path) else {
-            return
+            try? fileManager.removeItem(at: appGroupStoreURL)
         }
         
         // Perform migration
         do {
-            try fileManager.moveItem(at: existingStoreURL, to: appGroupStoreURL)
+            let coordinator = persistentContainer.persistentStoreCoordinator
+//            try fileManager.moveItem(at: existingStoreURL, to: appGroupStoreURL)
+//            try fileManager.copyItem(at: existingStoreURL, to: appGroupStoreURL)
+            
+            try coordinator.replacePersistentStore(at: appGroupStoreURL, withPersistentStoreFrom: existingStoreURL, type: .sqlite)
+            try coordinator.destroyPersistentStore(at: appGroupStoreURL, type: .sqlite, options: nil)
         } catch {
             fatalError("Failed to migrate store: \(error.localizedDescription)")
         }
